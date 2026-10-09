@@ -4,7 +4,7 @@ A compact, browser-only shopping gateway for gaming gear. Open `index.html` in a
 
 ## Features
 
-- Search and filter a 126-product gaming catalog by name, category, or watchlist.
+- Search and filter a multiple product gaming catalog by name, category, or watchlist.
 - Open product-specific search pages at major US retailers to check current prices, stock, and sale availability on the stores' own sites.
 - Browse gaming PCs, handhelds, consoles, monitors, keyboards, mice, headsets, controllers, capture gear, and accessories.
 - Open product details with retailer search and video-review links.
