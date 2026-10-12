@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8fa" id="theme-color">
+    <meta name="description" content="Tech It More helps you find gaming gear and check retailer prices and sale availability at US stores.">
+    <meta name="price-api-base" content="">
+    <link rel="canonical" href="https://tech-it-more-gaming-catalog.pages.dev/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tech It More">
+    <meta property="og:title" content="Tech It More — Find tech worth more">
+    <meta property="og:description" content="Browse gaming gear, then open each US store's own page to check today's price, stock and sales.">
+    <meta property="og:url" content="https://tech-it-more-gaming-catalog.pages.dev/">
+    <meta name="twitter:card" content="summary">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Tech It More","url":"https://tech-it-more-gaming-catalog.pages.dev/","description":"Independent research for gaming gear, with links to US retailers."}</script>
+    <title>Tech It More — Find tech worth more</title>
+    <link rel="stylesheet" href="styles.css?v=20261008-gallery">
+    <script src="catalog-products.js" defer></script>
+    <script src="gaming-products.js" defer></script>
+    <script src="app.js?v=20261008-gallery" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#catalog-title">Skip to products</a>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Tech It More home">
+        <span class="brand-mark" aria-hidden="true">t</span>
+        <span class="brand-name"><span>tech</span><span class="brand-it">it</span><span class="brand-light">more</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#products">Discover</a>
+        <a class="nav-link" href="#how-it-works">How it works</a>
+      </nav>
+      <a class="header-note" id="header-price-status" href="#data-note"><span class="status-dot"></span> Shop US stores</a>
+      <label class="currency-control" id="currency-control" for="currency-select" hidden><span>Currency</span>
+        <select id="currency-select" aria-label="Display prices in">
+          <option value="USD">USD $</option>
+          <option value="CAD">CAD $</option>
+          <option value="EUR">EUR €</option>
+          <option value="GBP">GBP £</option>
+          <option value="AUD">AUD $</option>
+          <option value="JPY">JPY ¥</option>
+        </select>
+      </label>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Dark mode</span></button>
+    </header>
+
+    <main>
+      <section class="hero" id="products">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> Independent gaming gear research</p>
+          <h1>Find your gear.<br><span>Check every store.</span></h1>
+          <p class="hero-description">Browse gaming PCs, consoles, monitors, keyboards and more, then open each store's own page for today's price, stock and sales.</p>
+          <div class="quick-searches" role="group" aria-label="Popular searches"><span>Popular:</span><button type="button" data-query="controller">Controllers</button><button type="button" data-query="mouse">Mice</button><button type="button" data-query="keyboard">Keyboards</button><button type="button" data-query="headset">Headsets</button></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-orbit orbit-one"></div>
+          <div class="art-orbit orbit-two"></div>
+          <div class="art-product"><img src="https://dlcdnwebimgs.asus.com/gain/282fa6b1-5d9e-4950-ab46-1da2defbe6a3/" alt=""></div>
+          <div class="art-tag">↓ <span>STORES</span></div>
+          <div class="art-spark spark-one">✳</div>
+          <div class="art-spark spark-two">✳</div>
+        </div>
+      </section>
+
+      <section class="data-notice" id="data-note" aria-label="Price data notice">
+        <span class="notice-icon" aria-hidden="true">i</span>
+        <p><strong id="price-data-heading">Check prices at stores:</strong> <span id="price-data-copy">Open a retailer search to see its current price, stock, and sale availability. Tech It More does not fetch store prices in gateway mode.</span> <a href="#how-it-works">How data works</a></p>
+        <span class="notice-region">UNITED STATES</span>
+      </section>
+
+      <section class="catalog" aria-labelledby="catalog-title">
+        <div class="section-heading">
+          <div>
+            
+            <h2 id="catalog-title">Browse gaming gear</h2>
+          </div>
+          <span class="results-count" id="results-count" aria-live="polite"></span>
+        </div>
+
+        <div class="catalog-controls">
+          <label class="search-box">
+            <span class="search-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Search products</span>
+            <input id="search-input" type="search" placeholder="Search gaming gear, consoles, headsets..." autocomplete="off">
+            <kbd>Ctrl K</kbd>
+          </label>
+          <div class="category-list" id="category-list" aria-label="Filter by category"></div>
+          <div class="catalog-actions">
+            <label class="sort-label">Sort
+              <select id="sort-select" aria-label="Sort products">
+                <option value="popular">Featured</option>
+                <option value="price-asc" disabled hidden>Price: low to high (live data only)</option>
+                <option value="discount" disabled hidden>Biggest sale (live data only)</option>
+                <option value="name">Name A–Z</option>
+              </select>
+            </label>
+            <button class="watchlist-filter" id="watchlist-filter" type="button" aria-pressed="false">♡ Watchlist <span id="watchlist-count">0</span></button>
+            <button class="export-button" id="export-button" type="button">Export data</button>
+          </div>
+        </div>
+
+        <section class="watchlist-panel" id="watchlist-panel" aria-label="Your watchlist"></section>
+        <div class="product-grid" id="product-grid" aria-live="polite"></div>
+        <noscript><p class="empty-state">The catalog needs JavaScript. Turn it on to browse and search products.</p></noscript>
+        <button class="load-more" id="load-more" type="button" hidden>Show more products</button>
+        <p class="empty-state" id="empty-state" hidden>No products match that search. Try another name or category.</p>
+      </section>
+
+      <section class="how-section" id="how-it-works">
+        <div class="how-heading">
+          
+          <h2>How it works</h2>
+        </div>
+        <div class="how-grid">
+          <article class="how-card">
+            <span class="how-number"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.2-4.2"/></svg></span>
+            <h3>Compare in one place</h3>
+            <p>Open retailer searches to check current product prices and sale availability.</p>
+          </article>
+          <article class="how-card">
+            <span class="how-number"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>
+            <h3>Keep an eye on it</h3>
+            <p>Save products to your watchlist and keep a desired price on this device.</p>
+          </article>
+          <article class="how-card">
+            <span class="how-number"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4m0 0L8 8m4-4 4 4M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg></span>
+            <h3>Research and share</h3>
+            <p>Compare store pages, open video reviews, or share a product link.</p>
+          </article>
+        </div>
+        <p class="integration-note" id="integration-note">Tech It More works as a shopping gateway without an API: choose a store to check its current price and sale availability. Optional live comparison requires an approved retailer feed.</p>
+      </section>
+    <section class="faq-section" id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions, answered</h2>
+      <div class="faq-list">
+        <details><summary>Do you sell these products?</summary><p>No. Tech It More is an independent research tool. Each product links to the retailers' own pages, and you buy from them directly.</p></details>
+        <details><summary>Why don't you show prices?</summary><p>Prices and stock change constantly, and the site has no approved retailer feed. Instead of showing numbers that may be out of date, it sends you to the store to see the real price, stock and sales.</p></details>
+        <details><summary>Do store links confirm that a product is in stock?</summary><p>No. Each link opens a search for the product's brand and model. Only the store's own page can confirm availability.</p></details>
+        <details><summary>Where is my watchlist stored?</summary><p>Only in this browser. There are no accounts and nothing is uploaded, so clearing your browser data also clears the watchlist. Use Export to keep a copy.</p></details>
+        <details><summary>Are you affiliated with the brands or stores shown?</summary><p>No. Brand and store names and product photos belong to their owners and appear only to help you find products.</p></details>
+      </div>
+    </section>
+  </main>
+
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-about">
+          <a class="brand footer-brand" href="#" aria-label="Tech It More home"><span class="brand-mark" aria-hidden="true">t</span><span class="brand-name"><span>tech</span><span class="brand-it">it</span><span class="brand-light">more</span></span></a>
+          <p>Independent research for gaming gear. We point you to each store's own page. We don't sell products, take payments or keep accounts.</p>
+        </div>
+        <nav class="footer-col" aria-label="Browse gear"><h2>Browse</h2><button type="button" class="link-button" data-query="controller">Controllers</button><button type="button" class="link-button" data-query="keyboard">Keyboards</button><button type="button" class="link-button" data-query="mouse">Mice</button><button type="button" class="link-button" data-query="headset">Headsets</button></nav>
+        <nav class="footer-col" aria-label="About"><h2>About</h2><a href="#how-it-works">How it works</a><a href="#faq">Questions</a><a href="#faq">Privacy and disclosure</a></nav>
+      </div>
+      <div class="footer-legal">
+        <p>© 2026 Tech It More. Not affiliated with the brands or stores shown; names and photos belong to their owners.</p>
+        <span id="footer-price-status">Shop US retailers</span>
+      </div>
+      <br>
+        <div class="footer-socials" aria-label="Contact and social links">
+            <a class="social-button" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=faresboukraya10@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Send an email" title="Email">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7" /></svg>
+            </a>
+            <a class="social-button" href="https://discord.com/users/743614856128888862" target="_blank" rel="noopener noreferrer" aria-label="Open Discord" title="Discord">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.54 5.34a16.3 16.3 0 0 0-3.94-1.2l-.48.98a14.6 14.6 0 0 0-6.24 0l-.48-.98a16.3 16.3 0 0 0-3.94 1.2C2.1 8.38 1.42 11.35 1.7 14.27a16.1 16.1 0 0 0 4.86 2.43l1.18-1.62c-.65-.24-1.27-.54-1.85-.89l.45-.34c3.56 1.65 7.66 1.65 11.22 0l.45.34c-.58.35-1.2.65-1.85.89l1.18 1.62a16.1 16.1 0 0 0 4.86-2.43c.33-3.39-.58-6.34-2.66-8.93ZM8.5 13.85c-1.05 0-1.92-.97-1.92-2.16s.85-2.16 1.92-2.16 1.93.97 1.93 2.16-.86 2.16-1.93 2.16Zm7 0c-1.05 0-1.92-.97-1.92-2.16s.85-2.16 1.92-2.16 1.93.97 1.93 2.16-.86 2.16-1.93 2.16Z" /></svg>
+            </a>
+            <a class="social-button" href="https://github.com/FaresBoukraya" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub" title="GitHub">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.7-2.3 4.5-4.5 4.8.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z" /></svg>
+            </a>
+        </div>
+    </footer>
+
+    <div class="product-dialog" id="product-dialog" role="dialog" aria-modal="true" aria-label="Product details" aria-hidden="true" hidden>
+      <div class="dialog-panel">
+        <button class="dialog-close" id="dialog-close" type="button" aria-label="Close product details">×</button>
+        <div id="dialog-content"></div>
+      </div>
+    </div>
+    <div class="dialog-backdrop" id="dialog-backdrop"></div>
+    <div class="photo-lightbox" id="photo-lightbox" role="dialog" aria-modal="true" aria-label="Full-screen product photo" aria-hidden="true" hidden>
+      <button class="photo-lightbox-close" id="photo-lightbox-close" type="button" aria-label="Close full-screen photo">×</button>
+      <button class="photo-lightbox-arrow previous" type="button" data-lightbox-step="-1" aria-label="Show previous photo">‹</button>
+      <figure class="photo-lightbox-figure">
+        <img id="photo-lightbox-image" alt="">
+        <figcaption id="photo-lightbox-caption"></figcaption>
+      </figure>
+      <button class="photo-lightbox-arrow next" type="button" data-lightbox-step="1" aria-label="Show next photo">›</button>
+      <button class="photo-lightbox-scroll" id="photo-lightbox-scroll" type="button" aria-label="Scroll down to see the full photo">↓ Scroll to see full photo</button>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
