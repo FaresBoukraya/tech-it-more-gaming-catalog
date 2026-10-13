@@ -1467,3 +1467,21 @@ clearSavedButton.addEventListener("click", async () => {
     showError("Could not clear your saved list.", error);
   }
 });
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("visible");
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => toast.classList.remove("visible"), 5000);
+}
+document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+  link.addEventListener("click", () => {
+    const address = decodeURIComponent(link.getAttribute("href").replace(/^mailto:/, "").split("?")[0]);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(address)
+        .then(() => showToast(`Email address copied: ${address}`))
+        .catch(() => showToast(`Email: ${address}`));
+    } else {
+      showToast(`Email: ${address}`);
+    }
+  });
+});
