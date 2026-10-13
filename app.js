@@ -1,36 +1,36 @@
 const bundledProducts = [
-  { id: "lg-ultragear-27", brand: "LG", name: "UltraGear 27″ QHD Gaming Monitor", category: "Monitors", icon: "▱", art: "art-monitor", imageUrl: "https://media.us.lg.com/transform/ecomm-PDPGalleryThumbnail-350x350/9baa8ae0-659f-4d9f-ac9a-8dd5e4ce806a/Monitor_27GS75Q-B_gallery_01_5000x5000", imageSource: "https://www.lg.com/us/monitors/lg-27gs75q-b-gaming-monitor", specs: "27″ QHD · up to 200Hz (overclocked) · IPS · Adaptive Sync", basePrice: 349.99, lowPrice: 229.99, retailers: [["Micro Center", 229.99], ["Amazon", 249.99], ["Newegg", 239.99], ["Best Buy", 279.99]] },
-  { id: "razer-deathadder-v3", brand: "RAZER", name: "DeathAdder V3 Pro Wireless Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/a0427959a82f1f5d1c27c2463008e5a8/razer-deathadder-v3-og.jpg", imageSource: "https://www.razer.com/gaming-mice/razer-deathadder-v3-pro", specs: "Ergonomic wireless · 30K sensor · Up to 90-hour battery", basePrice: 149.99, lowPrice: 99.99, retailers: [["Micro Center", 99.99], ["Amazon", 109.99], ["Newegg", 119.99], ["Best Buy", 129.99]] },
-  { id: "steam-deck-oled", brand: "VALVE", name: "Steam Deck OLED 512GB", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://cdn.fastly.steamstatic.com/steamdeck/images/oled/social_media_image.jpg", imageSource: "https://www.steamdeck.com/en/", specs: "7.4″ HDR OLED · 512GB NVMe · Wi-Fi 6E", basePrice: 549.00, lowPrice: 499.00, retailers: [["Steam", 549.00], ["Amazon", 519.99], ["Best Buy", 499.00], ["Newegg", 529.00]] },
-  { id: "switch-oled-white", brand: "NINTENDO", name: "Nintendo Switch OLED Model", category: "Gaming", icon: "▣", art: "art-console", imageUrl: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/en_US/products/hardware/nintendo-switch-oled-model-white-set/115461-switch-oled-white-boxart-1200x675", imageSource: "https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/", imageCreator: "Nintendo Switch OLED Model White product image", specs: "7″ OLED screen · 64GB · White Joy-Con controllers", basePrice: 349.99, lowPrice: 319.99, retailers: [["Best Buy", 339.99], ["Amazon", 319.99], ["Walmart", 339.00], ["Target", 339.99]] },
-  { id: "rog-ally-x", brand: "ASUS ROG", name: "ROG Ally X Handheld Gaming PC", category: "Gaming", icon: "▣", art: "art-console", imageUrl: "https://dlcdnwebimgs.asus.com/gain/F12D7B4D-DC78-4228-8426-D2C474B7BD0D", imageSource: "https://rog.asus.com/us/gaming-handhelds/rog-ally/rog-ally-x-2024/", imageCreator: "ASUS ROG Ally X official product image", specs: "7″ 120Hz · Ryzen Z1 Extreme · 24GB RAM · 1TB SSD", basePrice: 799.99, lowPrice: 699.99, retailers: [["Best Buy", 699.99], ["Amazon", 749.99], ["Newegg", 729.99], ["ASUS Store", 799.99]] },
-  { id: "razer-blackwidow-v4", brand: "RAZER", name: "BlackWidow V4 Mechanical Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/2eebfd7a585f70e30afa1bf2b242fa22/razer-blackwidow-v4-ogimage-1200x630.jpg", imageSource: "https://www.razer.com/gaming-keyboards/razer-blackwidow-v4", imageCreator: "Razer BlackWidow V4 official product image", specs: "Full-size mechanical · Razer Chroma RGB · Dedicated media controls", basePrice: 229.99, lowPrice: 179.99, retailers: [["Amazon", 179.99], ["Best Buy", 199.99], ["Newegg", 189.99], ["Micro Center", 209.99]] },
-  { id: "razer-huntsman-v3-pro", brand: "RAZER", name: "Huntsman V3 Pro Analog Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/f2ba430b48cc45a90075a905e0eac073/razer-huntsman-v3-pro-ogimage-1200x630-v2.webp", imageSource: "https://www.razer.com/gaming-keyboards/razer-huntsman-v3-pro", imageCreator: "Razer Huntsman V3 Pro official product image", specs: "Analog optical switches · Adjustable actuation · Rapid Trigger", basePrice: 249.99, lowPrice: 199.99, retailers: [["Amazon", 199.99], ["Best Buy", 219.99], ["Newegg", 229.99], ["Micro Center", 239.99]] },
-  { id: "razer-viper-v3-pro", brand: "RAZER", name: "Viper V3 Pro Wireless Gaming Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/24970f67be4ba9644e28720377d91cfb/razer-viper-v3-pro-1200x630.webp", imageSource: "https://www.razer.com/gaming-mice/razer-viper-v3-pro", imageCreator: "Razer Viper V3 Pro official product image", specs: "Ultra-light wireless · 35K DPI sensor · 8,000Hz polling capable", basePrice: 159.99, lowPrice: 129.99, retailers: [["Amazon", 129.99], ["Best Buy", 139.99], ["Newegg", 149.99], ["Micro Center", 154.99]] },
-  { id: "razer-deathadder-v3-hyperspeed", brand: "RAZER", name: "DeathAdder V3 HyperSpeed Wireless Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/846248a215ecc26cf0ad3f7cf62691bd/razer-deathadder-v3-hyperspeed-ogimage-1200x630.webp", imageSource: "https://www.razer.com/gaming-mice/razer-deathadder-v3-hyperspeed", imageCreator: "Razer DeathAdder V3 HyperSpeed official product image", specs: "Ergonomic wireless · 26K DPI sensor · Up to 100-hour battery", basePrice: 99.99, lowPrice: 69.99, retailers: [["Amazon", 69.99], ["Best Buy", 79.99], ["Newegg", 89.99], ["Micro Center", 94.99]] },
-  { id: "razer-blackshark-v2-pro", brand: "RAZER", name: "BlackShark V2 Pro Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/0de78efe3441114d8a92590145fff4c8/razer-blackshark-v2-pro-2023_ogimage-1200x630.jpg", imageSource: "https://www.razer.com/gaming-headsets/razer-blackshark-v2-pro", imageCreator: "Razer BlackShark V2 Pro official product image", specs: "Wireless esports headset · Detachable microphone · 70-hour battery", basePrice: 199.99, lowPrice: 159.99, retailers: [["Amazon", 159.99], ["Best Buy", 169.99], ["Newegg", 179.99], ["Micro Center", 189.99]] },
-  { id: "razer-kraken-v4", brand: "RAZER", name: "Kraken V4 Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/54336b9e31510b5983cfc72dbec14c34/kraken-v4-1200x630-og.webp", imageSource: "https://www.razer.com/gaming-headsets/razer-kraken-v4", imageCreator: "Razer Kraken V4 official product image", specs: "Wireless gaming headset · Retractable microphone · Chroma RGB", basePrice: 179.99, lowPrice: 139.99, retailers: [["Amazon", 139.99], ["Best Buy", 149.99], ["Newegg", 159.99], ["Micro Center", 169.99]] },
-  { id: "steelseries-arctis-nova-7p", brand: "STEELSERIES", name: "Arctis Nova 7P Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://images.ctfassets.net/hmm5mo4qf4mf/656blOm98ncSC8GsJv9QUN/853167c9ec252f79986681b6da4ca64e/arctis_nova_7p_black_pdp_img_buy_01.png__1920x1080_crop-fit_optimize_subsampling-2-190.png?w=1200&h=600&fit=fill&fm=jpg&q=85", imageSource: "https://steelseries.com/gaming-headsets/arctis-nova-7", imageCreator: "SteelSeries Arctis Nova 7P official product image", specs: "2.4GHz wireless and Bluetooth · USB-C · PlayStation-focused controls", basePrice: 179.99, lowPrice: 139.99, retailers: [["Amazon", 139.99], ["Best Buy", 149.99], ["Newegg", 159.99], ["Walmart", 169.99]] },
-  { id: "nzxt-player-two-prime", brand: "NZXT", name: "Player Two Prime Gaming PC", category: "Computers", icon: "⌁", art: "art-computer", imageUrl: "https://nzxt.com/cdn/shop/files/PlayerTwoPrime_hero_black_bagde_260527_43d11dd5-c1bf-434f-925d-64e4e419c973.png?v=1786045573&width=2048", imageSource: "https://nzxt.com/product/player-two-prime", imageCreator: "NZXT Player Two Prime official product image", specs: "AMD Ryzen 9 9900X · GeForce RTX 5070 Ti · 32GB RAM · 2TB SSD", basePrice: 2999.99, lowPrice: 2699.99, retailers: [["Amazon", 2699.99], ["Best Buy", 2799.99], ["Newegg", 2899.99], ["Micro Center", 2949.99]] },
-  { id: "nzxt-player-two", brand: "NZXT", name: "Player Two Gaming PC", category: "Computers", icon: "⌁", art: "art-computer", imageUrl: "https://nzxt.com/cdn/shop/files/PlayerTwoBase_hero_black_badge_9804c25b-a61f-4b02-ae9b-6ad4afdd408c.png?v=1786049042&width=2048", imageSource: "https://nzxt.com/product/player-two", imageCreator: "NZXT Player Two official product image", specs: "Intel Core Ultra 7 270K Plus · GeForce RTX 5070 · 32GB RAM · 1TB SSD", basePrice: 2199.99, lowPrice: 1899.99, retailers: [["Amazon", 1899.99], ["Best Buy", 1999.99], ["Newegg", 2099.99], ["Micro Center", 2149.99]] },
-  { id: "xbox-wireless-controller", brand: "XBOX", name: "Xbox Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://assets.xboxservices.com/assets/99/9b/999b6ab0-6ae1-432d-bed3-494bc3dfb138.jpg?n=111101_Sharing_200x200.jpg", imageSource: "https://www.xbox.com/en-US/accessories/controllers/xbox-wireless-controller", imageCreator: "Xbox Wireless Controller official product image", specs: "Wireless controller · Bluetooth · Xbox and Windows compatible", basePrice: 64.99, lowPrice: 49.99, retailers: [["Amazon", 49.99], ["Best Buy", 54.99], ["Walmart", 59.99], ["Target", 59.99]] },
-  { id: "dualsense-edge-controller", brand: "PLAYSTATION", name: "DualSense Edge Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/dualsense-edge-listing-thumb-01-en-23aug22?$facebook$", imageSource: "https://www.playstation.com/en-us/accessories/dualsense-edge-wireless-controller/", imageCreator: "PlayStation DualSense Edge official product image", specs: "Customizable controls · Replaceable stick modules · Back buttons", basePrice: 199.99, lowPrice: 179.99, retailers: [["Amazon", 179.99], ["Best Buy", 189.99], ["Walmart", 189.99], ["Target", 189.99]] },
-  { id: "elgato-4k-x", brand: "ELGATO", name: "4K X External Game Capture Card", category: "Gaming", icon: "▰", art: "art-storage", imageUrl: "https://images.ctfassets.net/h50kqpe25yx1/4f6jo2deHdLdmaxkWo3VKv/2056b061f7644d9003e4304dd373c0ce/4K-X-Social-Graph.jpg", imageSource: "https://www.elgato.com/us/en/p/game-capture-4k-x", imageCreator: "Elgato 4K X official product image", specs: "External USB capture · Up to 4K144 passthrough · HDMI 2.1", basePrice: 229.99, lowPrice: 199.99, retailers: [["Amazon", 199.99], ["Best Buy", 209.99], ["Newegg", 219.99], ["B&H Photo", 224.99]] },
-  { id: "corsair-k70-pro-rgb", brand: "CORSAIR", name: "K70 PRO RGB Mechanical Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://res.cloudinary.com/corsair-pwa/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Keyboards/CH-910941A-NA/Gallery/K70_PRO_OPX_PBT_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-keyboards/ch-910941a-na/k70-rgb-pro-mechanical-gaming-keyboard-ch-910941a-na", imageCreator: "Corsair K70 PRO RGB official product image", specs: "Optical-mechanical switches · PBT keycaps · Tournament switch", basePrice: 179.99, lowPrice: 129.99, retailers: [["Amazon", 129.99], ["Best Buy", 149.99], ["Newegg", 159.99], ["Micro Center", 169.99]] },
-  { id: "corsair-m75-air", brand: "CORSAIR", name: "M75 AIR Wireless Gaming Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets.corsair.com/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Mice/CH-931D100/M75_AIR_BLACK_RENDER_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-mice/ch-931d100-na/m75-air-wireless-ultra-lightweight-gaming-mouse-ch-931d100-na", imageCreator: "Corsair M75 AIR official product image", specs: "Ultra-light wireless · 26,000 DPI sensor · Up to 100-hour battery", basePrice: 129.99, lowPrice: 79.99, retailers: [["Amazon", 79.99], ["Best Buy", 99.99], ["Newegg", 109.99], ["Micro Center", 119.99]] },
-  { id: "corsair-virtuoso-rgb-wireless-se", brand: "CORSAIR", name: "Virtuoso RGB Wireless SE Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://res.cloudinary.com/corsair-pwa/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Headsets/CA-9011180-NA/Gallery/VIRTUOSO_SE_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-headsets/ca-9011180-na/virtuoso-rgb-wireless-se-high-fidelity-gaming-headset-ca-9011180-na", imageCreator: "Corsair Virtuoso RGB Wireless SE official product image", specs: "Wireless gaming headset · Detachable broadcast microphone · 7.1 surround sound", basePrice: 269.99, lowPrice: 219.99, retailers: [["Amazon", 219.99], ["Best Buy", 239.99], ["Newegg", 249.99], ["Micro Center", 259.99]] },
-  { id: "dualsense-wireless-controller", brand: "PLAYSTATION", name: "DualSense Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/dualsense-controller-product-thumbnail-01-en-14sep21?$facebook$", imageSource: "https://www.playstation.com/en-us/accessories/dualsense-wireless-controller/", imageCreator: "PlayStation DualSense official product image", specs: "Haptic feedback · Adaptive triggers · Built-in microphone", basePrice: 74.99, lowPrice: 59.99, retailers: [["Amazon", 59.99], ["Best Buy", 64.99], ["Walmart", 69.99], ["Target", 69.99]] },
-  { id: "playstation-5-pro", brand: "PLAYSTATION", name: "PlayStation 5 Pro Console", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/ps5-pro-dualsense-image-block-01-en-16aug24?$facebook$", imageSource: "https://www.playstation.com/en-us/ps5/ps5-pro/", imageCreator: "PlayStation 5 Pro official product image", specs: "2TB SSD · Advanced ray tracing · 4K gaming up to 120fps", basePrice: 699.99, lowPrice: 649.99, retailers: [["Amazon", 649.99], ["Best Buy", 679.99], ["Walmart", 689.99], ["Target", 699.99]] },
-  { id: "xbox-series-x", brand: "XBOX", name: "Xbox Series X Console", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://assets.xboxservices.com/assets/18/30/1830806b-d41d-40ce-a846-792df7d14e1d.jpg?n=Xbox-Series-X_Sharing_200x200_02.jpg", imageSource: "https://www.xbox.com/en-US/consoles/xbox-series-x", imageCreator: "Xbox Series X official product image", specs: "1TB SSD · 4K gaming · Up to 120fps · UHD Blu-ray", basePrice: 499.99, lowPrice: 449.99, retailers: [["Amazon", 449.99], ["Best Buy", 479.99], ["Walmart", 489.99], ["Target", 499.99]] },
-  { id: "playstation-vr2", brand: "PLAYSTATION", name: "PlayStation VR2 Headset", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/PSVR2-thumbnail-01-en-22feb22?$facebook$", imageSource: "https://www.playstation.com/en-us/ps-vr2/", imageCreator: "PlayStation VR2 official product image", specs: "4K HDR OLED · Eye tracking · 3D audio · Sense controllers", basePrice: 549.99, lowPrice: 399.99, retailers: [["Amazon", 399.99], ["Best Buy", 449.99], ["Walmart", 499.99], ["Target", 499.99]] },
-  { id: "meta-quest-3", brand: "META", name: "Quest 3 512GB VR Headset", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://lookaside.fbsbx.com/elementpath/media/?media_id=157327897433582&version=1790053480&transcode_extension=webp", imageSource: "https://www.meta.com/quest/quest-3/", imageCreator: "Meta Quest 3 official product image", specs: "Mixed reality · 512GB storage · 4K+ Infinite Display · Hand tracking", basePrice: 499.99, lowPrice: 429.99, retailers: [["Amazon", 429.99], ["Best Buy", 449.99], ["Walmart", 479.99], ["Target", 479.99]] },
-  { id: "geforce-rtx-5070-ti", brand: "NVIDIA", name: "GeForce RTX 5070 Ti Graphics Card", category: "Components", icon: "▰", art: "art-storage", imageUrl: "https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/graphic-cards/50-series/5070-family/geforce-rtx-5070-ti-og-image.jpg", imageSource: "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5070-family/", imageCreator: "NVIDIA GeForce RTX 5070 Ti official product image", specs: "16GB GDDR7 · DLSS 4 · PCI Express 5.0", basePrice: 749.99, lowPrice: 699.99, retailers: [["Amazon", 699.99], ["Best Buy", 729.99], ["Newegg", 719.99], ["Micro Center", 709.99]] }
+  { id: "lg-ultragear-27", brand: "LG", name: "UltraGear 27″ QHD Gaming Monitor", category: "Monitors", icon: "▱", art: "art-monitor", imageUrl: "https://media.us.lg.com/transform/ecomm-PDPGalleryThumbnail-350x350/9baa8ae0-659f-4d9f-ac9a-8dd5e4ce806a/Monitor_27GS75Q-B_gallery_01_5000x5000", imageSource: "https://www.lg.com/us/monitors/lg-27gs75q-b-gaming-monitor", specs: "27″ QHD · up to 200Hz (overclocked) · IPS · Adaptive Sync" },
+  { id: "razer-deathadder-v3", brand: "RAZER", name: "DeathAdder V3 Pro Wireless Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/a0427959a82f1f5d1c27c2463008e5a8/razer-deathadder-v3-og.jpg", imageSource: "https://www.razer.com/gaming-mice/razer-deathadder-v3-pro", specs: "Ergonomic wireless · 30K sensor · Up to 90-hour battery" },
+  { id: "steam-deck-oled", brand: "VALVE", name: "Steam Deck OLED 512GB", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://cdn.fastly.steamstatic.com/steamdeck/images/oled/social_media_image.jpg", imageSource: "https://www.steamdeck.com/en/", specs: "7.4″ HDR OLED · 512GB NVMe · Wi-Fi 6E" },
+  { id: "switch-oled-white", brand: "NINTENDO", name: "Nintendo Switch OLED Model", category: "Gaming", icon: "▣", art: "art-console", imageUrl: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/en_US/products/hardware/nintendo-switch-oled-model-white-set/115461-switch-oled-white-boxart-1200x675", imageSource: "https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/", imageCreator: "Nintendo Switch OLED Model White product image", specs: "7″ OLED screen · 64GB · White Joy-Con controllers" },
+  { id: "rog-ally-x", brand: "ASUS ROG", name: "ROG Ally X Handheld Gaming PC", category: "Gaming", icon: "▣", art: "art-console", imageUrl: "https://dlcdnwebimgs.asus.com/gain/F12D7B4D-DC78-4228-8426-D2C474B7BD0D", imageSource: "https://rog.asus.com/us/gaming-handhelds/rog-ally/rog-ally-x-2024/", imageCreator: "ASUS ROG Ally X official product image", specs: "7″ 120Hz · Ryzen Z1 Extreme · 24GB RAM · 1TB SSD" },
+  { id: "razer-blackwidow-v4", brand: "RAZER", name: "BlackWidow V4 Mechanical Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/2eebfd7a585f70e30afa1bf2b242fa22/razer-blackwidow-v4-ogimage-1200x630.jpg", imageSource: "https://www.razer.com/gaming-keyboards/razer-blackwidow-v4", imageCreator: "Razer BlackWidow V4 official product image", specs: "Full-size mechanical · Razer Chroma RGB · Dedicated media controls" },
+  { id: "razer-huntsman-v3-pro", brand: "RAZER", name: "Huntsman V3 Pro Analog Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/f2ba430b48cc45a90075a905e0eac073/razer-huntsman-v3-pro-ogimage-1200x630-v2.webp", imageSource: "https://www.razer.com/gaming-keyboards/razer-huntsman-v3-pro", imageCreator: "Razer Huntsman V3 Pro official product image", specs: "Analog optical switches · Adjustable actuation · Rapid Trigger" },
+  { id: "razer-viper-v3-pro", brand: "RAZER", name: "Viper V3 Pro Wireless Gaming Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/24970f67be4ba9644e28720377d91cfb/razer-viper-v3-pro-1200x630.webp", imageSource: "https://www.razer.com/gaming-mice/razer-viper-v3-pro", imageCreator: "Razer Viper V3 Pro official product image", specs: "Ultra-light wireless · 35K DPI sensor · 8,000Hz polling capable" },
+  { id: "razer-deathadder-v3-hyperspeed", brand: "RAZER", name: "DeathAdder V3 HyperSpeed Wireless Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/846248a215ecc26cf0ad3f7cf62691bd/razer-deathadder-v3-hyperspeed-ogimage-1200x630.webp", imageSource: "https://www.razer.com/gaming-mice/razer-deathadder-v3-hyperspeed", imageCreator: "Razer DeathAdder V3 HyperSpeed official product image", specs: "Ergonomic wireless · 26K DPI sensor · Up to 100-hour battery" },
+  { id: "razer-blackshark-v2-pro", brand: "RAZER", name: "BlackShark V2 Pro Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/0de78efe3441114d8a92590145fff4c8/razer-blackshark-v2-pro-2023_ogimage-1200x630.jpg", imageSource: "https://www.razer.com/gaming-headsets/razer-blackshark-v2-pro", imageCreator: "Razer BlackShark V2 Pro official product image", specs: "Wireless esports headset · Detachable microphone · 70-hour battery" },
+  { id: "razer-kraken-v4", brand: "RAZER", name: "Kraken V4 Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/54336b9e31510b5983cfc72dbec14c34/kraken-v4-1200x630-og.webp", imageSource: "https://www.razer.com/gaming-headsets/razer-kraken-v4", imageCreator: "Razer Kraken V4 official product image", specs: "Wireless gaming headset · Retractable microphone · Chroma RGB" },
+  { id: "steelseries-arctis-nova-7p", brand: "STEELSERIES", name: "Arctis Nova 7P Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://images.ctfassets.net/hmm5mo4qf4mf/656blOm98ncSC8GsJv9QUN/853167c9ec252f79986681b6da4ca64e/arctis_nova_7p_black_pdp_img_buy_01.png__1920x1080_crop-fit_optimize_subsampling-2-190.png?w=1200&h=600&fit=fill&fm=jpg&q=85", imageSource: "https://steelseries.com/gaming-headsets/arctis-nova-7", imageCreator: "SteelSeries Arctis Nova 7P official product image", specs: "2.4GHz wireless and Bluetooth · USB-C · PlayStation-focused controls" },
+  { id: "nzxt-player-two-prime", brand: "NZXT", name: "Player Two Prime Gaming PC", category: "Computers", icon: "⌁", art: "art-computer", imageUrl: "https://nzxt.com/cdn/shop/files/PlayerTwoPrime_hero_black_bagde_260527_43d11dd5-c1bf-434f-925d-64e4e419c973.png?v=1786045573&width=2048", imageSource: "https://nzxt.com/product/player-two-prime", imageCreator: "NZXT Player Two Prime official product image", specs: "AMD Ryzen 9 9900X · GeForce RTX 5070 Ti · 32GB RAM · 2TB SSD" },
+  { id: "nzxt-player-two", brand: "NZXT", name: "Player Two Gaming PC", category: "Computers", icon: "⌁", art: "art-computer", imageUrl: "https://nzxt.com/cdn/shop/files/PlayerTwoBase_hero_black_badge_9804c25b-a61f-4b02-ae9b-6ad4afdd408c.png?v=1786049042&width=2048", imageSource: "https://nzxt.com/product/player-two", imageCreator: "NZXT Player Two official product image", specs: "Intel Core Ultra 7 270K Plus · GeForce RTX 5070 · 32GB RAM · 1TB SSD" },
+  { id: "xbox-wireless-controller", brand: "XBOX", name: "Xbox Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://assets.xboxservices.com/assets/99/9b/999b6ab0-6ae1-432d-bed3-494bc3dfb138.jpg?n=111101_Sharing_200x200.jpg", imageSource: "https://www.xbox.com/en-US/accessories/controllers/xbox-wireless-controller", imageCreator: "Xbox Wireless Controller official product image", specs: "Wireless controller · Bluetooth · Xbox and Windows compatible" },
+  { id: "dualsense-edge-controller", brand: "PLAYSTATION", name: "DualSense Edge Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/dualsense-edge-listing-thumb-01-en-23aug22?$facebook$", imageSource: "https://www.playstation.com/en-us/accessories/dualsense-edge-wireless-controller/", imageCreator: "PlayStation DualSense Edge official product image", specs: "Customizable controls · Replaceable stick modules · Back buttons" },
+  { id: "elgato-4k-x", brand: "ELGATO", name: "4K X External Game Capture Card", category: "Gaming", icon: "▰", art: "art-storage", imageUrl: "https://images.ctfassets.net/h50kqpe25yx1/4f6jo2deHdLdmaxkWo3VKv/2056b061f7644d9003e4304dd373c0ce/4K-X-Social-Graph.jpg", imageSource: "https://www.elgato.com/us/en/p/game-capture-4k-x", imageCreator: "Elgato 4K X official product image", specs: "External USB capture · Up to 4K144 passthrough · HDMI 2.1" },
+  { id: "corsair-k70-pro-rgb", brand: "CORSAIR", name: "K70 PRO RGB Mechanical Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://res.cloudinary.com/corsair-pwa/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Keyboards/CH-910941A-NA/Gallery/K70_PRO_OPX_PBT_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-keyboards/ch-910941a-na/k70-rgb-pro-mechanical-gaming-keyboard-ch-910941a-na", imageCreator: "Corsair K70 PRO RGB official product image", specs: "Optical-mechanical switches · PBT keycaps · Tournament switch" },
+  { id: "corsair-m75-air", brand: "CORSAIR", name: "M75 AIR Wireless Gaming Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets.corsair.com/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Mice/CH-931D100/M75_AIR_BLACK_RENDER_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-mice/ch-931d100-na/m75-air-wireless-ultra-lightweight-gaming-mouse-ch-931d100-na", imageCreator: "Corsair M75 AIR official product image", specs: "Ultra-light wireless · 26,000 DPI sensor · Up to 100-hour battery" },
+  { id: "corsair-virtuoso-rgb-wireless-se", brand: "CORSAIR", name: "Virtuoso RGB Wireless SE Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://res.cloudinary.com/corsair-pwa/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Headsets/CA-9011180-NA/Gallery/VIRTUOSO_SE_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-headsets/ca-9011180-na/virtuoso-rgb-wireless-se-high-fidelity-gaming-headset-ca-9011180-na", imageCreator: "Corsair Virtuoso RGB Wireless SE official product image", specs: "Wireless gaming headset · Detachable broadcast microphone · 7.1 surround sound" },
+  { id: "dualsense-wireless-controller", brand: "PLAYSTATION", name: "DualSense Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/dualsense-controller-product-thumbnail-01-en-14sep21?$facebook$", imageSource: "https://www.playstation.com/en-us/accessories/dualsense-wireless-controller/", imageCreator: "PlayStation DualSense official product image", specs: "Haptic feedback · Adaptive triggers · Built-in microphone" },
+  { id: "playstation-5-pro", brand: "PLAYSTATION", name: "PlayStation 5 Pro Console", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/ps5-pro-dualsense-image-block-01-en-16aug24?$facebook$", imageSource: "https://www.playstation.com/en-us/ps5/ps5-pro/", imageCreator: "PlayStation 5 Pro official product image", specs: "2TB SSD · Advanced ray tracing · 4K gaming up to 120fps" },
+  { id: "xbox-series-x", brand: "XBOX", name: "Xbox Series X Console", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://assets.xboxservices.com/assets/18/30/1830806b-d41d-40ce-a846-792df7d14e1d.jpg?n=Xbox-Series-X_Sharing_200x200_02.jpg", imageSource: "https://www.xbox.com/en-US/consoles/xbox-series-x", imageCreator: "Xbox Series X official product image", specs: "1TB SSD · 4K gaming · Up to 120fps · UHD Blu-ray" },
+  { id: "playstation-vr2", brand: "PLAYSTATION", name: "PlayStation VR2 Headset", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/PSVR2-thumbnail-01-en-22feb22?$facebook$", imageSource: "https://www.playstation.com/en-us/ps-vr2/", imageCreator: "PlayStation VR2 official product image", specs: "4K HDR OLED · Eye tracking · 3D audio · Sense controllers" },
+  { id: "meta-quest-3", brand: "META", name: "Quest 3 512GB VR Headset", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://lookaside.fbsbx.com/elementpath/media/?media_id=157327897433582&version=1790053480&transcode_extension=webp", imageSource: "https://www.meta.com/quest/quest-3/", imageCreator: "Meta Quest 3 official product image", specs: "Mixed reality · 512GB storage · 4K+ Infinite Display · Hand tracking" },
+  { id: "geforce-rtx-5070-ti", brand: "NVIDIA", name: "GeForce RTX 5070 Ti Graphics Card", category: "Components", icon: "▰", art: "art-storage", imageUrl: "https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/graphic-cards/50-series/5070-family/geforce-rtx-5070-ti-og-image.jpg", imageSource: "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5070-family/", imageCreator: "NVIDIA GeForce RTX 5070 Ti official product image", specs: "16GB GDDR7 · DLSS 4 · PCI Express 5.0" }
 ];
 
 const productCandidates = bundledProducts
   .concat(Array.isArray(window.TECH_IT_MORE_PRODUCTS) ? window.TECH_IT_MORE_PRODUCTS : [])
   .concat(Array.isArray(window.TECH_IT_MORE_GAMING_PRODUCTS) ? window.TECH_IT_MORE_GAMING_PRODUCTS : [])
-  .filter(product => product && typeof product.id === "string" && typeof product.name === "string" && typeof product.imageUrl === "string" && product.imageUrl.length > 0 && typeof product.imageSource === "string" && product.imageSource.length > 0 && Number.isFinite(product.basePrice) && Number.isFinite(product.lowPrice));
+  .filter(product => product && typeof product.id === "string" && typeof product.name === "string" && typeof product.imageUrl === "string" && product.imageUrl.length > 0 && typeof product.imageSource === "string" && product.imageSource.length > 0);
 const productsById = new Map();
 for (const product of productCandidates) {
   if (!productsById.has(product.id)) productsById.set(product.id, product);
@@ -48,15 +48,7 @@ function kindOf(product) {
 const products = Array.from(productsById.values()).map(product => ({
   ...product,
   imageUrl: product.imageCreator === "Generic illustration, not a product photo" ? "" : product.imageUrl,
-  category: kindOf(product),
-  retailers: Array.isArray(product.retailers) && product.retailers.length > 0
-    ? product.retailers
-    : [
-        ["Amazon", product.lowPrice],
-        ["Best Buy", Math.round(product.lowPrice * 1.05 * 100) / 100],
-        ["Walmart", Math.round(product.lowPrice * 1.1 * 100) / 100],
-        ["Newegg", Math.round(product.lowPrice * 1.15 * 100) / 100]
-      ]
+  category: kindOf(product)
 }));
 
 const STORE_SEARCH_URLS = {
@@ -116,7 +108,6 @@ const productRetailerStores = new Map(products.map(product => [
 ]));
 const databaseName = "techscout-preview";
 const databaseVersion = 5;
-const priceApiBase = document.querySelector('meta[name="price-api-base"]')?.content.trim().replace(/\/$/, "") || "";
 const categoryOrder = ["Consoles & handhelds", "Controllers", "Keyboards", "Mice", "Headsets", "Audio", "Monitors", "PCs & laptops", "Components"];
 const categories = ["All products", ...[...new Set(products.map(product => product.category))].sort((a, b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b))];
 const grid = document.querySelector("#product-grid");
@@ -124,7 +115,23 @@ const searchInput = document.querySelector("#search-input");
 const categoryList = document.querySelector("#category-list");
 const resultsCount = document.querySelector("#results-count");
 const emptyState = document.querySelector("#empty-state");
-const watchlistPanel = document.querySelector("#watchlist-panel");
+const brandSelect = document.querySelector("#brand-select");
+const wirelessToggle = document.querySelector("#wireless-toggle");
+const activeFiltersEl = document.querySelector("#active-filters");
+const recentRow = document.querySelector("#recent-row");
+const suggestionsBox = document.querySelector("#search-suggestions");
+const searchWrap = document.querySelector("#search-wrap");
+const searchClear = document.querySelector("#search-clear");
+const shareListButton = document.querySelector("#share-list");
+const catalogTitle = document.querySelector("#catalog-title");
+const sharedBanner = document.querySelector("#shared-banner");
+const backToTop = document.querySelector("#back-to-top");
+let activeBrand = "All brands";
+let wirelessOnly = false;
+let sharedIds = null;
+let recentIds = [];
+let suggestionItems = [];
+let suggestionIndex = -1;
 const loadMoreButton = document.querySelector("#load-more");
 const dialog = document.querySelector("#product-dialog");
 const dialogContent = document.querySelector("#dialog-content");
@@ -143,22 +150,15 @@ const sortSelect = document.querySelector("#sort-select");
 const watchlistFilter = document.querySelector("#watchlist-filter");
 const watchlistCount = document.querySelector("#watchlist-count");
 const exportButton = document.querySelector("#export-button");
-const currencySelect = document.querySelector("#currency-select");
-const currencyControl = document.querySelector("#currency-control");
 let watchlist = new Set();
 let catalogProducts = [];
 const productPhotoCache = new Map();
-let livePriceServiceAvailable = false;
-let livePriceRefreshTimer;
 let gallerySlideTimer;
 let gallerySlideshowPlaying = false;
 let gallerySlideInterval = 4500;
 let handlingProductHistory = false;
 let productDialogRequest = 0;
 const catalogPageSize = 36;
-const EXCHANGE_RATES = { USD: 1, CAD: 1.36, EUR: 0.92, GBP: 0.79, AUD: 1.53, JPY: 149 };
-const CURRENCY_NAMES = { USD: "US dollar", CAD: "Canadian dollar", EUR: "euro", GBP: "British pound", AUD: "Australian dollar", JPY: "Japanese yen" };
-let displayCurrency = "USD";
 
 function openDatabase() {
   return new Promise((resolve, reject) => {
@@ -211,7 +211,7 @@ async function seedDatabaseIfNeeded() {
 }
 
 async function pruneDatabaseToGamingCatalog() {
-  if (await readSetting("catalogScope") === "shopping-gateway-v1") return;
+  if (await readSetting("catalogScope") === "shopping-gateway-v2") return;
   const allowedIds = new Set(products.map(product => product.id));
   const transaction = database.transaction(["products", "offers", "priceHistory", "alerts", "settings"], "readwrite");
   const done = transactionDone(transaction);
@@ -236,7 +236,7 @@ async function pruneDatabaseToGamingCatalog() {
       settingsStore.put({ key: "watchlist", value: retainedWatchlist });
     }
   };
-  settingsStore.put({ key: "catalogScope", value: "shopping-gateway-v1" });
+  settingsStore.put({ key: "catalogScope", value: "shopping-gateway-v2" });
   await done;
 }
 
@@ -245,127 +245,6 @@ function readProducts() {
     const request = database.transaction("products", "readonly").objectStore("products").getAll();
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error || new Error("Unable to load products from the local database."));
-  });
-}
-
-async function loadLiveOffers() {
-  if (!priceApiBase) return;
-  const response = await fetch(`${priceApiBase}/prices`, { cache: "no-store" });
-  if (!response.ok) throw new Error(`Live price service returned HTTP ${response.status}.`);
-  const payload = await response.json();
-  if (!payload || !Array.isArray(payload.offers)) throw new Error("Live price service returned an invalid offers response.");
-  const offersByProduct = new Map();
-  for (const offer of payload.offers) {
-    if (!offer || typeof offer.productId !== "string" || typeof offer.store !== "string"
-      || typeof offer.price !== "number" || !Number.isFinite(offer.price) || offer.price <= 0
-      || ![0, 1, true, false].includes(offer.isOnSale)
-      || typeof offer.checkedAt !== "string" || Number.isNaN(Date.parse(offer.checkedAt))) continue;
-    const offers = offersByProduct.get(offer.productId) || [];
-    offers.push({ ...offer, isOnSale: Boolean(offer.isOnSale) });
-    offersByProduct.set(offer.productId, offers);
-  }
-  for (const product of catalogProducts) {
-    if (typeof product.demoLowPrice !== "number") {
-      product.demoLowPrice = product.lowPrice;
-      product.demoRetailers = product.retailers;
-    }
-    product.liveOffers = (offersByProduct.get(product.id) || []).sort((a, b) => a.price - b.price);
-    if (product.liveOffers.length) {
-      product.lowPrice = product.liveOffers[0].price;
-      product.retailers = product.liveOffers.map(offer => [offer.store, offer.price]);
-    } else {
-      product.lowPrice = product.demoLowPrice;
-      product.retailers = product.demoRetailers;
-    }
-  }
-  livePriceServiceAvailable = true;
-  const liveOfferCount = catalogProducts.reduce((count, product) => count + product.liveOffers.length, 0);
-  if (liveOfferCount > 0) {
-    document.querySelector("#price-data-heading").textContent = "Live US prices:";
-    document.querySelector("#price-data-copy").textContent = "Live offers are marked on product cards; all other prices remain illustrative. Prices may change at checkout. Other currencies use fixed demo conversion rates.";
-    document.querySelector("#integration-note").textContent = "Live retailer prices are supplied by the configured feed and refreshed every six hours.";
-    document.querySelector("#footer-price-status").textContent = "Live prices · US retailers";
-    document.querySelector("#header-price-status").lastChild.textContent = " Live US prices";
-  } else {
-    document.querySelector("#price-data-heading").textContent = "Feed connected:";
-    document.querySelector("#price-data-copy").textContent = "No current retailer offers are available yet. Use store links to check current prices and sale availability.";
-    document.querySelector("#integration-note").textContent = "Tech It More works as a shopping gateway without an API; live comparison is optional.";
-    document.querySelector("#footer-price-status").textContent = "Shop US retailers";
-    document.querySelector("#header-price-status").lastChild.textContent = " Shop US stores";
-  }
-}
-
-function updatePriceControls() {
-  const hasAnyLiveOffers = catalogProducts.some(product => product.liveOffers?.length);
-  currencyControl.hidden = !hasAnyLiveOffers;
-  for (const option of sortSelect.options) {
-    if (option.value === "price-asc" || option.value === "discount") { option.disabled = !hasAnyLiveOffers; option.hidden = !hasAnyLiveOffers; }
-  }
-  if (!hasAnyLiveOffers && (sortSelect.value === "price-asc" || sortSelect.value === "discount")) {
-    sortSelect.value = "popular";
-  }
-}
-
-function refreshCatalogAfterLivePrices() {
-  const displayedCount = grid.children.length;
-  updatePriceControls();
-  renderWatchlistPanel();
-  renderCatalog();
-  while (grid.children.length < displayedCount && !loadMoreButton.hidden) renderCatalog(true);
-  const detail = dialogContent.querySelector(".detail-content");
-  if (!dialog.hidden && detail) openProduct(detail.dataset.productId);
-}
-
-async function refreshLivePriceData() {
-  try {
-    await loadLiveOffers();
-    refreshCatalogAfterLivePrices();
-    if (!livePriceRefreshTimer) {
-      livePriceRefreshTimer = window.setInterval(refreshLivePriceData, 15 * 60 * 1000);
-    }
-  } catch (error) {
-    console.warn("Live prices are unavailable; retailer links are available without an API or feed.", error);
-    if (!livePriceServiceAvailable) return;
-    livePriceServiceAvailable = false;
-    for (const product of catalogProducts) {
-      product.liveOffers = [];
-      product.lowPrice = product.demoLowPrice;
-      product.retailers = product.demoRetailers;
-    }
-    document.querySelector("#price-data-heading").textContent = "Check prices at stores:";
-    document.querySelector("#price-data-copy").textContent = "Open a retailer search to see its current price, stock, and sale availability. Tech It More does not fetch store prices in gateway mode.";
-    document.querySelector("#integration-note").textContent = "This site works as a shopping gateway without an API. Optional live price comparison requires an approved retailer feed.";
-    document.querySelector("#footer-price-status").textContent = "Shop US retailers";
-    document.querySelector("#header-price-status").lastChild.textContent = " Shop US stores";
-    refreshCatalogAfterLivePrices();
-  }
-}
-
-async function readLiveHistory(productId, days = 365) {
-  if (!livePriceServiceAvailable) return [];
-  const response = await fetch(`${priceApiBase}/prices/${encodeURIComponent(productId)}/history?days=${days}`, { cache: "no-store" });
-  if (!response.ok) throw new Error(`Live price history returned HTTP ${response.status}.`);
-  const payload = await response.json();
-  if (!payload || !Array.isArray(payload.history)) throw new Error("Live price history returned an invalid response.");
-  return payload.history.filter(point => point && /^\d{4}-\d{2}-\d{2}$/.test(point.date)
-    && typeof point.price === "number" && Number.isFinite(point.price) && point.price > 0);
-}
-
-function readAlert(productId) {
-  return new Promise((resolve, reject) => {
-    const request = database.transaction("alerts", "readonly").objectStore("alerts").get(productId);
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error || new Error(`Unable to load the saved price target for "${productId}".`));
-  });
-}
-
-function saveAlert(productId, targetPrice) {
-  return new Promise((resolve, reject) => {
-    const transaction = database.transaction("alerts", "readwrite");
-    transaction.objectStore("alerts").put({ productId, targetPrice, currency: "USD", createdAt: new Date().toISOString() });
-    transaction.oncomplete = resolve;
-    transaction.onerror = () => reject(transaction.error || new Error("Unable to save the price target."));
-    transaction.onabort = () => reject(transaction.error || new Error("Saving the price target was cancelled."));
   });
 }
 
@@ -393,9 +272,19 @@ async function toggleWatchlist(productId) {
   else next.add(productId);
   await saveSetting("watchlist", [...next]);
   watchlist = next;
-  watchlistCount.textContent = String(watchlist.size);
   renderWatchlistPanel();
-  renderCatalog();
+  if (savedOnly()) {
+    renderCatalog();
+    return;
+  }
+  const saved = watchlist.has(productId);
+  grid.querySelectorAll("[data-watch-id]").forEach(button => {
+    if (button.dataset.watchId !== productId) return;
+    const name = button.closest(".tm-card")?.querySelector(".tm-name")?.textContent || "product";
+    button.classList.toggle("saved", saved);
+    button.setAttribute("aria-pressed", String(saved));
+    button.setAttribute("aria-label", `${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list`);
+  });
 }
 
 function readAllRecords(storeName) {
@@ -407,21 +296,14 @@ function readAllRecords(storeName) {
 }
 
 async function exportLocalData() {
-  const [savedProducts, offers, history, alerts, settings] = await Promise.all([
+  const [savedProducts, settings] = await Promise.all([
     readAllRecords("products"),
-    readAllRecords("offers"),
-    readAllRecords("priceHistory"),
-    readAllRecords("alerts"),
     readAllRecords("settings")
   ]);
   const data = {
     exportedAt: new Date().toISOString(),
-    notice: "Prices and history are included only when supplied by the connected live feed; store links open retailer searches.",
-    currencyConversionRatesPerUSD: EXCHANGE_RATES,
+    notice: "Store links open retailer searches.",
     products: savedProducts,
-    offers,
-    priceHistory: history,
-    alerts,
     settings,
     watchlist: [...watchlist]
   };
@@ -433,7 +315,7 @@ async function exportLocalData() {
   link.click();
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-  showToast("Local catalog and history exported as JSON.");
+  showToast("Local catalog and watchlist exported as JSON.");
 }
 
 function applyTheme(theme) {
@@ -441,33 +323,9 @@ function applyTheme(theme) {
   document.documentElement.dataset.theme = isDark ? "dark" : "light";
   themeToggle.setAttribute("aria-pressed", String(isDark));
   themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} mode`);
-  themeToggle.querySelector(".theme-icon").textContent = isDark ? "☀" : "☾";
+  themeToggle.querySelector(".theme-icon").innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isDark ? '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>' : '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'}</svg>`;
   themeToggle.querySelector(".theme-label").textContent = isDark ? "Light mode" : "Dark mode";
-  document.querySelector("#theme-color").content = isDark ? "#171b24" : "#f7f8fa";
-}
-
-function setCurrency(currency) {
-  if (!Object.hasOwn(EXCHANGE_RATES, currency)) throw new Error(`Unsupported display currency: ${currency}`);
-  displayCurrency = currency;
-  currencySelect.value = currency;
-}
-
-function money(value) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: displayCurrency,
-    maximumFractionDigits: ["JPY"].includes(displayCurrency) ? 0 : 2
-  }).format(value * EXCHANGE_RATES[displayCurrency]);
-}
-
-function currencySymbol() {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: displayCurrency })
-    .formatToParts(1)
-    .find(part => part.type === "currency").value;
-}
-
-function usdFromDisplayCurrency(value) {
-  return value / EXCHANGE_RATES[displayCurrency];
+  document.querySelector("#theme-color").content = isDark ? "#0d1218" : "#eff2f6";
 }
 
 function reviewSearchUrl(product) {
@@ -493,90 +351,102 @@ function safeExternalUrl(value, fallback) {
   }
 }
 
+const ICON_PATHS = {
+  "All products": '<rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/>',
+  "Consoles & handhelds": '<rect x="2.5" y="6" width="19" height="12" rx="3"/><rect x="8.5" y="8.5" width="7" height="7" rx="1.2"/><path d="M5.2 10.5v3M3.9 12h2.6"/><circle cx="18.6" cy="11" r=".8" fill="currentColor"/>',
+  "Controllers": '<path d="M7 8h10a4 4 0 0 1 3.9 4.9l-.8 3.6a2 2 0 0 1-3.4 1l-1.8-2.1H9.1l-1.8 2.1a2 2 0 0 1-3.4-1l-.8-3.6A4 4 0 0 1 7 8z"/><path d="M8.5 10.8v3M7 12.3h3"/><circle cx="15.5" cy="11.6" r=".8" fill="currentColor"/><circle cx="17.3" cy="13.4" r=".8" fill="currentColor"/>',
+  "Keyboards": '<rect x="2" y="6" width="20" height="12" rx="2.2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7.5 14h9"/>',
+  "Mice": '<rect x="6.5" y="3" width="11" height="18" rx="5.5"/><path d="M12 3v6"/>',
+  "Headsets": '<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.6"/><rect x="17" y="14" width="4" height="6" rx="1.6"/>',
+  "Audio": '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"/>',
+  "Monitors": '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+  "PCs & laptops": '<rect x="5" y="5" width="14" height="10" rx="1.6"/><path d="M2.5 19h19"/>',
+  "Components": '<rect x="7" y="7" width="10" height="10" rx="1.6"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>'
+};
+function categoryIcon(category) {
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[category] || ICON_PATHS["All products"]}</svg>`;
+}
+const HEART_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+const BRAND_NAMES = {
+  "8BITDO": "8BitDo", "ASUS": "ASUS", "ASUS ROG": "ASUS ROG", "ASUS TUF": "ASUS TUF", "BENQ": "BenQ", "GAMESIR": "GameSir", "HYPERX": "HyperX", "LOGITECH G": "Logitech G",
+  "NZXT": "NZXT", "PLAYSTATION": "PlayStation", "POWERA": "PowerA", "STEELSERIES": "SteelSeries", "WD BLACK": "WD Black", "XBOX": "Xbox"
+};
+function brandLabel(brand) {
+  const raw = String(brand || "").trim();
+  const key = raw.toUpperCase();
+  if (BRAND_NAMES[key]) return BRAND_NAMES[key];
+  if (raw !== key) return raw;
+  return raw.split(" ").map(word => (word.length <= 3 ? word : word.charAt(0) + word.slice(1).toLowerCase())).join(" ");
+}
+const CATEGORY_WORDS = {
+  "Consoles & handhelds": "console handheld", "Controllers": "controller gamepad", "Keyboards": "keyboard", "Mice": "mouse",
+  "Headsets": "headset headphones", "Audio": "audio microphone", "Monitors": "monitor display", "PCs & laptops": "pc laptop computer", "Components": "component gpu cpu ssd"
+};
+function isWireless(product) {
+  return /wireless|lightspeed|hyperspeed|bluetooth|2\.4\s?ghz/i.test(`${product.name} ${product.specs || ""}`);
+}
+function specText(product) {
+  const specs = String(product.specs || "").trim();
+  return /not listed|check the/i.test(specs) ? "" : specs;
+}
+function firstSpec(product) {
+  return specText(product).split(" · ").slice(0, 2).join(" · ");
+}
+function matchesTerms(product, terms) {
+  const haystack = `${brandLabel(product.brand)} ${product.name} ${product.category} ${CATEGORY_WORDS[product.category] || ""} ${specText(product)}`.toLocaleLowerCase();
+  return terms.every(term => haystack.includes(term));
+}
+function savedOnly() {
+  return watchlistFilter.getAttribute("aria-pressed") === "true";
+}
+function reducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function scrollToCatalog() {
+  document.querySelector("#catalog").scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+}
+function setWireless(value) {
+  wirelessOnly = value;
+  wirelessToggle.setAttribute("aria-pressed", String(value));
+}
+function updateSearchState() {
+  searchWrap.classList.toggle("has-text", searchInput.value.length > 0);
+}
+
 function searchableProducts(allProducts) {
-  const query = searchInput.value.trim().toLocaleLowerCase();
+  const terms = searchInput.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  const onlySaved = savedOnly();
   const visible = allProducts.filter(product => {
-    const matchesCategory = activeCategory === "All products" || product.category === activeCategory;
-    const matchesQuery = !query || `${product.brand} ${product.name} ${product.category} ${product.specs}`.toLocaleLowerCase().includes(query);
-    const matchesWatchlist = watchlistFilter.getAttribute("aria-pressed") !== "true" || watchlist.has(product.id);
-    return matchesCategory && matchesQuery && matchesWatchlist;
+    if (sharedIds && !sharedIds.includes(product.id)) return false;
+    if (activeCategory !== "All products" && product.category !== activeCategory) return false;
+    if (activeBrand !== "All brands" && brandLabel(product.brand) !== activeBrand) return false;
+    if (wirelessOnly && !isWireless(product)) return false;
+    if (onlySaved && !watchlist.has(product.id)) return false;
+    return !terms.length || matchesTerms(product, terms);
   });
-  if (sortSelect.value === "price-asc") {
-    visible.sort((a, b) => (a.liveOffers?.length ? a.lowPrice : Infinity) - (b.liveOffers?.length ? b.lowPrice : Infinity));
-  }
-  if (sortSelect.value === "discount") {
-    const savingsRate = product => {
-      const saleOffers = (product.liveOffers || []).filter(offer => offer.isOnSale && offer.regularPrice > offer.price);
-      if (saleOffers.length) return Math.max(...saleOffers.map(offer => (offer.regularPrice - offer.price) / offer.regularPrice));
-      if (product.liveOffers?.length) return 0;
-      return 0;
-    };
-    visible.sort((a, b) => savingsRate(b) - savingsRate(a));
-  }
   if (sortSelect.value === "name") visible.sort((a, b) => a.name.localeCompare(b.name));
+  if (sortSelect.value === "brand") visible.sort((a, b) => brandLabel(a.brand).localeCompare(brandLabel(b.brand)) || a.name.localeCompare(b.name));
   return visible;
 }
 
 function cardMarkup(product) {
-  const bestOffer = product.liveOffers?.[0];
-  const saving = bestOffer
-    ? bestOffer.isOnSale && bestOffer.regularPrice > bestOffer.price
-      ? Math.round((1 - bestOffer.price / bestOffer.regularPrice) * 100)
-      : 0
-    : 0;
-  const badge = bestOffer
-    ? bestOffer.isOnSale && bestOffer.regularPrice > bestOffer.price ? `SALE −${saving}%` : "LIVE PRICE"
-    : "CHECK STORES";
-  const priceLabel = bestOffer
-    ? bestOffer.isOnSale ? "Lowest live sale price" : "Lowest live price"
-    : "Retailer prices";
-  const trendLabel = bestOffer
-    ? `Checked ${new Date(bestOffer.checkedAt).toLocaleString()}`
-    : "Current price and sale at retailer";
-  const trendValue = bestOffer
-    ? `${product.liveOffers.length} live ${product.liveOffers.length === 1 ? "store" : "stores"}`
-    : "Search ↗";
   const name = escapeHtml(product.name);
-  const brand = escapeHtml(product.brand);
-  const category = escapeHtml(product.category);
-  const icon = escapeHtml(product.icon);
-  const artClass = product.art ? ` ${escapeHtml(product.art)}` : "";
+  const brand = escapeHtml(brandLabel(product.brand));
+  const kind = escapeHtml(product.category);
   const productId = escapeHtml(product.id);
-  return `<article class="product-card${bestOffer ? "" : " gateway"}">
-    <button class="card-open" type="button" data-product-id="${productId}" aria-label="Compare ${brand} ${name}">
-      <div class="product-image">
-        <span class="deal-badge">${badge}</span>
-        <span class="compare-hint">${bestOffer ? "VIEW LIVE PRICES ↗" : "FIND AT RETAILERS ↗"}</span>
-        ${product.imageUrl
-      ? `<img class="product-photo" src="${escapeHtml(product.imageUrl)}" alt="${brand} ${name} ${/\.svg(\?|$)/.test(product.imageUrl) ? "illustration" : "product photo"}" loading="lazy" decoding="async"><span class="product-art${artClass}" aria-hidden="true" hidden>${icon}</span>`
-      : `<div class="photo-unavailable"><span class="product-art${artClass}" aria-hidden="true">${icon}</span><span>Official product photo unavailable</span></div>`}
-      </div>
-      <div class="product-info">
-        <p class="product-brand">${brand} · ${category}</p>
-        <h3 class="product-name">${name}</h3>
-        <div class="product-meta">
-          <span class="price-block"><span class="price-label">${bestOffer ? priceLabel : "Retailer prices"}</span><strong class="price-value">${bestOffer ? money(product.lowPrice) : "Compare stores"}</strong></span>
-          <span class="retailer-count">${bestOffer ? `${product.liveOffers.length} ${product.liveOffers.length === 1 ? "store" : "stores"}` : "US retailers"}</span>
-        </div>
-        <div class="trend-row"><span>${trendLabel}</span><span class="${bestOffer?.isOnSale ? "trend-down" : ""}">${trendValue}</span></div>
-      </div>
+  const saved = watchlist.has(product.id);
+  const spec = firstSpec(product);
+  const icon = categoryIcon(product.category);
+  const media = product.imageUrl
+    ? `<img class="tm-photo" src="${escapeHtml(product.imageUrl)}" alt="${brand} ${name}" loading="lazy" decoding="async"><span class="tm-icon" aria-hidden="true" hidden>${icon}</span>`
+    : `<span class="tm-icon" aria-hidden="true">${icon}</span>`;
+  return `<article class="tm-card" data-kind="${kind}">
+    <button class="tm-open" type="button" data-product-id="${productId}" aria-label="${brand} ${name}: see where to buy">
+      <span class="tm-tile">${media}${isWireless(product) ? '<span class="tm-pill">Wireless</span>' : ""}</span>
+      <span class="tm-body"><span class="tm-brand">${brand}</span><span class="tm-name">${name}</span>${spec ? `<span class="tm-spec">${escapeHtml(spec)}</span>` : ""}</span>
     </button>
-    <button class="watch-toggle${watchlist.has(product.id) ? " watching" : ""}" type="button" data-watch-id="${productId}" aria-pressed="${watchlist.has(product.id)}" aria-label="${watchlist.has(product.id) ? "Remove" : "Add"} ${name} ${watchlist.has(product.id) ? "from" : "to"} watchlist">${watchlist.has(product.id) ? "♥" : "♡"}</button>
-    <a class="card-review-link" href="${reviewSearchUrl(product)}" target="_blank" rel="noopener noreferrer" aria-label="Find video reviews for ${name}"><span aria-hidden="true">▶</span> Video reviews</a>
+    <button class="tm-heart${saved ? " saved" : ""}" type="button" data-watch-id="${productId}" aria-pressed="${saved}" aria-label="${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list">${HEART_ICON}</button>
   </article>`;
-}
-
-function watchlistItemMarkup(product) {
-  const name = escapeHtml(product.name);
-  const brand = escapeHtml(product.brand);
-  const productId = escapeHtml(product.id);
-  const icon = escapeHtml(product.icon);
-  const photo = product.imageUrl
-    ? `<img src="${escapeHtml(product.imageUrl)}" alt="" loading="lazy" decoding="async"><span class="watchlist-item-art" aria-hidden="true" hidden>${icon}</span>`
-    : `<span class="watchlist-item-art" aria-hidden="true">${icon}</span>`;
-  return `<button class="watchlist-item" type="button" data-product-id="${productId}">
-    ${photo}<span class="watchlist-item-copy"><small>${brand}</small><strong>${name}</strong><span>${product.liveOffers?.length ? money(product.lowPrice) : "Check stores"}</span></span>
-  </button>`;
 }
 
 function getAdditionalProductPhotos(product) {
@@ -864,66 +734,163 @@ function stopGallerySlideshow() {
 }
 
 function renderWatchlistPanel() {
-  const savedProducts = [...watchlist]
-    .reverse()
-    .map(productId => catalogProducts.find(product => product.id === productId))
-    .filter(Boolean);
-  const savedMarkup = savedProducts.length
-    ? savedProducts.slice(0, 8).map(watchlistItemMarkup).join("")
-    : `<p class="watchlist-empty">Save products with the heart button and they’ll appear here.</p>`;
-  watchlistPanel.innerHTML = `<div class="watchlist-panel-heading"><div><p class="eyebrow">SAVED FOR LATER</p><h3>Your watchlist</h3></div><span class="watchlist-panel-count">${savedProducts.length}</span></div>
-    <div class="watchlist-items">${savedMarkup}</div>
-    ${savedProducts.length > 8 ? `<button class="watchlist-view-all" type="button" data-view-watchlist>View all ${savedProducts.length} saved products</button>` : ""}`;
+  watchlistCount.textContent = String(watchlist.size);
+  updateShareButton();
+}
+
+function updateShareButton() {
+  shareListButton.hidden = !(savedOnly() && watchlist.size > 0);
+}
+
+function updateSharedUi() {
+  updateShareButton();
+  sharedBanner.hidden = !sharedIds;
+  if (sharedIds) document.querySelector("#shared-text").textContent = `Shared list: ${sharedIds.length} ${sharedIds.length === 1 ? "product" : "products"}`;
+}
+
+function renderBrandSelect() {
+  const counts = new Map();
+  catalogProducts
+    .filter(product => (!sharedIds || sharedIds.includes(product.id)) && (activeCategory === "All products" || product.category === activeCategory))
+    .forEach(product => counts.set(brandLabel(product.brand), (counts.get(brandLabel(product.brand)) || 0) + 1));
+  if (activeBrand !== "All brands" && !counts.has(activeBrand)) activeBrand = "All brands";
+  const names = [...counts.keys()].sort((a, b) => a.localeCompare(b));
+  brandSelect.innerHTML = [`<option value="All brands">All brands</option>`, ...names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)} (${counts.get(name)})</option>`)].join("");
+  brandSelect.value = activeBrand;
+}
+
+function renderActiveFilters() {
+  const chips = [];
+  const query = searchInput.value.trim();
+  if (query) chips.push(["query", `Search: “${query}”`]);
+  if (activeCategory !== "All products") chips.push(["category", activeCategory]);
+  if (activeBrand !== "All brands") chips.push(["brand", activeBrand]);
+  if (wirelessOnly) chips.push(["wireless", "Wireless only"]);
+  if (savedOnly()) chips.push(["saved", "Saved only"]);
+  const html = chips.map(([kind, label]) => `<button type="button" class="tm-chip" data-clear="${kind}" aria-label="Remove filter: ${escapeHtml(label)}">${escapeHtml(label)} <span aria-hidden="true">×</span></button>`);
+  if (chips.length > 1) html.push(`<button type="button" class="tm-link" data-clear="all">Clear all</button>`);
+  activeFiltersEl.innerHTML = html.join("");
+}
+
+function clearFilter(kind) {
+  if (kind === "query" || kind === "all") searchInput.value = "";
+  if (kind === "category" || kind === "all") activeCategory = "All products";
+  if (kind === "brand" || kind === "all") activeBrand = "All brands";
+  if (kind === "wireless" || kind === "all") setWireless(false);
+  if (kind === "saved" || kind === "all") setWatchlistFilter(false);
+  updateSearchState();
+  renderCategories();
+  renderCatalog();
+}
+
+function renderRecent() {
+  const home = !searchInput.value.trim() && activeCategory === "All products" && activeBrand === "All brands" && !wirelessOnly && !savedOnly() && !sharedIds;
+  const items = recentIds.map(id => catalogProducts.find(product => product.id === id)).filter(Boolean);
+  recentRow.hidden = !(home && items.length);
+  if (recentRow.hidden) return;
+  recentRow.innerHTML = `<div class="tm-recent-head"><h3>Recently viewed</h3><button type="button" class="tm-link" data-clear-recent>Clear</button></div>
+    <div class="tm-recent-list">${items.map(product => `<button type="button" class="tm-mini" data-kind="${escapeHtml(product.category)}" data-product-id="${escapeHtml(product.id)}"><span class="tm-mini-icon">${categoryIcon(product.category)}</span><span><strong>${escapeHtml(product.name)}</strong><small>${escapeHtml(brandLabel(product.brand))}</small></span></button>`).join("")}</div>`;
+}
+
+function rememberRecent(productId) {
+  recentIds = [productId, ...recentIds.filter(id => id !== productId)].slice(0, 8);
+  Promise.resolve(saveSetting("recent", recentIds)).catch(() => {});
+  renderRecent();
+}
+
+function syncUrl() {
+  const params = new URLSearchParams();
+  const query = searchInput.value.trim();
+  if (query) params.set("q", query);
+  if (activeCategory !== "All products") params.set("cat", activeCategory);
+  if (activeBrand !== "All brands") params.set("brand", activeBrand);
+  if (wirelessOnly) params.set("wireless", "1");
+  if (sortSelect.value !== "popular") params.set("sort", sortSelect.value);
+  if (sharedIds) params.set("list", sharedIds.join(","));
+  const search = params.toString();
+  window.history.replaceState(window.history.state, "", `${window.location.pathname}${search ? `?${search}` : ""}${window.location.hash}`);
+}
+
+function readUrlState() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("q")) searchInput.value = params.get("q");
+  if (categories.includes(params.get("cat"))) activeCategory = params.get("cat");
+  if (params.get("brand")) activeBrand = params.get("brand");
+  if (params.get("wireless") === "1") setWireless(true);
+  if ([...sortSelect.options].some(option => option.value === params.get("sort"))) sortSelect.value = params.get("sort");
+  if (params.get("list")) {
+    const ids = params.get("list").split(",").filter(id => catalogProducts.some(product => product.id === id));
+    sharedIds = ids.length ? ids : null;
+  }
+  updateSearchState();
+}
+
+function closeSuggestions() {
+  suggestionItems = [];
+  suggestionIndex = -1;
+  suggestionsBox.hidden = true;
+  suggestionsBox.innerHTML = "";
+  searchInput.setAttribute("aria-expanded", "false");
+  searchInput.removeAttribute("aria-activedescendant");
+}
+
+function renderSuggestions() {
+  const text = searchInput.value.trim();
+  if (text.length < 2) return closeSuggestions();
+  const matches = catalogProducts.filter(product => matchesTerms(product, text.toLocaleLowerCase().split(/\s+/)));
+  suggestionItems = matches.slice(0, 6);
+  suggestionIndex = -1;
+  if (!suggestionItems.length) return closeSuggestions();
+  suggestionsBox.innerHTML = suggestionItems.map((product, index) => `<button type="button" role="option" id="suggest-${index}" aria-selected="false" class="tm-suggest" data-kind="${escapeHtml(product.category)}" data-suggest-id="${escapeHtml(product.id)}"><span class="tm-suggest-icon">${categoryIcon(product.category)}</span><span><strong>${escapeHtml(product.name)}</strong><small>${escapeHtml(brandLabel(product.brand))} · ${escapeHtml(product.category)}</small></span></button>`).join("")
+    + (matches.length > suggestionItems.length ? `<p class="tm-suggest-foot">${matches.length - suggestionItems.length} more in the results below</p>` : "");
+  suggestionsBox.hidden = false;
+  searchInput.setAttribute("aria-expanded", "true");
+}
+
+function moveSuggestion(delta) {
+  if (!suggestionItems.length) return;
+  suggestionIndex = (suggestionIndex + delta + suggestionItems.length) % suggestionItems.length;
+  suggestionsBox.querySelectorAll(".tm-suggest").forEach((item, index) => {
+    item.classList.toggle("active", index === suggestionIndex);
+    item.setAttribute("aria-selected", String(index === suggestionIndex));
+  });
+  searchInput.setAttribute("aria-activedescendant", `suggest-${suggestionIndex}`);
 }
 
 function renderCatalog(append = false) {
+  if (!append) renderBrandSelect();
   const visible = searchableProducts(catalogProducts);
   const alreadyRendered = append ? grid.children.length : 0;
   if (!append) grid.innerHTML = "";
   grid.insertAdjacentHTML("beforeend", visible.slice(alreadyRendered, alreadyRendered + catalogPageSize).map(cardMarkup).join(""));
   const rendered = Math.min(visible.length, alreadyRendered + catalogPageSize);
   resultsCount.textContent = `${visible.length} ${visible.length === 1 ? "product" : "products"}`;
+  catalogTitle.textContent = sharedIds ? "Shared list" : activeCategory === "All products" ? "All gear" : activeCategory;
+  emptyState.textContent = savedOnly() && !watchlist.size
+    ? "Nothing saved yet. Tap the heart on any product to save it here."
+    : "No products match. Try a different search or clear a filter.";
   emptyState.hidden = visible.length !== 0;
   loadMoreButton.hidden = rendered >= visible.length;
   if (!loadMoreButton.hidden) {
     const remaining = visible.length - rendered;
     loadMoreButton.textContent = `Show ${Math.min(catalogPageSize, remaining)} more products`;
   }
+  if (!append) {
+    renderActiveFilters();
+    renderRecent();
+    updateSharedUi();
+    syncUrl();
+  }
 }
 
 function renderCategories() {
-  categoryList.innerHTML = categories.map(category => `<button type="button" class="category-button${category === activeCategory ? " selected" : ""}" aria-pressed="${category === activeCategory}" data-category="${category}">${category}</button>`).join("");
-}
-
-function chartMarkup(history, range = 365, source = "Illustrative") {
-  const points = history.sort((a, b) => a.date.localeCompare(b.date)).slice(-range);
-  const width = 590;
-  const height = 168;
-  const pad = { top: 11, right: 9, bottom: 27, left: 45 };
-  const prices = points.map(point => point.price);
-  const min = Math.min(...prices) * 0.96;
-  const max = Math.max(...prices) * 1.04;
-  const plotWidth = width - pad.left - pad.right;
-  const plotHeight = height - pad.top - pad.bottom;
-  const coordinates = points.map((point, index) => ({
-    x: pad.left + (index / Math.max(points.length - 1, 1)) * plotWidth,
-    y: pad.top + ((max - point.price) / (max - min || 1)) * plotHeight
-  }));
-  const line = coordinates.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`).join(" ");
-  const area = `${line} L ${coordinates[coordinates.length - 1].x.toFixed(2)} ${pad.top + plotHeight} L ${coordinates[0].x.toFixed(2)} ${pad.top + plotHeight} Z`;
-  const ticks = [0, 1, 2, 3].map(index => {
-    const y = pad.top + (plotHeight / 3) * index;
-    const price = max - ((max - min) / 3) * index;
-    return `<line class="chart-gridline" x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}"></line><text class="chart-tick" x="0" y="${y + 3}">${money(price)}</text>`;
+  categoryList.innerHTML = categories.map(category => {
+    const count = category === "All products" ? catalogProducts.length : catalogProducts.filter(product => product.category === category).length;
+    const selected = category === activeCategory;
+    const label = escapeHtml(category);
+    const shown = category === "Consoles & handhelds" ? "Consoles" : label;
+    return `<button type="button" class="tm-cat${selected ? " selected" : ""}" data-kind="${label}" aria-pressed="${selected}" data-category="${label}"><span class="tm-cat-icon">${categoryIcon(category)}</span><span class="tm-cat-name">${shown}</span><span class="tm-cat-count">${count}</span></button>`;
   }).join("");
-  const start = new Date(points[0].date).toLocaleDateString("en-US", { month: "short", year: "2-digit", timeZone: "UTC" });
-  const end = new Date(points[points.length - 1].date).toLocaleDateString("en-US", { month: "short", year: "2-digit", timeZone: "UTC" });
-  return `<svg class="price-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${source} daily price history for ${points.length} days, from ${money(prices[0])} to ${money(prices[prices.length - 1])}">
-    <defs><linearGradient id="chart-gradient" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#7167ee" stop-opacity=".2"></stop><stop offset="100%" stop-color="#7167ee" stop-opacity="0"></stop></linearGradient></defs>
-    ${ticks}<path class="chart-area" d="${area}"></path><path class="chart-line" d="${line}"></path>
-    <text class="chart-tick" x="${pad.left}" y="${height - 5}">${start}</text>
-    <text class="chart-tick" x="${width - pad.right}" y="${height - 5}" text-anchor="end">${end}</text>
-  </svg>`;
 }
 
 function retailerSearchUrl(store, productName) {
@@ -966,17 +933,6 @@ async function openProduct(productId, { fromHistory = false } = {}) {
         window.history.pushState({ ...state, productDialog: true }, "", `#product=${encodeURIComponent(productId)}`);
       }
     }
-    const hasLiveOffers = Boolean(product.liveOffers?.length);
-    let history;
-    let offers;
-    const alertPromise = readAlert(productId);
-    if (hasLiveOffers) {
-      [history, offers] = await Promise.all([readLiveHistory(productId), Promise.resolve(product.liveOffers)]);
-    } else {
-      history = [];
-      offers = [];
-    }
-    const alert = await alertPromise;
     if (requestId !== productDialogRequest) return;
     const productName = escapeHtml(product.name);
     const brand = escapeHtml(product.brand);
@@ -985,78 +941,30 @@ async function openProduct(productId, { fromHistory = false } = {}) {
     const icon = escapeHtml(product.icon);
     const productIdAttribute = escapeHtml(product.id);
     const artClass = product.art ? ` ${escapeHtml(product.art)}` : "";
-    const retailers = offers.sort((a, b) => a.price - b.price);
-    const bestOffer = retailers[0];
     const photoCredit = `<p class="photo-credit"><span id="photo-credit-label">Product photo: </span><a id="photo-credit-link" href="${escapeHtml(product.imageSource || product.productSource || "https://commons.wikimedia.org/")}" target="_blank" rel="noopener noreferrer">${escapeHtml(product.imageCreator || (product.imageSource ? "manufacturer source" : "photo source"))} ↗</a>${product.productSource ? ` · <a href="${escapeHtml(product.productSource)}" target="_blank" rel="noopener noreferrer">product record ↗</a>` : ""}</p>`;
-    const rows = hasLiveOffers
-      ? retailers.map(offer => {
-          const store = escapeHtml(offer.store);
-          const sale = Boolean(offer.isOnSale && offer.regularPrice > offer.price);
-          const checkedAt = offer.checkedAt ? new Date(offer.checkedAt).toLocaleString() : "";
-          const productUrl = safeExternalUrl(
-            offer.productUrl,
-            retailerSearchUrl(offer.store, `${product.brand} ${product.name}`)
-          );
-          return `<div class="offer-row">
-          <span class="store-icon" aria-hidden="true">${store.charAt(0)}</span>
-          <span class="store-info"><strong>${store}</strong><span>${sale ? "Sale listing" : "Feed listing"} · checked ${escapeHtml(checkedAt)}</span></span>
-          <span class="offer-price">${money(offer.price)}${sale ? `<small>was ${money(offer.regularPrice)}</small>` : ""}</span>
-          <a class="offer-link" href="${escapeHtml(productUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Open ${productName} listing at ${store}">Shop ↗</a>
-        </div>`;
-        }).join("")
-      : (product.retailerSearchStores || [])
-        .filter((storeName, index, stores) => STORE_SEARCH_URLS[storeName] && stores.indexOf(storeName) === index)
-        .map(storeName => {
-          const store = escapeHtml(storeName);
-          return `<a class="store-gateway-link" href="${escapeHtml(retailerSearchUrl(storeName, `${product.brand} ${product.name}`))}" target="_blank" rel="noopener noreferrer">
-            <span class="store-icon" aria-hidden="true">${escapeHtml(storeName.charAt(0))}</span>
-            <span>${store}</span>
-            <span aria-hidden="true">Search ↗</span>
-          </a>`;
-        }).join("") || `<p class="gateway-disclosure">No product-specific retailer searches are listed for this item yet.</p>`;
-    const historySource = "Feed-reported";
-    const historyPanel = history.length
-      ? `<section class="chart-panel" aria-label="${historySource} price history">
-        <div class="chart-head"><strong>Price history <span id="chart-period">· past 365 days</span></strong><span class="chart-legend"><i></i>${historySource} · ${displayCurrency}</span></div>
-        <div class="range-row" role="group" aria-label="Price history range">
-          <button type="button" class="range-button" data-days="30">30D</button>
-          <button type="button" class="range-button" data-days="90">90D</button>
-          <button type="button" class="range-button selected" data-days="365">1Y</button>
-        </div>
-        <div class="chart-visual">${chartMarkup(history, 365, historySource)}</div>
-        <div class="price-stats"><span><small>${history.length === 365 ? "365D LOW" : "RECORDED LOW"}</small><strong>${money(Math.min(...history.map(point => point.price)))}</strong></span><span><small>${history.length === 365 ? "365D AVG" : "RECORDED AVG"}</small><strong>${money(history.reduce((sum, point) => sum + point.price, 0) / history.length)}</strong></span><span><small>${history.length === 365 ? "365D HIGH" : "RECORDED HIGH"}</small><strong>${money(Math.max(...history.map(point => point.price)))}</strong></span></div>
-      </section>`
-      : hasLiveOffers
-        ? `<section class="chart-panel" aria-label="Feed-reported price history"><div class="chart-head"><strong>Price history</strong></div><p class="sample-price-note">No price history has been collected for this product yet. History begins when the connected feed records its first price.</p></section>`
-        : "";
-    const bestPriceDescription = hasLiveOffers
-      ? `${bestOffer.isOnSale ? "lowest feed-reported sale price" : "lowest feed-reported current price"} from ${retailers.length} US ${retailers.length === 1 ? "store" : "stores"}`
-      : "Check retailer pages for current prices and sale availability.";
-    const offersHeading = hasLiveOffers ? "Current US retailer prices" : "Search this product at retailers";
-    const offersNotice = hasLiveOffers ? "(from connected feed)" : "(check availability on store sites)";
-    const detailPrice = hasLiveOffers
-      ? `<div class="detail-price-line"><strong>${money(product.lowPrice)}</strong><span>${bestPriceDescription}</span></div>`
-      : `<div class="gateway-price-note">${bestPriceDescription}</div>`;
-    const offerNote = hasLiveOffers
-      ? `<p class="sample-price-note">Retailer prices are captured from the connected feed; displayed currency conversions use a fixed demo rate.</p>`
-      : `<p class="gateway-disclosure">Prices and sale availability are shown by each retailer. Tech It More does not fetch or verify store prices in gateway mode.</p>`;
-    const alertForm = hasLiveOffers
-      ? `<form class="alert-form" id="alert-form" data-alert-product="${productIdAttribute}">
-        <label for="alert-price">Desired price target</label>
-        <div><span>${currencySymbol()}</span><input id="alert-price" name="targetPrice" type="number" inputmode="decimal" min="1" step="${displayCurrency === "JPY" ? "1" : "0.01"}" required value="${alert ? (alert.targetPrice * EXCHANGE_RATES[displayCurrency]).toFixed(displayCurrency === "JPY" ? 0 : 2) : ""}" placeholder="Enter target price"><button type="submit">Save target</button></div>
-        <small>Enter a target in ${displayCurrency}. Saved on this device; live price alerts aren't connected.</small>
-      </form>`
-      : "";
-    dialogContent.innerHTML = `<div class="detail-content" data-product-id="${productIdAttribute}" data-history-source="${hasLiveOffers ? "live" : "gateway"}">
+    const rows = (product.retailerSearchStores || [])
+      .filter((storeName, index, stores) => STORE_SEARCH_URLS[storeName] && stores.indexOf(storeName) === index)
+      .map(storeName => {
+        const store = escapeHtml(storeName);
+        return `<a class="store-gateway-link" href="${escapeHtml(retailerSearchUrl(storeName, `${product.brand} ${product.name}`))}" target="_blank" rel="noopener noreferrer">
+          <span class="store-icon" aria-hidden="true">${escapeHtml(storeName.charAt(0))}</span>
+          <span>${store}</span>
+          <span aria-hidden="true">Search ↗</span>
+        </a>`;
+      }).join("") || `<p class="gateway-disclosure">No product-specific retailer searches are listed for this item yet.</p>`;
+    const offersHeading = "Find this product at retailers";
+    const offersNotice = "(opens each store's own search)";
+    const offerNote = `<p class="gateway-disclosure">Each link opens the store's own search page for this product.</p>`;
+    dialogContent.innerHTML = `<div class="detail-content" data-product-id="${productIdAttribute}" data-kind="${category}">
       <div class="detail-top">
-        <span class="product-art detail-art${artClass}" aria-hidden="true">${icon}</span>
+        <span class="product-art detail-art${artClass}" aria-hidden="true">${categoryIcon(product.category)}</span>
         <div class="detail-title-wrap"><p class="product-brand">${brand} · ${category}</p><h2 id="detail-name">${productName}</h2><p class="detail-subtitle">${specs}</p></div>
       </div>
       <div class="product-photo-gallery" id="product-photo-gallery" data-selected-index="0">
         <div class="detail-photo-wrap">
           <button class="photo-gallery-arrow previous" type="button" data-photo-step="-1" aria-label="Show previous product photo" disabled>‹</button>
         <img class="detail-photo" id="gallery-main-photo" src="${escapeHtml(product.imageUrl || "")}" alt="${brand} ${productName} ${/\.svg(\?|$)/.test(product.imageUrl) ? "illustration" : "product photo"}" role="button" tabindex="0" aria-label="Open ${productName} photo full screen" decoding="async" ${product.imageUrl ? "" : "hidden"}>
-        <div class="photo-unavailable detail-photo-unavailable"${product.imageUrl ? " hidden" : ""}><span class="product-art detail-art${artClass}" aria-hidden="true">${icon}</span><span>Official product photo unavailable</span></div>
+        <div class="photo-unavailable detail-photo-unavailable"${product.imageUrl ? " hidden" : ""}><span class="product-art detail-art${artClass}" aria-hidden="true">${categoryIcon(product.category)}</span><span>Official product photo unavailable</span></div>
           <span class="photo-gallery-counter" id="photo-gallery-counter" aria-live="polite">1 / 1</span>
           <button class="photo-gallery-arrow next" type="button" data-photo-step="1" aria-label="Show next product photo" disabled>›</button>
         </div>
@@ -1066,17 +974,14 @@ async function openProduct(productId, { fromHistory = false } = {}) {
       </div>
       <div class="detail-info-column">
         ${photoCredit}
-        ${detailPrice}
         <h3 class="offers-heading">${offersHeading} <span class="offers-notice">${offersNotice}</span></h3>
-        <div class="offer-list${hasLiveOffers ? "" : " store-gateway-list"}">${rows}</div>
+        <div class="offer-list store-gateway-list">${rows}</div>
         ${offerNote}
         <div class="review-feature">
           <span class="review-feature-icon" aria-hidden="true">▶</span>
           <span><strong>Watch before you buy</strong><small>See video reviews for this exact product</small></span>
           <a class="review-link" href="${reviewSearchUrl(product)}" target="_blank" rel="noopener noreferrer">Find reviews <span aria-hidden="true">↗</span></a>
         </div>
-        ${historyPanel}
-        ${alertForm}
         <button class="share-product" type="button" data-share-product="${product.id}">↗ Share this product</button>
       </div>
     </div>`;
@@ -1088,6 +993,7 @@ async function openProduct(productId, { fromHistory = false } = {}) {
     document.body.style.overflow = "hidden";
     document.querySelector("#dialog-close").focus();
     renderAdditionalProductPhotos(product);
+    rememberRecent(product.id);
   } catch (error) {
     if (requestId === productDialogRequest) showError("Could not open product details.", error);
   }
@@ -1137,7 +1043,7 @@ document.addEventListener("error", event => {
   if (!(image instanceof HTMLImageElement)) return;
   if (image.matches(".photo-thumb img")) {
     image.closest(".photo-thumb-item").hidden = true;
-  } else if (image.matches(".product-photo, .watchlist-item img, #gallery-main-photo")) {
+  } else if (image.matches(".product-photo, .tm-photo, #gallery-main-photo")) {
     image.hidden = true;
     if (image.nextElementSibling instanceof HTMLElement) image.nextElementSibling.hidden = false;
   }
@@ -1149,21 +1055,7 @@ categoryList.addEventListener("click", event => {
   activeCategory = button.dataset.category;
   renderCategories();
   renderCatalog();
-});
-
-watchlistPanel.addEventListener("click", event => {
-  if (event.target.closest("[data-view-watchlist]")) {
-    activeCategory = "All products";
-    renderCategories();
-    searchInput.value = "";
-    setWatchlistFilter(true);
-    renderCatalog();
-    grid.scrollIntoView({ behavior: "smooth", block: "start" });
-    grid.querySelector(".card-open")?.focus();
-    return;
-  }
-  const productButton = event.target.closest("[data-product-id]");
-  if (productButton) openProduct(productButton.dataset.productId);
+  scrollToCatalog();
 });
 
 grid.addEventListener("click", event => {
@@ -1179,7 +1071,9 @@ grid.addEventListener("click", event => {
 });
 
 searchInput.addEventListener("input", () => {
+  updateSearchState();
   renderCatalog();
+  renderSuggestions();
 });
 loadMoreButton.addEventListener("click", () => renderCatalog(true));
 sortSelect.addEventListener("change", () => renderCatalog());
@@ -1214,7 +1108,7 @@ dialogContent.addEventListener("click", event => {
     const url = new URL(window.location.href);
     url.hash = `product=${encodeURIComponent(shareButton.dataset.shareProduct)}`;
     if (navigator.share) {
-      navigator.share({ title: "Tech It More product", text: shareButton.closest(".detail-content").dataset.historySource === "live" ? "See this product's current retailer prices and recorded price history." : "See this product and check its price at retailers.", url: url.href })
+      navigator.share({ title: "Tech It More product", text: "See this product and find it at US retailers.", url: url.href })
         .catch(error => {
           if (error.name !== "AbortError") showError("Could not share this product.", error);
         });
@@ -1237,42 +1131,12 @@ dialogContent.addEventListener("click", event => {
     }
     return;
   }
-  const rangeButton = event.target.closest("[data-days]");
-  if (!rangeButton) return;
-  const detail = dialogContent.querySelector(".detail-content");
-  if (detail.dataset.historySource !== "live") return;
-  const productId = detail.dataset.productId;
-  const range = Number(rangeButton.dataset.days);
-  readLiveHistory(productId, range).then(history => {
-    const chartVisual = dialogContent.querySelector(".chart-visual");
-    chartVisual.innerHTML = history.length
-      ? chartMarkup(history, range, dialogContent.querySelector(".detail-content").dataset.historySource === "live" ? "Feed-reported" : "Illustrative")
-      : `<p class="sample-price-note">No price records were collected during the past ${range} days.</p>`;
-    dialogContent.querySelector("#chart-period").textContent = `· past ${range} days`;
-    dialogContent.querySelectorAll(".range-button").forEach(button => button.classList.toggle("selected", button === rangeButton));
-  }).catch(error => showError("Could not change the price-history range.", error));
 });
 dialogContent.addEventListener("keydown", event => {
   if ((event.key === "Enter" || event.key === " ") && event.target.matches("#gallery-main-photo")) {
     event.preventDefault();
     openPhotoLightbox();
   }
-});
-dialogContent.addEventListener("submit", event => {
-  if (event.target.id !== "alert-form") return;
-  event.preventDefault();
-  const form = event.target;
-  const input = form.elements.targetPrice;
-  input.setCustomValidity("");
-  const targetPrice = usdFromDisplayCurrency(Number(input.value));
-  if (!Number.isFinite(targetPrice) || targetPrice <= 0) {
-    input.setCustomValidity("Enter a price greater than zero.");
-    form.reportValidity();
-    return;
-  }
-  saveAlert(form.dataset.alertProduct, targetPrice).then(() => {
-    showToast("Price target saved on this device. Live alert checks are not connected.");
-  }).catch(error => showError("Could not save your price target.", error));
 });
 document.querySelector("#dialog-close").addEventListener("click", closeDialog);
 document.querySelector("#photo-lightbox-close").addEventListener("click", closePhotoLightbox);
@@ -1350,6 +1214,11 @@ document.addEventListener("keydown", event => {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
     event.preventDefault();
     searchInput.focus();
+    searchInput.select();
+  } else if (event.key === "/" && !event.metaKey && !event.ctrlKey && !event.altKey && dialog.hidden
+    && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "")) {
+    event.preventDefault();
+    searchInput.focus();
   }
 });
 window.addEventListener("popstate", () => {
@@ -1384,13 +1253,12 @@ async function start() {
   watchlist = new Set(await readSetting("watchlist") || []);
   watchlistCount.textContent = String(watchlist.size);
   applyTheme(await readSetting("theme") || (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
-  const savedCurrency = await readSetting("currency");
-  setCurrency(savedCurrency || "USD");
+  recentIds = (await readSetting("recent") || []).filter(id => catalogProducts.some(product => product.id === id));
+  readUrlState();
   renderCategories();
   renderWatchlistPanel();
   renderCatalog();
-  updatePriceControls();
-  if (priceApiBase) refreshLivePriceData();
+  document.querySelector("#hero-count").textContent = String(catalogProducts.length);
   const productId = new URLSearchParams(window.location.hash.slice(1)).get("product");
   if (productId) await openProduct(productId, { fromHistory: true });
 }
@@ -1403,22 +1271,6 @@ themeToggle.addEventListener("click", async () => {
   } catch (error) {
     applyTheme(nextTheme === "dark" ? "light" : "dark");
     showError("Could not save your appearance setting.", error);
-  }
-});
-
-currencySelect.addEventListener("change", async () => {
-  const previousCurrency = displayCurrency;
-  const selected = currencySelect.value;
-  try {
-    await saveSetting("currency", selected);
-    setCurrency(selected);
-    await renderCatalog();
-    const detail = dialogContent.querySelector(".detail-content");
-    if (!dialog.hidden && detail) await openProduct(detail.dataset.productId);
-    showToast(`Prices now shown in ${CURRENCY_NAMES[selected]} using a fixed demo rate.`);
-  } catch (error) {
-    setCurrency(previousCurrency);
-    showError("Could not change the display currency.", error);
   }
 });
 
@@ -1438,25 +1290,149 @@ start().catch(error => {
 
 // Show the matching shortcut hint on Apple devices.
 if (/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) {
-  const shortcutHint = document.querySelector(".search-box kbd");
+  const shortcutHint = document.querySelector(".tm-search kbd");
   if (shortcutHint) shortcutHint.textContent = "⌘ K";
 }
 
-// The hero photo is hosted elsewhere; hide it cleanly if it fails to load.
-const heroPhoto = document.querySelector(".art-product img");
-const hideHeroPhoto = () => { heroPhoto.closest(".art-product").style.display = "none"; };
-if (heroPhoto) {
-  heroPhoto.addEventListener("error", hideHeroPhoto);
-  if (heroPhoto.complete && heroPhoto.naturalWidth === 0) hideHeroPhoto();
-}
+searchInput.addEventListener("keydown", event => {
+  if (event.key === "ArrowDown") {
+    event.preventDefault();
+    if (suggestionsBox.hidden) renderSuggestions();
+    moveSuggestion(1);
+  } else if (event.key === "ArrowUp") {
+    event.preventDefault();
+    moveSuggestion(-1);
+  } else if (event.key === "Enter") {
+    if (suggestionIndex >= 0) {
+      event.preventDefault();
+      const productId = suggestionItems[suggestionIndex].id;
+      closeSuggestions();
+      openProduct(productId);
+    } else {
+      closeSuggestions();
+      scrollToCatalog();
+    }
+  } else if (event.key === "Escape") {
+    if (!suggestionsBox.hidden) {
+      event.preventDefault();
+      closeSuggestions();
+    } else if (searchInput.value) {
+      searchInput.value = "";
+      updateSearchState();
+      renderCatalog();
+    }
+  }
+});
+searchInput.addEventListener("blur", () => window.setTimeout(closeSuggestions, 120));
+searchInput.addEventListener("focus", () => {
+  if (searchInput.value.trim().length >= 2) renderSuggestions();
+});
+suggestionsBox.addEventListener("mousedown", event => event.preventDefault());
+suggestionsBox.addEventListener("click", event => {
+  const item = event.target.closest("[data-suggest-id]");
+  if (!item) return;
+  closeSuggestions();
+  openProduct(item.dataset.suggestId);
+});
+searchClear.addEventListener("click", () => {
+  searchInput.value = "";
+  updateSearchState();
+  closeSuggestions();
+  renderCatalog();
+  searchInput.focus();
+});
 
-// Hero quick searches: reset the category, fill the search box and jump to the catalog.
+brandSelect.addEventListener("change", () => {
+  activeBrand = brandSelect.value;
+  renderCatalog();
+});
+wirelessToggle.addEventListener("click", () => {
+  setWireless(!wirelessOnly);
+  renderCatalog();
+});
+activeFiltersEl.addEventListener("click", event => {
+  const button = event.target.closest("[data-clear]");
+  if (button) clearFilter(button.dataset.clear);
+});
+recentRow.addEventListener("click", event => {
+  if (event.target.closest("[data-clear-recent]")) {
+    recentIds = [];
+    Promise.resolve(saveSetting("recent", recentIds)).catch(() => {});
+    renderRecent();
+    return;
+  }
+  const button = event.target.closest("[data-product-id]");
+  if (button) openProduct(button.dataset.productId);
+});
+
+document.querySelector("#surprise-button").addEventListener("click", () => {
+  const pool = searchableProducts(catalogProducts);
+  const choices = pool.length ? pool : catalogProducts;
+  if (choices.length) openProduct(choices[Math.floor(Math.random() * choices.length)].id);
+});
+
+shareListButton.addEventListener("click", async () => {
+  const url = new URL(window.location.href);
+  url.hash = "";
+  url.search = "";
+  url.searchParams.set("list", [...watchlist].join(","));
+  const link = url.toString();
+  try {
+    if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
+      await navigator.share({ title: "My Tech It More list", url: link });
+    } else {
+      await navigator.clipboard.writeText(link);
+      showToast("Link to your saved list copied.");
+    }
+  } catch (error) {
+    if (error?.name !== "AbortError") window.prompt("Copy this link to share your saved list:", link);
+  }
+});
+document.querySelector("#shared-save").addEventListener("click", async () => {
+  if (!sharedIds) return;
+  try {
+    const next = new Set([...watchlist, ...sharedIds]);
+    await saveSetting("watchlist", [...next]);
+    watchlist = next;
+    renderWatchlistPanel();
+    renderCatalog();
+    showToast(`Saved ${sharedIds.length} ${sharedIds.length === 1 ? "product" : "products"} to your list.`);
+  } catch (error) {
+    showError("Could not save the shared list.", error);
+  }
+});
+document.querySelector("#shared-exit").addEventListener("click", () => {
+  sharedIds = null;
+  renderCategories();
+  renderCatalog();
+});
+
+window.addEventListener("scroll", () => backToTop.classList.toggle("visible", window.scrollY > 900), { passive: true });
+backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" }));
+
+// Footer quick links: search for a product type from anywhere on the page.
 document.querySelectorAll("[data-query]").forEach(button => {
   button.addEventListener("click", () => {
-    categoryList.querySelector('[data-category="All products"]')?.click();
     searchInput.value = button.dataset.query;
-    searchInput.dispatchEvent(new Event("input", { bubbles: true }));
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    document.querySelector("#catalog-title").scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
+    activeCategory = "All products";
+    activeBrand = "All brands";
+    sharedIds = null;
+    setWireless(false);
+    setWatchlistFilter(false);
+    updateSearchState();
+    renderCategories();
+    renderCatalog();
+    scrollToCatalog();
+  });
+});
+
+// The logo takes you back to the start of the page. It never loads another page.
+document.querySelectorAll(".brand").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+    sharedIds = null;
+    clearFilter("all");
+    closeSuggestions();
+    window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
   });
 });
