@@ -351,6 +351,20 @@ function safeExternalUrl(value, fallback) {
   }
 }
 
+function safeAssetUrl(value) {
+  const text = String(value || "");
+  if (/^tiles\/[a-z0-9-]+\.svg$/.test(text)) return text;
+  return safeExternalUrl(text, "");
+}
+function sanitizeProduct(product) {
+  return {
+    ...product,
+    imageUrl: safeAssetUrl(product.imageUrl),
+    imageSource: safeExternalUrl(product.imageSource, ""),
+    productSource: safeExternalUrl(product.productSource, "")
+  };
+}
+
 const ICON_PATHS = {
   "All products": '<rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/>',
   "Consoles & handhelds": '<rect x="2.5" y="6" width="19" height="12" rx="3"/><rect x="8.5" y="8.5" width="7" height="7" rx="1.2"/><path d="M5.2 10.5v3M3.9 12h2.6"/><circle cx="18.6" cy="11" r=".8" fill="currentColor"/>',
@@ -505,10 +519,13 @@ function getAdditionalProductPhotos(product) {
         .map(page => {
           const image = page.imageinfo?.[0];
           if (!image || typeof image.thumburl !== "string" || typeof image.descriptionurl !== "string") return null;
+          const thumbUrl = safeExternalUrl(image.thumburl, "");
+          const descriptionUrl = safeExternalUrl(image.descriptionurl, "");
+          if (!thumbUrl || !descriptionUrl) return null;
           return {
             title: typeof page.title === "string" ? page.title.replace(/^File:/, "") : product.name,
-            imageUrl: image.thumburl,
-            sourceUrl: image.descriptionurl,
+            imageUrl: thumbUrl,
+            sourceUrl: descriptionUrl,
             credit: "Wikimedia Commons · author and license"
           };
         })
@@ -982,7 +999,7 @@ async function openProduct(productId, { fromHistory = false } = {}) {
           <span><strong>Watch before you buy</strong><small>See video reviews for this exact product</small></span>
           <a class="review-link" href="${reviewSearchUrl(product)}" target="_blank" rel="noopener noreferrer">Find reviews <span aria-hidden="true">↗</span></a>
         </div>
-        <button class="share-product" type="button" data-share-product="${product.id}">↗ Share this product</button>
+        <button class="share-product" type="button" data-share-product="${productIdAttribute}">↗ Share this product</button>
       </div>
     </div>`;
     if (dialog.hidden) previouslyFocusedElement = document.activeElement;
@@ -1246,7 +1263,7 @@ async function start() {
   await pruneDatabaseToGamingCatalog();
   await seedDatabaseIfNeeded();
   const retailerSearchStoresByProduct = productRetailerStores;
-  catalogProducts = (await readProducts()).map(product => ({
+  catalogProducts = (await readProducts()).map(sanitizeProduct).map(product => ({
     ...product,
     retailerSearchStores: retailerSearchStoresByProduct.get(product.id) || []
   }));

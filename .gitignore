@@ -1,0 +1,15 @@
+# OS / editor junk
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Secrets (this site needs none, but never commit them)
+.env
+.env.*
+*.pem
+*.key
+
+# Tooling
+node_modules/
+.wrangler/
+.dev.vars
