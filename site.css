@@ -568,6 +568,9 @@ main.tm-main { width: min(1240px, calc(100% - 40px)); margin: 0 auto; }
 .tm-link { border: 0; background: none; color: var(--tm-accent); font-size: 14px; font-weight: 600; cursor: pointer; padding: 6px 2px; }
 .tm-link:hover { text-decoration: underline; }
 .tm-link[hidden] { display: none; }
+.tm-danger { color: var(--tm-signal); }
+.tm-danger.confirming { padding: 6px 12px; border-radius: 8px; background: var(--tm-signal); color: #fff; }
+.tm-danger.confirming:hover { text-decoration: none; filter: brightness(1.05); }
 
 .tm-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
 .tm-chips:empty { display: none; }

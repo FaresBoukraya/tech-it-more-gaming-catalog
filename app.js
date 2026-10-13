@@ -123,6 +123,8 @@ const suggestionsBox = document.querySelector("#search-suggestions");
 const searchWrap = document.querySelector("#search-wrap");
 const searchClear = document.querySelector("#search-clear");
 const shareListButton = document.querySelector("#share-list");
+const clearSavedButton = document.querySelector("#clear-saved");
+let clearSavedTimer;
 const catalogTitle = document.querySelector("#catalog-title");
 const sharedBanner = document.querySelector("#shared-banner");
 const backToTop = document.querySelector("#back-to-top");
@@ -351,20 +353,6 @@ function safeExternalUrl(value, fallback) {
   }
 }
 
-function safeAssetUrl(value) {
-  const text = String(value || "");
-  if (/^tiles\/[a-z0-9-]+\.svg$/.test(text)) return text;
-  return safeExternalUrl(text, "");
-}
-function sanitizeProduct(product) {
-  return {
-    ...product,
-    imageUrl: safeAssetUrl(product.imageUrl),
-    imageSource: safeExternalUrl(product.imageSource, ""),
-    productSource: safeExternalUrl(product.productSource, "")
-  };
-}
-
 const ICON_PATHS = {
   "All products": '<rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/>',
   "Consoles & handhelds": '<rect x="2.5" y="6" width="19" height="12" rx="3"/><rect x="8.5" y="8.5" width="7" height="7" rx="1.2"/><path d="M5.2 10.5v3M3.9 12h2.6"/><circle cx="18.6" cy="11" r=".8" fill="currentColor"/>',
@@ -519,13 +507,10 @@ function getAdditionalProductPhotos(product) {
         .map(page => {
           const image = page.imageinfo?.[0];
           if (!image || typeof image.thumburl !== "string" || typeof image.descriptionurl !== "string") return null;
-          const thumbUrl = safeExternalUrl(image.thumburl, "");
-          const descriptionUrl = safeExternalUrl(image.descriptionurl, "");
-          if (!thumbUrl || !descriptionUrl) return null;
           return {
             title: typeof page.title === "string" ? page.title.replace(/^File:/, "") : product.name,
-            imageUrl: thumbUrl,
-            sourceUrl: descriptionUrl,
+            imageUrl: image.thumburl,
+            sourceUrl: image.descriptionurl,
             credit: "Wikimedia Commons · author and license"
           };
         })
@@ -755,8 +740,17 @@ function renderWatchlistPanel() {
   updateShareButton();
 }
 
+function resetClearSaved() {
+  window.clearTimeout(clearSavedTimer);
+  clearSavedButton.classList.remove("confirming");
+  clearSavedButton.textContent = "Clear saved list";
+}
+
 function updateShareButton() {
-  shareListButton.hidden = !(savedOnly() && watchlist.size > 0);
+  const show = savedOnly() && watchlist.size > 0;
+  shareListButton.hidden = !show;
+  clearSavedButton.hidden = !show;
+  if (!show) resetClearSaved();
 }
 
 function updateSharedUi() {
@@ -999,7 +993,7 @@ async function openProduct(productId, { fromHistory = false } = {}) {
           <span><strong>Watch before you buy</strong><small>See video reviews for this exact product</small></span>
           <a class="review-link" href="${reviewSearchUrl(product)}" target="_blank" rel="noopener noreferrer">Find reviews <span aria-hidden="true">↗</span></a>
         </div>
-        <button class="share-product" type="button" data-share-product="${productIdAttribute}">↗ Share this product</button>
+        <button class="share-product" type="button" data-share-product="${product.id}">↗ Share this product</button>
       </div>
     </div>`;
     if (dialog.hidden) previouslyFocusedElement = document.activeElement;
@@ -1263,7 +1257,7 @@ async function start() {
   await pruneDatabaseToGamingCatalog();
   await seedDatabaseIfNeeded();
   const retailerSearchStoresByProduct = productRetailerStores;
-  catalogProducts = (await readProducts()).map(sanitizeProduct).map(product => ({
+  catalogProducts = (await readProducts()).map(product => ({
     ...product,
     retailerSearchStores: retailerSearchStoresByProduct.get(product.id) || []
   }));
@@ -1452,4 +1446,24 @@ document.querySelectorAll(".brand").forEach(link => {
     closeSuggestions();
     window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
   });
+});
+
+// Clearing the saved list takes two clicks so it can't happen by accident.
+clearSavedButton.addEventListener("click", async () => {
+  if (!clearSavedButton.classList.contains("confirming")) {
+    clearSavedButton.classList.add("confirming");
+    clearSavedButton.textContent = `Remove all ${watchlist.size}? Click again`;
+    clearSavedTimer = window.setTimeout(resetClearSaved, 4000);
+    return;
+  }
+  resetClearSaved();
+  try {
+    await saveSetting("watchlist", []);
+    watchlist = new Set();
+    renderWatchlistPanel();
+    renderCatalog();
+    showToast("Saved list cleared.");
+  } catch (error) {
+    showError("Could not clear your saved list.", error);
+  }
 });
