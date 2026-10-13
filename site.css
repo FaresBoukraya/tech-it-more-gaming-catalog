@@ -715,6 +715,8 @@ main.tm-main { width: min(1240px, calc(100% - 40px)); margin: 0 auto; }
   transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
 }
 .social-button svg { width: 17px; height: 17px; fill: currentColor; }
+.social-email svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.social-button:focus:not(:focus-visible) { outline: none; }
 .social-button:first-child:hover, .social-button:first-child:focus-visible { color: #fff; background: #d52b35; border-color: #d52b35; }
 .social-button:nth-child(2):hover, .social-button:nth-child(2):focus-visible { color: #fff; background: #5865f2; border-color: #5865f2; }
 .social-button:nth-child(3):hover, .social-button:nth-child(3):focus-visible { color: #fff; background: #111820; border-color: #111820; }
