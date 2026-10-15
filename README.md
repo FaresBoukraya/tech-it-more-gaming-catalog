@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/8ae8f166-75e0-4b03-b687-7e0bb9d67245
+
 # 🎮 Tech It More
 
 **Find gaming gear worth buying, then jump straight to the store.**
