@@ -1,3 +1,4 @@
+![Tech It More intro](assets/intro.gif)
 # 🎮 Tech It More
 
 **Find gaming gear worth buying, then jump straight to the store.**
