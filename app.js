@@ -162,9 +162,11 @@ let handlingProductHistory = false;
 let productDialogRequest = 0;
 const catalogPageSize = 36;
 
-function openDatabase() {
+const requiredStores = ["products", "priceHistory", "offers", "settings", "alerts"];
+
+function openDatabaseAtVersion(version) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(databaseName, databaseVersion);
+    const request = version ? indexedDB.open(databaseName, version) : indexedDB.open(databaseName);
     request.onupgradeneeded = () => {
       const db = request.result;
       if (!db.objectStoreNames.contains("products")) {
@@ -193,6 +195,34 @@ function openDatabase() {
     };
     request.onerror = () => reject(request.error || new Error("Unable to open the local product database."));
   });
+}
+
+function deleteDatabase() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.deleteDatabase(databaseName);
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error || new Error("Unable to reset the local product database."));
+    request.onblocked = () => reject(new Error("Close other Tech It More tabs, then reload."));
+  });
+}
+
+async function openDatabase() {
+  try {
+    return await openDatabaseAtVersion(databaseVersion);
+  } catch (error) {
+    if (!error || error.name !== "VersionError") throw error;
+  }
+  // The browser already holds a newer copy of this database (for example from a newer build
+  // of the site). Reuse it if it has everything we need; otherwise reset it and start fresh.
+  try {
+    const existing = await openDatabaseAtVersion();
+    if (requiredStores.every(name => existing.objectStoreNames.contains(name))) return existing;
+    existing.close();
+  } catch (error) {
+    // fall through to reset
+  }
+  await deleteDatabase();
+  return openDatabaseAtVersion(databaseVersion);
 }
 
 function transactionDone(transaction) {
@@ -1287,7 +1317,13 @@ themeToggle.addEventListener("click", async () => {
 
 start().catch(error => {
   console.error("Tech It More could not start.", error);
-  const notice = document.querySelector("#data-note");
+  let notice = document.querySelector("#data-note");
+  if (!notice) {
+    notice = document.createElement("div");
+    notice.id = "data-note";
+    notice.className = "tm-empty";
+    (document.querySelector("#main") || document.body).prepend(notice);
+  }
   const icon = document.createElement("span");
   icon.className = "notice-icon";
   icon.setAttribute("aria-hidden", "true");
