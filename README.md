@@ -2,7 +2,7 @@
 
 **Find gaming gear worth buying, then jump straight to the store.**
 
-Tech It More is a fast, friendly catalog of **253 gaming products** across 9 categories: consoles, controllers, keyboards, mice, headsets, monitors, laptops, PCs and parts. Pick a product, and it opens ready-made searches at the major US retailers. There are no accounts, no checkout, and no backend, just a static site that loads instantly.
+Tech It More is a fast, friendly catalog across 8 categories: consoles, controllers, keyboards, mice, headsets, monitors, laptops, PCs and parts. Pick a product, and it opens ready-made searches at the major US retailers. There are no accounts, no checkout, and no backend, just a static site that loads instantly.
 
 > Tech It More doesn't sell anything and doesn't quote prices, sales or stock itself. Each store link opens that retailer's own search page, and that page is where you see the real price.
 
