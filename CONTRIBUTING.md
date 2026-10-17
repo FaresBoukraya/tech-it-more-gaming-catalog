@@ -13,32 +13,30 @@ For anything big, please open an issue first so we can agree on the idea before 
 
 ## Run the site locally
 
-There is no install and no build step:
+There is no install. To rebuild the generated files you need Node 18+:
 
+    npm run build
     python3 -m http.server 8000
 
 Then open http://localhost:8000 in your browser.
 
 ## Adding or editing products
 
-Products live in `gaming-products.js` and `catalog-products.js`. A product looks like this:
+Products live in `data/products.json`. A product looks like this:
 
-    { id: "tim-example-product", brand: "LOGITECH G", name: "Example Gaming Mouse",
-      category: "Mice", icon: "◉", art: "art-mouse",
-      imageUrl: "", specs: "Wireless · 25,000 DPI",
-      productSource: "https://example.com/product" }
+    { "id": "logitech-example-mouse", "brand": "LOGITECH G", "name": "Example Gaming Mouse",
+      "category": "Mice", "specs": "Wireless · 25,000 DPI" }
 
 Please follow these rules:
 
 - **No prices, currency, sales or stock information.**
 - **Only popular gear that is less than 10 years old.**
 - **Don't guess specs.** If a source doesn't list them, leave them out.
-- **Photos are optional.** Leave `imageUrl` empty unless you have a photo you're allowed to use.
+- **Photos are optional.** Leave out `imageUrl` unless you have a photo you're allowed to use, and fill in `imageSource` and `imageCreator` when you add one.
 
 ## After changing files
 
-- If you changed a `.css` or `.js` file, bump the `?v=` number in `index.html` so returning visitors get the new version.
-- If you removed products, change the `shopping-gateway-v2` catalog marker in `app.js` (it appears twice).
+Run `npm run build` and commit the generated files together with your change. `npm run check` tells you if anything is stale.
 
 ## Submitting a pull request
 
@@ -53,3 +51,14 @@ Never commit API keys, passwords or personal data. To report a security problem,
 ## Code of conduct
 
 By taking part, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Adding or editing a product (data/products.json)
+
+Every published product needs: `id`, `brand`, `name`, `category`, `specs`, `imageUrl`, and:
+
+- `summary`: 9 words or fewer, shown on the card.
+- `verdict.bestFor`, `verdict.downside`, `verdict.skipIf` (finishes "Skip it if ..."), `verdict.tier` (Budget, Mid-range or Premium).
+- `alts`: up to three `{ "id": "...", "why": "..." }` in the same category, each with a short reason.
+- `checked` (optional, `YYYY-MM-DD`): set it only after comparing the entry with the manufacturer's page. It shows as "Last checked".
+
+The photo's host must also be listed in `img-src` in `_headers`; `npm run build` fails if it is not.

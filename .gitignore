@@ -13,3 +13,6 @@ Thumbs.db
 node_modules/
 .wrangler/
 .dev.vars
+
+# Optional image tooling
+assets/products/.cache/

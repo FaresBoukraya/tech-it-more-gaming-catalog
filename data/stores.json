@@ -1,0 +1,265 @@
+{
+  "stores": {
+    "Amazon": {
+      "url": "https://www.amazon.com/s",
+      "param": "k"
+    },
+    "Best Buy": {
+      "url": "https://www.bestbuy.com/site/searchpage.jsp",
+      "param": "st"
+    },
+    "Newegg": {
+      "url": "https://www.newegg.com/p/pl",
+      "param": "d"
+    },
+    "Micro Center": {
+      "url": "https://www.microcenter.com/search/search_results.aspx",
+      "param": "Ntt"
+    },
+    "Walmart": {
+      "url": "https://www.walmart.com/search",
+      "param": "q"
+    },
+    "Target": {
+      "url": "https://www.target.com/s",
+      "param": "searchTerm"
+    },
+    "GameStop": {
+      "url": "https://www.gamestop.com/search/",
+      "param": "q"
+    },
+    "eBay": {
+      "url": "https://www.ebay.com/sch/i.html",
+      "param": "_nkw"
+    },
+    "Steam": {
+      "url": "https://store.steampowered.com/search/",
+      "param": "term"
+    },
+    "Nintendo": {
+      "url": "https://www.nintendo.com/us/search/",
+      "param": "q"
+    },
+    "PlayStation": {
+      "url": "https://direct.playstation.com/en-us/search",
+      "param": "q"
+    },
+    "Xbox": {
+      "url": "https://www.xbox.com/en-US/search",
+      "param": "q"
+    },
+    "LG": {
+      "url": "https://www.lg.com/us/search",
+      "param": "q"
+    },
+    "Meta": {
+      "url": "https://www.meta.com/search/",
+      "param": "q"
+    },
+    "NVIDIA": {
+      "url": "https://www.nvidia.com/en-us/search/",
+      "param": "q"
+    },
+    "NZXT": {
+      "url": "https://nzxt.com/search",
+      "param": "q"
+    },
+    "Elgato": {
+      "url": "https://www.elgato.com/us/en/search",
+      "param": "q"
+    },
+    "GameSir": {
+      "url": "https://gamesir.com/search",
+      "param": "q"
+    },
+    "Hyperkin": {
+      "url": "https://hyperkin.com/catalogsearch/result/",
+      "param": "q"
+    },
+    "ASUS Store": {
+      "url": "https://www.asus.com/us/search/",
+      "param": "q"
+    },
+    "Samsung Store": {
+      "url": "https://www.samsung.com/us/search/",
+      "param": "q"
+    },
+    "Razer": {
+      "url": "https://www.razer.com/search/",
+      "param": "q"
+    },
+    "Corsair": {
+      "url": "https://www.corsair.com/us/en/search/",
+      "param": "q"
+    },
+    "SteelSeries": {
+      "url": "https://steelseries.com/search",
+      "param": "q"
+    },
+    "Logitech G": {
+      "url": "https://www.logitechg.com/en-us/search.html",
+      "param": "q"
+    }
+  },
+  "brandStores": {
+    "ASUS ROG": [
+      "ASUS Store",
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Micro Center"
+    ],
+    "CORSAIR": [
+      "Corsair",
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Micro Center"
+    ],
+    "ELGATO": [
+      "Elgato",
+      "Amazon",
+      "Best Buy",
+      "Newegg"
+    ],
+    "GAMESIR": [
+      "GameSir",
+      "Amazon",
+      "Best Buy"
+    ],
+    "HYPERKIN": [
+      "Hyperkin",
+      "Amazon",
+      "eBay"
+    ],
+    "LG": [
+      "LG",
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Micro Center"
+    ],
+    "LOGITECH G": [
+      "Logitech G",
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Micro Center"
+    ],
+    "META": [
+      "Meta",
+      "Amazon",
+      "Best Buy",
+      "Walmart",
+      "Target"
+    ],
+    "NINTENDO": [
+      "Nintendo",
+      "Amazon",
+      "Best Buy",
+      "Walmart",
+      "Target",
+      "GameStop"
+    ],
+    "NVIDIA": [
+      "NVIDIA",
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Micro Center"
+    ],
+    "NZXT": [
+      "NZXT",
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Micro Center"
+    ],
+    "PLAYSTATION": [
+      "PlayStation",
+      "Amazon",
+      "Best Buy",
+      "Walmart",
+      "Target",
+      "GameStop"
+    ],
+    "RAZER": [
+      "Razer",
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Micro Center"
+    ],
+    "SAMSUNG": [
+      "Samsung Store",
+      "Amazon",
+      "Best Buy",
+      "Newegg"
+    ],
+    "STEELSERIES": [
+      "SteelSeries",
+      "Amazon",
+      "Best Buy",
+      "Newegg"
+    ],
+    "VALVE": [
+      "Steam",
+      "Amazon",
+      "Best Buy"
+    ],
+    "XBOX": [
+      "Xbox",
+      "Amazon",
+      "Best Buy",
+      "Walmart",
+      "Target",
+      "GameStop"
+    ]
+  },
+  "categoryStores": {
+    "Consoles & handhelds": [
+      "Amazon",
+      "Best Buy",
+      "Walmart",
+      "Target",
+      "GameStop"
+    ],
+    "Controllers": [
+      "Amazon",
+      "Best Buy",
+      "Walmart",
+      "Target",
+      "GameStop"
+    ],
+    "Keyboards": [
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Walmart"
+    ],
+    "Mice": [
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Walmart"
+    ],
+    "Headsets": [
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Walmart"
+    ],
+    "Streaming & audio": [
+      "Amazon",
+      "Best Buy",
+      "Newegg",
+      "Walmart"
+    ],
+    "PC hardware": [
+      "Amazon",
+      "Newegg",
+      "Micro Center",
+      "Best Buy"
+    ]
+  }
+}

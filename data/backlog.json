@@ -1,0 +1,1244 @@
+[
+ {
+  "id": "wikidata-q111990345",
+  "brand": "THUMBY",
+  "name": "Thumby",
+  "category": "Consoles & handhelds",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ab/ThumbyCloseUp.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+  "imageSource": "https://commons.wikimedia.org/wiki/File:ThumbyCloseUp.jpg",
+  "imageCreator": "RockBluesFan · CC BY-SA 4.0",
+  "productSource": "https://www.wikidata.org/wiki/Q111990345"
+ },
+ {
+  "id": "wikidata-q48965915",
+  "brand": "ANALOGUE",
+  "name": "Analogue Super Nt",
+  "category": "Consoles & handhelds",
+  "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/SuperNT.jpg/500px-SuperNT.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "imageSource": "https://commons.wikimedia.org/wiki/File:SuperNT.jpg",
+  "imageCreator": "StroggPicker · CC BY-SA 4.0",
+  "productSource": "https://www.wikidata.org/wiki/Q48965915"
+ },
+ {
+  "id": "wikidata-q137682470",
+  "brand": "GAMESIR",
+  "name": "GameSir X5 Lite",
+  "category": "Consoles & handhelds",
+  "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/GameSir_X5_Lite.jpg/500px-GameSir_X5_Lite.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "imageSource": "https://commons.wikimedia.org/wiki/File:GameSir_X5_Lite.jpg",
+  "imageCreator": "Skyshifter · CC BY-SA 4.0",
+  "productSource": "https://www.wikidata.org/wiki/Q137682470"
+ },
+ {
+  "id": "tim-logitech-g-g502-x-plus",
+  "brand": "LOGITECH G",
+  "name": "G502 X Plus Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-logitech-g-g502-x-lightspeed",
+  "brand": "LOGITECH G",
+  "name": "G502 X Lightspeed Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-logitech-g-g502-hero",
+  "brand": "LOGITECH G",
+  "name": "G502 Hero Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-logitech-g-pro-x-superlight-2",
+  "brand": "LOGITECH G",
+  "name": "Pro X Superlight 2 Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-logitech-g-g305-lightspeed",
+  "brand": "LOGITECH G",
+  "name": "G305 Lightspeed Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-logitech-g-g203-lightsync",
+  "brand": "LOGITECH G",
+  "name": "G203 Lightsync Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-logitech-g-g102-lightsync",
+  "brand": "LOGITECH G",
+  "name": "G102 Lightsync Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-razer-viper-mini",
+  "brand": "RAZER",
+  "name": "Viper Mini Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-razer-deathadder-essential",
+  "brand": "RAZER",
+  "name": "DeathAdder Essential Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-razer-deathadder-v2",
+  "brand": "RAZER",
+  "name": "DeathAdder V2 Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-razer-basilisk-v3-x-hyperspeed",
+  "brand": "RAZER",
+  "name": "Basilisk V3 X HyperSpeed Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-steelseries-rival-3",
+  "brand": "STEELSERIES",
+  "name": "Rival 3 Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-steelseries-aerox-3",
+  "brand": "STEELSERIES",
+  "name": "Aerox 3 Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-steelseries-prime-wireless",
+  "brand": "STEELSERIES",
+  "name": "Prime Wireless Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-corsair-katar-pro",
+  "brand": "CORSAIR",
+  "name": "Katar Pro Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-glorious-model-o",
+  "brand": "GLORIOUS",
+  "name": "Model O Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-glorious-model-o-wireless",
+  "brand": "GLORIOUS",
+  "name": "Model O Wireless Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-glorious-model-d",
+  "brand": "GLORIOUS",
+  "name": "Model D Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-glorious-model-d-wireless",
+  "brand": "GLORIOUS",
+  "name": "Model D Wireless Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-zowie-ec2-c",
+  "brand": "ZOWIE",
+  "name": "EC2-C Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-zowie-fk1-c",
+  "brand": "ZOWIE",
+  "name": "FK1-C Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-hyperx-pulsefire-haste-2-wireless",
+  "brand": "HYPERX",
+  "name": "Pulsefire Haste 2 Wireless Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-hyperx-pulsefire-haste",
+  "brand": "HYPERX",
+  "name": "Pulsefire Haste Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-asus-rog-gladius-iii-wireless",
+  "brand": "ASUS ROG",
+  "name": "Gladius III Wireless Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-asus-rog-keris-wireless-aimpoint",
+  "brand": "ASUS ROG",
+  "name": "Keris Wireless AimPoint Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-asus-rog-harpe-ace-aim-lab-edition",
+  "brand": "ASUS ROG",
+  "name": "Harpe Ace Aim Lab Edition Gaming Mouse",
+  "category": "Mice"
+ },
+ {
+  "id": "tim-logitech-g-g915-x-lightspeed",
+  "brand": "LOGITECH G",
+  "name": "G915 X Lightspeed Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-logitech-g-g915-tkl",
+  "brand": "LOGITECH G",
+  "name": "G915 TKL Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-logitech-g-pro-x-tkl-lightspeed",
+  "brand": "LOGITECH G",
+  "name": "Pro X TKL Lightspeed Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-logitech-g-g513",
+  "brand": "LOGITECH G",
+  "name": "G513 Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-logitech-g-g413-se",
+  "brand": "LOGITECH G",
+  "name": "G413 SE Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-razer-blackwidow-v3",
+  "brand": "RAZER",
+  "name": "BlackWidow V3 Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-razer-huntsman-v2",
+  "brand": "RAZER",
+  "name": "Huntsman V2 Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-razer-ornata-v3",
+  "brand": "RAZER",
+  "name": "Ornata V3 Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-razer-cynosa-v2",
+  "brand": "RAZER",
+  "name": "Cynosa V2 Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-steelseries-apex-pro",
+  "brand": "STEELSERIES",
+  "name": "Apex Pro Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-steelseries-apex-pro-tkl",
+  "brand": "STEELSERIES",
+  "name": "Apex Pro TKL Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-steelseries-apex-3",
+  "brand": "STEELSERIES",
+  "name": "Apex 3 Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-corsair-k70-rgb-tkl",
+  "brand": "CORSAIR",
+  "name": "K70 RGB TKL Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-corsair-k65-rgb-mini",
+  "brand": "CORSAIR",
+  "name": "K65 RGB Mini Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-corsair-k60-pro",
+  "brand": "CORSAIR",
+  "name": "K60 Pro Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-hyperx-alloy-origins",
+  "brand": "HYPERX",
+  "name": "Alloy Origins Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-hyperx-alloy-origins-core",
+  "brand": "HYPERX",
+  "name": "Alloy Origins Core Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-hyperx-alloy-origins-65",
+  "brand": "HYPERX",
+  "name": "Alloy Origins 65 Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-asus-rog-strix-scope-ii",
+  "brand": "ASUS ROG",
+  "name": "Strix Scope II Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-asus-rog-strix-scope-rx",
+  "brand": "ASUS ROG",
+  "name": "Strix Scope RX Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-asus-rog-azoth",
+  "brand": "ASUS ROG",
+  "name": "Azoth Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-wooting-60he",
+  "brand": "WOOTING",
+  "name": "60HE Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-wooting-80he",
+  "brand": "WOOTING",
+  "name": "80HE Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-wooting-two-he",
+  "brand": "WOOTING",
+  "name": "Two HE Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-ducky-one-3",
+  "brand": "DUCKY",
+  "name": "One 3 Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-ducky-one-3-mini",
+  "brand": "DUCKY",
+  "name": "One 3 Mini Gaming Keyboard",
+  "category": "Keyboards"
+ },
+ {
+  "id": "tim-logitech-g-pro-x-2-lightspeed",
+  "brand": "LOGITECH G",
+  "name": "Pro X 2 Lightspeed Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-logitech-g-g435-lightspeed",
+  "brand": "LOGITECH G",
+  "name": "G435 Lightspeed Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-logitech-g-g733-lightspeed",
+  "brand": "LOGITECH G",
+  "name": "G733 Lightspeed Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-logitech-g-g335",
+  "brand": "LOGITECH G",
+  "name": "G335 Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-logitech-g-g432",
+  "brand": "LOGITECH G",
+  "name": "G432 Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-logitech-g-pro-x",
+  "brand": "LOGITECH G",
+  "name": "Pro X Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-razer-blackshark-v2-x",
+  "brand": "RAZER",
+  "name": "BlackShark V2 X Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-razer-kraken-v3-x",
+  "brand": "RAZER",
+  "name": "Kraken V3 X Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-razer-kraken-v3-pro",
+  "brand": "RAZER",
+  "name": "Kraken V3 Pro Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-razer-barracuda-x",
+  "brand": "RAZER",
+  "name": "Barracuda X Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-steelseries-arctis-nova-pro-wireless",
+  "brand": "STEELSERIES",
+  "name": "Arctis Nova Pro Wireless Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-steelseries-arctis-nova-1",
+  "brand": "STEELSERIES",
+  "name": "Arctis Nova 1 Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-steelseries-arctis-nova-3",
+  "brand": "STEELSERIES",
+  "name": "Arctis Nova 3 Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-steelseries-arctis-7",
+  "brand": "STEELSERIES",
+  "name": "Arctis 7+ Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-hyperx-cloud-ii-wireless",
+  "brand": "HYPERX",
+  "name": "Cloud II Wireless Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-hyperx-cloud-iii",
+  "brand": "HYPERX",
+  "name": "Cloud III Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-hyperx-cloud-iii-wireless",
+  "brand": "HYPERX",
+  "name": "Cloud III Wireless Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-hyperx-cloud-alpha",
+  "brand": "HYPERX",
+  "name": "Cloud Alpha Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-hyperx-cloud-stinger-2",
+  "brand": "HYPERX",
+  "name": "Cloud Stinger 2 Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-corsair-hs80-rgb-wireless",
+  "brand": "CORSAIR",
+  "name": "HS80 RGB Wireless Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-corsair-hs65-wireless",
+  "brand": "CORSAIR",
+  "name": "HS65 Wireless Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-corsair-hs55-wireless",
+  "brand": "CORSAIR",
+  "name": "HS55 Wireless Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-turtle-beach-stealth-700-gen-2-max",
+  "brand": "TURTLE BEACH",
+  "name": "Stealth 700 Gen 2 Max Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-turtle-beach-stealth-600-gen-2-max",
+  "brand": "TURTLE BEACH",
+  "name": "Stealth 600 Gen 2 Max Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-turtle-beach-recon-70",
+  "brand": "TURTLE BEACH",
+  "name": "Recon 70 Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-astro-a20-wireless-gen-2",
+  "brand": "ASTRO",
+  "name": "A20 Wireless Gen 2 Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-astro-a30",
+  "brand": "ASTRO",
+  "name": "A30 Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-asus-rog-delta-s",
+  "brand": "ASUS ROG",
+  "name": "Delta S Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-playstation-pulse-elite",
+  "brand": "PLAYSTATION",
+  "name": "Pulse Elite Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-playstation-pulse-explore",
+  "brand": "PLAYSTATION",
+  "name": "Pulse Explore Gaming Headset",
+  "category": "Headsets"
+ },
+ {
+  "id": "tim-xbox-elite-wireless-controller-series-2",
+  "brand": "XBOX",
+  "name": "Elite Wireless Controller Series 2",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-xbox-adaptive-controller",
+  "brand": "XBOX",
+  "name": "Adaptive Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-playstation-access-controller",
+  "brand": "PLAYSTATION",
+  "name": "Access Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-nintendo-switch-pro-controller",
+  "brand": "NINTENDO",
+  "name": "Switch Pro Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-nintendo-joy-con-pair",
+  "brand": "NINTENDO",
+  "name": "Joy-Con Pair",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-8bitdo-pro-2",
+  "brand": "8BITDO",
+  "name": "Pro 2 Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-8bitdo-ultimate-bluetooth",
+  "brand": "8BITDO",
+  "name": "Ultimate Bluetooth Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-8bitdo-ultimate-2-4g",
+  "brand": "8BITDO",
+  "name": "Ultimate 2.4g Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-8bitdo-sn30-pro",
+  "brand": "8BITDO",
+  "name": "SN30 Pro Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-powera-enhanced-wired-xbox",
+  "brand": "POWERA",
+  "name": "Enhanced Wired Xbox Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-powera-spectra-infinity-enhanced-wired",
+  "brand": "POWERA",
+  "name": "Spectra Infinity Enhanced Wired Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-logitech-g-g923-racing-wheel",
+  "brand": "LOGITECH G",
+  "name": "G923 Racing Wheel",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-thrustmaster-t248-racing-wheel",
+  "brand": "THRUSTMASTER",
+  "name": "T248 Racing Wheel",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-scuf-instinct-pro",
+  "brand": "SCUF",
+  "name": "Instinct Pro Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-scuf-envision-pro",
+  "brand": "SCUF",
+  "name": "Envision Pro Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-hori-split-pad-pro",
+  "brand": "HORI",
+  "name": "Split Pad Pro",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-hori-horipad-wireless",
+  "brand": "HORI",
+  "name": "Horipad Wireless Controller",
+  "category": "Controllers"
+ },
+ {
+  "id": "tim-lg-ultragear-27gp850-b",
+  "brand": "LG",
+  "name": "UltraGear 27GP850-B Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-lg-ultragear-27gr93u-b",
+  "brand": "LG",
+  "name": "UltraGear 27GR93U-B Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-lg-ultragear-32gq950-b",
+  "brand": "LG",
+  "name": "UltraGear 32GQ950-B Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-lg-ultragear-27gn950-b",
+  "brand": "LG",
+  "name": "UltraGear 27GN950-B Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-lg-ultragear-45gr95qe-b",
+  "brand": "LG",
+  "name": "UltraGear 45GR95QE-B Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-lg-ultragear-27gl83a-b",
+  "brand": "LG",
+  "name": "UltraGear 27GL83A-B Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-samsung-odyssey-g7",
+  "brand": "SAMSUNG",
+  "name": "Odyssey G7 Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-samsung-odyssey-g9",
+  "brand": "SAMSUNG",
+  "name": "Odyssey G9 Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-samsung-odyssey-neo-g9",
+  "brand": "SAMSUNG",
+  "name": "Odyssey Neo G9 Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-samsung-odyssey-neo-g7",
+  "brand": "SAMSUNG",
+  "name": "Odyssey Neo G7 Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-samsung-odyssey-oled-g8",
+  "brand": "SAMSUNG",
+  "name": "Odyssey OLED G8 Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-samsung-odyssey-oled-g6",
+  "brand": "SAMSUNG",
+  "name": "Odyssey OLED G6 Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-asus-rog-swift-pg279qm",
+  "brand": "ASUS ROG",
+  "name": "Swift PG279QM Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-asus-rog-swift-oled-pg27aqdm",
+  "brand": "ASUS ROG",
+  "name": "Swift OLED PG27AQDM Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-asus-rog-swift-oled-pg32ucdm",
+  "brand": "ASUS ROG",
+  "name": "Swift OLED PG32UCDM Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-asus-tuf-gaming-vg27aq",
+  "brand": "ASUS",
+  "name": "TUF Gaming VG27AQ Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-alienware-aw3423dwf",
+  "brand": "ALIENWARE",
+  "name": "AW3423DWF Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-alienware-aw3423dw",
+  "brand": "ALIENWARE",
+  "name": "AW3423DW Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-alienware-aw3225qf",
+  "brand": "ALIENWARE",
+  "name": "AW3225QF Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-alienware-aw2725df",
+  "brand": "ALIENWARE",
+  "name": "AW2725DF Gaming Monitor",
+  "category": "Monitors",
+  "imageUrl": "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/alienware/aw2725df/media-gallery/monitor-alienware-2725df-black-gallery-8.psd?fmt=png-alpha&pscan=auto&scl=1&hei=476&wid=463&qlt=100,0&resMode=sharp2&size=463,476",
+  "imageSource": "https://www.dell.com/en-us/shop/alienware-27-360hz-qd-oled-gaming-monitor-aw2725df/apd/210-bljd/monitors-monitor-accessories",
+  "imageCreator": "Dell AW2725DF official product photo"
+ },
+ {
+  "id": "tim-msi-mag-274qrf-qd",
+  "brand": "MSI",
+  "name": "MAG 274QRF-QD Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-msi-mpg-321urx-qd-oled",
+  "brand": "MSI",
+  "name": "MPG 321URX QD-OLED Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-msi-mpg-271qrx-qd-oled",
+  "brand": "MSI",
+  "name": "MPG 271QRX QD-OLED Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-gigabyte-m27q",
+  "brand": "GIGABYTE",
+  "name": "M27Q Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-gigabyte-aorus-fi32u",
+  "brand": "GIGABYTE",
+  "name": "AORUS FI32U Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-gigabyte-g27q",
+  "brand": "GIGABYTE",
+  "name": "G27Q Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-acer-predator-xb273u",
+  "brand": "ACER",
+  "name": "Predator XB273U Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-acer-predator-x27u",
+  "brand": "ACER",
+  "name": "Predator X27U Gaming Monitor",
+  "category": "Monitors",
+  "imageUrl": "https://m.media-amazon.com/images/I/71lbP9qNQmL._AC_.jpg",
+  "imageSource": "https://www.acer.com/us-en/predator/monitors/x27u",
+  "imageCreator": "Amazon product listing photo for Acer Predator X27U"
+ },
+ {
+  "id": "tim-benq-zowie-xl2546k",
+  "brand": "BENQ",
+  "name": "ZOWIE XL2546K Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-benq-zowie-xl2566k",
+  "brand": "BENQ",
+  "name": "ZOWIE XL2566K Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-benq-zowie-xl2411k",
+  "brand": "BENQ",
+  "name": "ZOWIE XL2411K Gaming Monitor",
+  "category": "Monitors"
+ },
+ {
+  "id": "tim-asus-rog-zephyrus-g14",
+  "brand": "ASUS ROG",
+  "name": "Zephyrus G14 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-asus-rog-zephyrus-g16",
+  "brand": "ASUS ROG",
+  "name": "Zephyrus G16 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-asus-rog-strix-g16",
+  "brand": "ASUS ROG",
+  "name": "Strix G16 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-asus-rog-strix-scar-16",
+  "brand": "ASUS ROG",
+  "name": "Strix Scar 16 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-asus-rog-flow-z13",
+  "brand": "ASUS ROG",
+  "name": "Flow Z13 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-asus-tuf-gaming-a15",
+  "brand": "ASUS TUF",
+  "name": "Gaming A15 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-asus-tuf-gaming-f15",
+  "brand": "ASUS TUF",
+  "name": "Gaming F15 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-lenovo-legion-5-pro",
+  "brand": "LENOVO",
+  "name": "Legion 5 Pro Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-lenovo-legion-pro-7i",
+  "brand": "LENOVO",
+  "name": "Legion Pro 7i Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-lenovo-loq-15",
+  "brand": "LENOVO",
+  "name": "LOQ 15 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-msi-titan-18-hx",
+  "brand": "MSI",
+  "name": "Titan 18 HX Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-msi-katana-15",
+  "brand": "MSI",
+  "name": "Katana 15 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-msi-cyborg-15",
+  "brand": "MSI",
+  "name": "Cyborg 15 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-razer-blade-14",
+  "brand": "RAZER",
+  "name": "Blade 14 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-razer-blade-16",
+  "brand": "RAZER",
+  "name": "Blade 16 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-razer-blade-18",
+  "brand": "RAZER",
+  "name": "Blade 18 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-alienware-m16-r2",
+  "brand": "ALIENWARE",
+  "name": "m16 R2 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-alienware-m18-r2",
+  "brand": "ALIENWARE",
+  "name": "m18 R2 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-alienware-x16-r2",
+  "brand": "ALIENWARE",
+  "name": "x16 R2 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-acer-predator-helios-16",
+  "brand": "ACER",
+  "name": "Predator Helios 16 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-acer-predator-helios-neo-16",
+  "brand": "ACER",
+  "name": "Predator Helios Neo 16 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-acer-nitro-v-15",
+  "brand": "ACER",
+  "name": "Nitro V 15 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-hp-omen-16",
+  "brand": "HP",
+  "name": "Omen 16 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-hp-victus-15",
+  "brand": "HP",
+  "name": "Victus 15 Gaming Laptop",
+  "category": "PCs & laptops"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-4060",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 4060 Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-4060-ti",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 4060 Ti Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-4070-super",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 4070 Super Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-4070-ti-super",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 4070 Ti Super Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-4080-super",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 4080 Super Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-4090",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 4090 Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-5060",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 5060 Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-5060-ti",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 5060 Ti Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-5080",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 5080 Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nvidia-geforce-rtx-5090",
+  "brand": "NVIDIA",
+  "name": "GeForce RTX 5090 Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-radeon-rx-7700-xt",
+  "brand": "AMD",
+  "name": "Radeon RX 7700 XT Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-radeon-rx-7800-xt",
+  "brand": "AMD",
+  "name": "Radeon RX 7800 XT Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-radeon-rx-7900-xtx",
+  "brand": "AMD",
+  "name": "Radeon RX 7900 XTX Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-radeon-rx-9060-xt",
+  "brand": "AMD",
+  "name": "Radeon RX 9060 XT Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-radeon-rx-9070",
+  "brand": "AMD",
+  "name": "Radeon RX 9070 Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-radeon-rx-9070-xt",
+  "brand": "AMD",
+  "name": "Radeon RX 9070 XT Graphics Card",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-ryzen-5-5600",
+  "brand": "AMD",
+  "name": "Ryzen 5 5600 Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-ryzen-5-7600x",
+  "brand": "AMD",
+  "name": "Ryzen 5 7600X Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-ryzen-7-7800x3d",
+  "brand": "AMD",
+  "name": "Ryzen 7 7800X3D Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-ryzen-7-9800x3d",
+  "brand": "AMD",
+  "name": "Ryzen 7 9800X3D Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-ryzen-7-9700x",
+  "brand": "AMD",
+  "name": "Ryzen 7 9700X Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-amd-ryzen-9-9950x",
+  "brand": "AMD",
+  "name": "Ryzen 9 9950X Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-intel-core-i5-14600k",
+  "brand": "INTEL",
+  "name": "Core i5-14600K Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-intel-core-i7-14700k",
+  "brand": "INTEL",
+  "name": "Core i7-14700K Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-intel-core-i9-14900k",
+  "brand": "INTEL",
+  "name": "Core i9-14900K Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-intel-core-ultra-7-265k",
+  "brand": "INTEL",
+  "name": "Core Ultra 7 265K Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-intel-core-ultra-9-285k",
+  "brand": "INTEL",
+  "name": "Core Ultra 9 285K Processor",
+  "category": "Components"
+ },
+ {
+  "id": "tim-samsung-990-pro-2tb",
+  "brand": "SAMSUNG",
+  "name": "990 Pro 2TB NVMe SSD",
+  "category": "Components"
+ },
+ {
+  "id": "tim-samsung-980-pro-1tb",
+  "brand": "SAMSUNG",
+  "name": "980 Pro 1TB NVMe SSD",
+  "category": "Components"
+ },
+ {
+  "id": "tim-samsung-990-evo-1tb",
+  "brand": "SAMSUNG",
+  "name": "990 EVO 1TB NVMe SSD",
+  "category": "Components"
+ },
+ {
+  "id": "tim-wd-black-sn850x-2tb",
+  "brand": "WD BLACK",
+  "name": "SN850X 2TB NVMe SSD",
+  "category": "Components"
+ },
+ {
+  "id": "tim-crucial-t500-1tb",
+  "brand": "CRUCIAL",
+  "name": "T500 1TB NVMe SSD",
+  "category": "Components"
+ },
+ {
+  "id": "tim-crucial-p3-plus-1tb",
+  "brand": "CRUCIAL",
+  "name": "P3 Plus 1TB NVMe SSD",
+  "category": "Components"
+ },
+ {
+  "id": "tim-nintendo-switch-2-console",
+  "brand": "NINTENDO",
+  "name": "Switch 2 Console",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-nintendo-switch-lite-console",
+  "brand": "NINTENDO",
+  "name": "Switch Lite Console",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-nintendo-switch-console",
+  "brand": "NINTENDO",
+  "name": "Switch Console",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-playstation-playstation-5-slim-console",
+  "brand": "PLAYSTATION",
+  "name": "PlayStation 5 Slim Console",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-playstation-playstation-portal-remote-player",
+  "brand": "PLAYSTATION",
+  "name": "PlayStation Portal Remote Player",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-xbox-series-s-512gb-console",
+  "brand": "XBOX",
+  "name": "Series S 512GB Console",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-xbox-series-s-1tb-console",
+  "brand": "XBOX",
+  "name": "Series S 1TB Console",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-xbox-series-x-digital-console",
+  "brand": "XBOX",
+  "name": "Series X Digital Console",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-lenovo-legion-go-handheld",
+  "brand": "LENOVO",
+  "name": "Legion Go Handheld",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-lenovo-legion-go-s-handheld",
+  "brand": "LENOVO",
+  "name": "Legion Go S Handheld",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-msi-claw-8-ai-handheld",
+  "brand": "MSI",
+  "name": "Claw 8 AI+ Handheld",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-valve-steam-deck-lcd-256gb-handheld",
+  "brand": "VALVE",
+  "name": "Steam Deck LCD 256GB Handheld",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-asus-rog-ally-handheld-gaming-pc",
+  "brand": "ASUS ROG",
+  "name": "Ally Handheld Gaming PC",
+  "category": "Consoles & handhelds"
+ },
+ {
+  "id": "tim-meta-quest-3s-128gb-vr-headset",
+  "brand": "META",
+  "name": "Quest 3S 128GB VR Headset",
+  "category": "Consoles & handhelds"
+ }
+]

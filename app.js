@@ -1,114 +1,7 @@
-const bundledProducts = [
-  { id: "lg-ultragear-27", brand: "LG", name: "UltraGear 27″ QHD Gaming Monitor", category: "Monitors", icon: "▱", art: "art-monitor", imageUrl: "https://media.us.lg.com/transform/ecomm-PDPGalleryThumbnail-350x350/9baa8ae0-659f-4d9f-ac9a-8dd5e4ce806a/Monitor_27GS75Q-B_gallery_01_5000x5000", imageSource: "https://www.lg.com/us/monitors/lg-27gs75q-b-gaming-monitor", specs: "27″ QHD · up to 200Hz (overclocked) · IPS · Adaptive Sync" },
-  { id: "razer-deathadder-v3", brand: "RAZER", name: "DeathAdder V3 Pro Wireless Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/a0427959a82f1f5d1c27c2463008e5a8/razer-deathadder-v3-og.jpg", imageSource: "https://www.razer.com/gaming-mice/razer-deathadder-v3-pro", specs: "Ergonomic wireless · 30K sensor · Up to 90-hour battery" },
-  { id: "steam-deck-oled", brand: "VALVE", name: "Steam Deck OLED 512GB", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://cdn.fastly.steamstatic.com/steamdeck/images/oled/social_media_image.jpg", imageSource: "https://www.steamdeck.com/en/", specs: "7.4″ HDR OLED · 512GB NVMe · Wi-Fi 6E" },
-  { id: "switch-oled-white", brand: "NINTENDO", name: "Nintendo Switch OLED Model", category: "Gaming", icon: "▣", art: "art-console", imageUrl: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/en_US/products/hardware/nintendo-switch-oled-model-white-set/115461-switch-oled-white-boxart-1200x675", imageSource: "https://www.nintendo.com/us/store/products/nintendo-switch-oled-model-white-set/", imageCreator: "Nintendo Switch OLED Model White product image", specs: "7″ OLED screen · 64GB · White Joy-Con controllers" },
-  { id: "rog-ally-x", brand: "ASUS ROG", name: "ROG Ally X Handheld Gaming PC", category: "Gaming", icon: "▣", art: "art-console", imageUrl: "https://dlcdnwebimgs.asus.com/gain/F12D7B4D-DC78-4228-8426-D2C474B7BD0D", imageSource: "https://rog.asus.com/us/gaming-handhelds/rog-ally/rog-ally-x-2024/", imageCreator: "ASUS ROG Ally X official product image", specs: "7″ 120Hz · Ryzen Z1 Extreme · 24GB RAM · 1TB SSD" },
-  { id: "razer-blackwidow-v4", brand: "RAZER", name: "BlackWidow V4 Mechanical Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/2eebfd7a585f70e30afa1bf2b242fa22/razer-blackwidow-v4-ogimage-1200x630.jpg", imageSource: "https://www.razer.com/gaming-keyboards/razer-blackwidow-v4", imageCreator: "Razer BlackWidow V4 official product image", specs: "Full-size mechanical · Razer Chroma RGB · Dedicated media controls" },
-  { id: "razer-huntsman-v3-pro", brand: "RAZER", name: "Huntsman V3 Pro Analog Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/f2ba430b48cc45a90075a905e0eac073/razer-huntsman-v3-pro-ogimage-1200x630-v2.webp", imageSource: "https://www.razer.com/gaming-keyboards/razer-huntsman-v3-pro", imageCreator: "Razer Huntsman V3 Pro official product image", specs: "Analog optical switches · Adjustable actuation · Rapid Trigger" },
-  { id: "razer-viper-v3-pro", brand: "RAZER", name: "Viper V3 Pro Wireless Gaming Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/24970f67be4ba9644e28720377d91cfb/razer-viper-v3-pro-1200x630.webp", imageSource: "https://www.razer.com/gaming-mice/razer-viper-v3-pro", imageCreator: "Razer Viper V3 Pro official product image", specs: "Ultra-light wireless · 35K DPI sensor · 8,000Hz polling capable" },
-  { id: "razer-deathadder-v3-hyperspeed", brand: "RAZER", name: "DeathAdder V3 HyperSpeed Wireless Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/846248a215ecc26cf0ad3f7cf62691bd/razer-deathadder-v3-hyperspeed-ogimage-1200x630.webp", imageSource: "https://www.razer.com/gaming-mice/razer-deathadder-v3-hyperspeed", imageCreator: "Razer DeathAdder V3 HyperSpeed official product image", specs: "Ergonomic wireless · 26K DPI sensor · Up to 100-hour battery" },
-  { id: "razer-blackshark-v2-pro", brand: "RAZER", name: "BlackShark V2 Pro Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/0de78efe3441114d8a92590145fff4c8/razer-blackshark-v2-pro-2023_ogimage-1200x630.jpg", imageSource: "https://www.razer.com/gaming-headsets/razer-blackshark-v2-pro", imageCreator: "Razer BlackShark V2 Pro official product image", specs: "Wireless esports headset · Detachable microphone · 70-hour battery" },
-  { id: "razer-kraken-v4", brand: "RAZER", name: "Kraken V4 Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://assets2.razerzone.com/images/pnx.assets/54336b9e31510b5983cfc72dbec14c34/kraken-v4-1200x630-og.webp", imageSource: "https://www.razer.com/gaming-headsets/razer-kraken-v4", imageCreator: "Razer Kraken V4 official product image", specs: "Wireless gaming headset · Retractable microphone · Chroma RGB" },
-  { id: "steelseries-arctis-nova-7p", brand: "STEELSERIES", name: "Arctis Nova 7P Wireless Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://images.ctfassets.net/hmm5mo4qf4mf/656blOm98ncSC8GsJv9QUN/853167c9ec252f79986681b6da4ca64e/arctis_nova_7p_black_pdp_img_buy_01.png__1920x1080_crop-fit_optimize_subsampling-2-190.png?w=1200&h=600&fit=fill&fm=jpg&q=85", imageSource: "https://steelseries.com/gaming-headsets/arctis-nova-7", imageCreator: "SteelSeries Arctis Nova 7P official product image", specs: "2.4GHz wireless and Bluetooth · USB-C · PlayStation-focused controls" },
-  { id: "nzxt-player-two-prime", brand: "NZXT", name: "Player Two Prime Gaming PC", category: "Computers", icon: "⌁", art: "art-computer", imageUrl: "https://nzxt.com/cdn/shop/files/PlayerTwoPrime_hero_black_bagde_260527_43d11dd5-c1bf-434f-925d-64e4e419c973.png?v=1786045573&width=2048", imageSource: "https://nzxt.com/product/player-two-prime", imageCreator: "NZXT Player Two Prime official product image", specs: "AMD Ryzen 9 9900X · GeForce RTX 5070 Ti · 32GB RAM · 2TB SSD" },
-  { id: "nzxt-player-two", brand: "NZXT", name: "Player Two Gaming PC", category: "Computers", icon: "⌁", art: "art-computer", imageUrl: "https://nzxt.com/cdn/shop/files/PlayerTwoBase_hero_black_badge_9804c25b-a61f-4b02-ae9b-6ad4afdd408c.png?v=1786049042&width=2048", imageSource: "https://nzxt.com/product/player-two", imageCreator: "NZXT Player Two official product image", specs: "Intel Core Ultra 7 270K Plus · GeForce RTX 5070 · 32GB RAM · 1TB SSD" },
-  { id: "xbox-wireless-controller", brand: "XBOX", name: "Xbox Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://assets.xboxservices.com/assets/99/9b/999b6ab0-6ae1-432d-bed3-494bc3dfb138.jpg?n=111101_Sharing_200x200.jpg", imageSource: "https://www.xbox.com/en-US/accessories/controllers/xbox-wireless-controller", imageCreator: "Xbox Wireless Controller official product image", specs: "Wireless controller · Bluetooth · Xbox and Windows compatible" },
-  { id: "dualsense-edge-controller", brand: "PLAYSTATION", name: "DualSense Edge Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/dualsense-edge-listing-thumb-01-en-23aug22?$facebook$", imageSource: "https://www.playstation.com/en-us/accessories/dualsense-edge-wireless-controller/", imageCreator: "PlayStation DualSense Edge official product image", specs: "Customizable controls · Replaceable stick modules · Back buttons" },
-  { id: "elgato-4k-x", brand: "ELGATO", name: "4K X External Game Capture Card", category: "Gaming", icon: "▰", art: "art-storage", imageUrl: "https://images.ctfassets.net/h50kqpe25yx1/4f6jo2deHdLdmaxkWo3VKv/2056b061f7644d9003e4304dd373c0ce/4K-X-Social-Graph.jpg", imageSource: "https://www.elgato.com/us/en/p/game-capture-4k-x", imageCreator: "Elgato 4K X official product image", specs: "External USB capture · Up to 4K144 passthrough · HDMI 2.1" },
-  { id: "corsair-k70-pro-rgb", brand: "CORSAIR", name: "K70 PRO RGB Mechanical Gaming Keyboard", category: "Accessories", icon: "▦", art: "art-keyboard", imageUrl: "https://res.cloudinary.com/corsair-pwa/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Keyboards/CH-910941A-NA/Gallery/K70_PRO_OPX_PBT_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-keyboards/ch-910941a-na/k70-rgb-pro-mechanical-gaming-keyboard-ch-910941a-na", imageCreator: "Corsair K70 PRO RGB official product image", specs: "Optical-mechanical switches · PBT keycaps · Tournament switch" },
-  { id: "corsair-m75-air", brand: "CORSAIR", name: "M75 AIR Wireless Gaming Mouse", category: "Accessories", icon: "◉", art: "art-mouse", imageUrl: "https://assets.corsair.com/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Mice/CH-931D100/M75_AIR_BLACK_RENDER_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-mice/ch-931d100-na/m75-air-wireless-ultra-lightweight-gaming-mouse-ch-931d100-na", imageCreator: "Corsair M75 AIR official product image", specs: "Ultra-light wireless · 26,000 DPI sensor · Up to 100-hour battery" },
-  { id: "corsair-virtuoso-rgb-wireless-se", brand: "CORSAIR", name: "Virtuoso RGB Wireless SE Gaming Headset", category: "Audio", icon: "◖", art: "art-headphones", imageUrl: "https://res.cloudinary.com/corsair-pwa/image/upload/c_scale%2Cq_auto%2Cw_1200/products/Gaming-Headsets/CA-9011180-NA/Gallery/VIRTUOSO_SE_01.png", imageSource: "https://www.corsair.com/us/en/p/gaming-headsets/ca-9011180-na/virtuoso-rgb-wireless-se-high-fidelity-gaming-headset-ca-9011180-na", imageCreator: "Corsair Virtuoso RGB Wireless SE official product image", specs: "Wireless gaming headset · Detachable broadcast microphone · 7.1 surround sound" },
-  { id: "dualsense-wireless-controller", brand: "PLAYSTATION", name: "DualSense Wireless Controller", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/dualsense-controller-product-thumbnail-01-en-14sep21?$facebook$", imageSource: "https://www.playstation.com/en-us/accessories/dualsense-wireless-controller/", imageCreator: "PlayStation DualSense official product image", specs: "Haptic feedback · Adaptive triggers · Built-in microphone" },
-  { id: "playstation-5-pro", brand: "PLAYSTATION", name: "PlayStation 5 Pro Console", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/ps5-pro-dualsense-image-block-01-en-16aug24?$facebook$", imageSource: "https://www.playstation.com/en-us/ps5/ps5-pro/", imageCreator: "PlayStation 5 Pro official product image", specs: "2TB SSD · Advanced ray tracing · 4K gaming up to 120fps" },
-  { id: "xbox-series-x", brand: "XBOX", name: "Xbox Series X Console", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://assets.xboxservices.com/assets/18/30/1830806b-d41d-40ce-a846-792df7d14e1d.jpg?n=Xbox-Series-X_Sharing_200x200_02.jpg", imageSource: "https://www.xbox.com/en-US/consoles/xbox-series-x", imageCreator: "Xbox Series X official product image", specs: "1TB SSD · 4K gaming · Up to 120fps · UHD Blu-ray" },
-  { id: "playstation-vr2", brand: "PLAYSTATION", name: "PlayStation VR2 Headset", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://gmedia.playstation.com/is/image/SIEPDC/PSVR2-thumbnail-01-en-22feb22?$facebook$", imageSource: "https://www.playstation.com/en-us/ps-vr2/", imageCreator: "PlayStation VR2 official product image", specs: "4K HDR OLED · Eye tracking · 3D audio · Sense controllers" },
-  { id: "meta-quest-3", brand: "META", name: "Quest 3 512GB VR Headset", category: "Gaming", icon: "◈", art: "art-console", imageUrl: "https://lookaside.fbsbx.com/elementpath/media/?media_id=157327897433582&version=1790053480&transcode_extension=webp", imageSource: "https://www.meta.com/quest/quest-3/", imageCreator: "Meta Quest 3 official product image", specs: "Mixed reality · 512GB storage · 4K+ Infinite Display · Hand tracking" },
-  { id: "geforce-rtx-5070-ti", brand: "NVIDIA", name: "GeForce RTX 5070 Ti Graphics Card", category: "Components", icon: "▰", art: "art-storage", imageUrl: "https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/graphic-cards/50-series/5070-family/geforce-rtx-5070-ti-og-image.jpg", imageSource: "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5070-family/", imageCreator: "NVIDIA GeForce RTX 5070 Ti official product image", specs: "16GB GDDR7 · DLSS 4 · PCI Express 5.0" }
-];
-
-const productCandidates = bundledProducts
-  .concat(Array.isArray(window.TECH_IT_MORE_PRODUCTS) ? window.TECH_IT_MORE_PRODUCTS : [])
-  .concat(Array.isArray(window.TECH_IT_MORE_GAMING_PRODUCTS) ? window.TECH_IT_MORE_GAMING_PRODUCTS : [])
-  .filter(product => product && typeof product.id === "string" && typeof product.name === "string" && typeof product.imageUrl === "string" && product.imageUrl.length > 0 && typeof product.imageSource === "string" && product.imageSource.length > 0);
-const productsById = new Map();
-for (const product of productCandidates) {
-  if (!productsById.has(product.id)) productsById.set(product.id, product);
-}
-function kindOf(product) {
-  const art = product.art || "";
-  if (art === "art-mouse") return "Mice";
-  if (art === "art-keyboard") return "Keyboards";
-  if (art === "art-headphones") return /mic|seiren|speaker|soundbar/i.test(product.name) ? "Audio" : "Headsets";
-  if (art === "art-monitor") return "Monitors";
-  if (art === "art-computer") return "PCs & laptops";
-  if (art === "art-storage") return "Components";
-  return /controller|gamepad|wheel|stick|joy-con|pad\b/i.test(product.name) ? "Controllers" : "Consoles & handhelds";
-}
-const products = Array.from(productsById.values()).map(product => ({
-  ...product,
-  imageUrl: product.imageCreator === "Generic illustration, not a product photo" ? "" : product.imageUrl,
-  category: kindOf(product)
-}));
-
-const STORE_SEARCH_URLS = {
-  "Amazon": "https://www.amazon.com/s",
-  "Dell": "https://www.dell.com/en-us/search",
-  "Apple Store": "https://www.apple.com/shop/buy",
-  "Google Store": "https://store.google.com/us/search",
-  "Micro Center": "https://www.microcenter.com/search/search_results.aspx",
-  "Best Buy": "https://www.bestbuy.com/site/searchpage.jsp",
-  "Walmart": "https://www.walmart.com/search",
-  "Newegg": "https://www.newegg.com/p/pl",
-  "B&H Photo": "https://www.bhphotovideo.com/c/search",
-  "Target": "https://www.target.com/s",
-  "GameStop": "https://www.gamestop.com/search/?q=",
-  "eBay": "https://www.ebay.com/sch/i.html",
-  "Steam": "https://store.steampowered.com/search/",
-  "Nintendo": "https://www.nintendo.com/us/search/",
-  "PlayStation": "https://direct.playstation.com/en-us/search?q=",
-  "Xbox": "https://www.xbox.com/en-US/search?q=",
-  "LG": "https://www.lg.com/us/search",
-  "Meta": "https://www.meta.com/search/",
-  "NVIDIA": "https://www.nvidia.com/en-us/search/",
-  "NZXT": "https://nzxt.com/search",
-  "Elgato": "https://www.elgato.com/us/en/search",
-  "GameSir": "https://gamesir.com/search",
-  "Hyperkin": "https://hyperkin.com/catalogsearch/result/",
-  "ASUS Store": "https://www.asus.com/us/search/",
-  "Samsung Store": "https://www.samsung.com/us/search/",
-  "Razer": "https://www.razer.com/search/",
-  "Corsair": "https://www.corsair.com/us/en/search/",
-  "SteelSeries": "https://steelseries.com/search",
-  "Logitech G": "https://www.logitechg.com/en-us/search.html",
-  "Anker Store": "https://www.anker.com/search",
-  "Sonos": "https://www.sonos.com/en-us/search"
-};
-const BRAND_RETAILER_STORES = {
-  "ASUS ROG": ["ASUS Store", "Amazon", "Best Buy", "Newegg", "Micro Center"],
-  "CORSAIR": ["Corsair", "Amazon", "Best Buy", "Newegg", "Micro Center"],
-  "ELGATO": ["Elgato", "Amazon", "Best Buy", "Newegg"],
-  "GAMESIR": ["GameSir", "Amazon", "Best Buy"],
-  "HYPERKIN": ["Hyperkin", "Amazon", "eBay"],
-  "LG": ["LG", "Amazon", "Best Buy", "Newegg", "Micro Center"],
-  "META": ["Meta", "Amazon", "Best Buy", "Walmart", "Target"],
-  "NVIDIA": ["NVIDIA", "Amazon", "Best Buy", "Newegg", "Micro Center"],
-  "NZXT": ["NZXT", "Amazon", "Best Buy", "Newegg", "Micro Center"],
-  "NINTENDO": ["Nintendo", "Amazon", "Best Buy", "Walmart", "Target", "GameStop"],
-  "PLAYSTATION": ["PlayStation", "Amazon", "Best Buy", "Walmart", "Target", "GameStop"],
-  "RAZER": ["Razer", "Amazon", "Best Buy", "Newegg", "Micro Center"],
-  "STEELSERIES": ["SteelSeries", "Amazon", "Best Buy", "Newegg"],
-  "VALVE": ["Steam", "Amazon", "Best Buy"],
-  "XBOX": ["Xbox", "Amazon", "Best Buy", "Walmart", "Target", "GameStop"]
-};
-const DEFAULT_RETAILER_STORES = ["Amazon", "eBay"];
-const productRetailerStores = new Map(products.map(product => [
-  product.id,
-  BRAND_RETAILER_STORES[product.brand.trim().toUpperCase()] || DEFAULT_RETAILER_STORES
-]));
-const databaseName = "techscout-preview";
-const databaseVersion = 5;
-const categoryOrder = ["Consoles & handhelds", "Controllers", "Keyboards", "Mice", "Headsets", "Audio", "Monitors", "PCs & laptops", "Components"];
+const TIM = window.TIM || { products: [], stores: {}, categories: [], brandNames: {} };
+const products = TIM.products;
+const BRAND_NAMES = TIM.brandNames;
+const categoryOrder = TIM.categories.map(category => category.label);
 const categories = ["All products", ...[...new Set(products.map(product => product.category))].sort((a, b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b))];
 const grid = document.querySelector("#product-grid");
 const searchInput = document.querySelector("#search-input");
@@ -144,7 +37,6 @@ const photoLightboxCaption = document.querySelector("#photo-lightbox-caption");
 const photoLightboxScroll = document.querySelector("#photo-lightbox-scroll");
 const toast = document.querySelector("#toast");
 let activeCategory = "All products";
-let database;
 const themeToggle = document.querySelector("#theme-toggle");
 let toastTimer;
 let previouslyFocusedElement;
@@ -162,140 +54,31 @@ let handlingProductHistory = false;
 let productDialogRequest = 0;
 const catalogPageSize = 36;
 
-const requiredStores = ["products", "priceHistory", "offers", "settings", "alerts"];
-
-function openDatabaseAtVersion(version) {
-  return new Promise((resolve, reject) => {
-    const request = version ? indexedDB.open(databaseName, version) : indexedDB.open(databaseName);
-    request.onupgradeneeded = () => {
-      const db = request.result;
-      if (!db.objectStoreNames.contains("products")) {
-        const productStore = db.createObjectStore("products", { keyPath: "id" });
-        productStore.createIndex("category", "category", { unique: false });
-      }
-      if (!db.objectStoreNames.contains("priceHistory")) {
-        db.createObjectStore("priceHistory", { keyPath: ["productId", "date"] });
-      }
-      const historyStore = request.transaction.objectStore("priceHistory");
-      if (!historyStore.indexNames.contains("productId")) historyStore.createIndex("productId", "productId", { unique: false });
-      if (!db.objectStoreNames.contains("offers")) {
-        const offerStore = db.createObjectStore("offers", { keyPath: ["productId", "store"] });
-        offerStore.createIndex("productId", "productId", { unique: false });
-      }
-      if (!db.objectStoreNames.contains("settings")) db.createObjectStore("settings", { keyPath: "key" });
-      if (!db.objectStoreNames.contains("alerts")) {
-        const alertStore = db.createObjectStore("alerts", { keyPath: "productId" });
-        alertStore.createIndex("targetPrice", "targetPrice", { unique: false });
-      }
-    };
-    request.onblocked = () => reject(new Error("Close other Tech It More tabs so the local database can be upgraded."));
-    request.onsuccess = () => {
-      request.result.onversionchange = () => request.result.close();
-      resolve(request.result);
-    };
-    request.onerror = () => reject(request.error || new Error("Unable to open the local product database."));
-  });
-}
-
-function deleteDatabase() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.deleteDatabase(databaseName);
-    request.onsuccess = () => resolve();
-    request.onerror = () => reject(request.error || new Error("Unable to reset the local product database."));
-    request.onblocked = () => reject(new Error("Close other Tech It More tabs, then reload."));
-  });
-}
-
-async function openDatabase() {
+const STORAGE_PREFIX = "tim:";
+const memoryStore = new Map();
+function storageGet(key) {
+  if (memoryStore.has(key)) return memoryStore.get(key);
   try {
-    return await openDatabaseAtVersion(databaseVersion);
+    const raw = window.localStorage.getItem(STORAGE_PREFIX + key);
+    return raw === null ? undefined : JSON.parse(raw);
   } catch (error) {
-    if (!error || error.name !== "VersionError") throw error;
+    return undefined;
   }
-  // The browser already holds a newer copy of this database (for example from a newer build
-  // of the site). Reuse it if it has everything we need; otherwise reset it and start fresh.
+}
+function storageSet(key, value) {
+  memoryStore.set(key, value);
   try {
-    const existing = await openDatabaseAtVersion();
-    if (requiredStores.every(name => existing.objectStoreNames.contains(name))) return existing;
-    existing.close();
+    window.localStorage.setItem(STORAGE_PREFIX + key, JSON.stringify(value));
   } catch (error) {
-    // fall through to reset
+    /* Storage is blocked or full: the value stays in memory for this visit. */
   }
-  await deleteDatabase();
-  return openDatabaseAtVersion(databaseVersion);
 }
-
-function transactionDone(transaction) {
-  return new Promise((resolve, reject) => {
-    transaction.oncomplete = () => resolve();
-    transaction.onerror = () => reject(transaction.error || new Error("The local database transaction failed."));
-    transaction.onabort = () => reject(transaction.error || new Error("The local database transaction was aborted."));
-  });
-}
-
-async function seedDatabaseIfNeeded() {
-  const write = database.transaction("products", "readwrite");
-  const productStore = write.objectStore("products");
-  for (const product of products) {
-    productStore.put(product);
-  }
-  await transactionDone(write);
-}
-
-async function pruneDatabaseToGamingCatalog() {
-  if (await readSetting("catalogScope") === "shopping-gateway-v2") return;
-  const allowedIds = new Set(products.map(product => product.id));
-  const transaction = database.transaction(["products", "offers", "priceHistory", "alerts", "settings"], "readwrite");
-  const done = transactionDone(transaction);
-  for (const storeName of ["products", "offers", "priceHistory", "alerts"]) {
-    const store = transaction.objectStore(storeName);
-    const request = store.openCursor();
-    request.onsuccess = () => {
-      const cursor = request.result;
-      if (!cursor) return;
-      const productId = storeName === "products" ? cursor.value.id : cursor.value.productId;
-      if (storeName === "offers" || storeName === "priceHistory" || !allowedIds.has(productId)) cursor.delete();
-      cursor.continue();
-    };
-  }
-  const settingsStore = transaction.objectStore("settings");
-  const watchlistRequest = settingsStore.get("watchlist");
-  watchlistRequest.onsuccess = () => {
-    const existingWatchlist = watchlistRequest.result?.value;
-    if (!Array.isArray(existingWatchlist)) return;
-    const retainedWatchlist = existingWatchlist.filter(productId => allowedIds.has(productId));
-    if (retainedWatchlist.length !== existingWatchlist.length) {
-      settingsStore.put({ key: "watchlist", value: retainedWatchlist });
-    }
-  };
-  settingsStore.put({ key: "catalogScope", value: "shopping-gateway-v2" });
-  await done;
-}
-
-function readProducts() {
-  return new Promise((resolve, reject) => {
-    const request = database.transaction("products", "readonly").objectStore("products").getAll();
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error || new Error("Unable to load products from the local database."));
-  });
-}
-
 function readSetting(key) {
-  return new Promise((resolve, reject) => {
-    const request = database.transaction("settings", "readonly").objectStore("settings").get(key);
-    request.onsuccess = () => resolve(request.result ? request.result.value : undefined);
-    request.onerror = () => reject(request.error || new Error("Unable to load the saved appearance setting."));
-  });
+  return Promise.resolve(storageGet(key));
 }
-
 function saveSetting(key, value) {
-  return new Promise((resolve, reject) => {
-    const transaction = database.transaction("settings", "readwrite");
-    transaction.objectStore("settings").put({ key, value });
-    transaction.oncomplete = resolve;
-    transaction.onerror = () => reject(transaction.error || new Error("Unable to save the appearance setting."));
-    transaction.onabort = () => reject(transaction.error || new Error("The appearance setting change was cancelled."));
-  });
+  storageSet(key, value);
+  return Promise.resolve();
 }
 
 async function toggleWatchlist(productId) {
@@ -319,25 +102,13 @@ async function toggleWatchlist(productId) {
   });
 }
 
-function readAllRecords(storeName) {
-  return new Promise((resolve, reject) => {
-    const request = database.transaction(storeName, "readonly").objectStore(storeName).getAll();
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error || new Error(`Unable to export ${storeName} from the local database.`));
-  });
-}
-
 async function exportLocalData() {
-  const [savedProducts, settings] = await Promise.all([
-    readAllRecords("products"),
-    readAllRecords("settings")
-  ]);
   const data = {
     exportedAt: new Date().toISOString(),
-    notice: "Store links open retailer searches.",
-    products: savedProducts,
-    settings,
-    watchlist: [...watchlist]
+    notice: "Your saved list, recently viewed items and theme from this browser. Store links open retailer searches.",
+    watchlist: [...watchlist],
+    recent: recentIds,
+    theme: document.documentElement.dataset.theme
   };
   const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
   const link = document.createElement("a");
@@ -347,7 +118,7 @@ async function exportLocalData() {
   link.click();
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-  showToast("Local catalog and watchlist exported as JSON.");
+  showToast("Your saved list was exported as JSON.");
 }
 
 function applyTheme(theme) {
@@ -357,11 +128,11 @@ function applyTheme(theme) {
   themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} mode`);
   themeToggle.querySelector(".theme-icon").innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isDark ? '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>' : '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'}</svg>`;
   themeToggle.querySelector(".theme-label").textContent = isDark ? "Light mode" : "Dark mode";
-  document.querySelector("#theme-color").content = isDark ? "#0d1218" : "#eff2f6";
+  document.querySelector("#theme-color").content = isDark ? "#0e1117" : "#f3f2fa";
 }
 
 function reviewSearchUrl(product) {
-  return `https://www.youtube.com/results?search_query=${encodeURIComponent(`${product.brand} ${product.name} review`)}`;
+  return `https://www.youtube.com/results?search_query=${encodeURIComponent(`${fullProductName(product)} review`)}`;
 }
 
 function escapeHtml(value) {
@@ -390,19 +161,17 @@ const ICON_PATHS = {
   "Keyboards": '<rect x="2" y="6" width="20" height="12" rx="2.2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7.5 14h9"/>',
   "Mice": '<rect x="6.5" y="3" width="11" height="18" rx="5.5"/><path d="M12 3v6"/>',
   "Headsets": '<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.6"/><rect x="17" y="14" width="4" height="6" rx="1.6"/>',
-  "Audio": '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"/>',
-  "Monitors": '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
-  "PCs & laptops": '<rect x="5" y="5" width="14" height="10" rx="1.6"/><path d="M2.5 19h19"/>',
-  "Components": '<rect x="7" y="7" width="10" height="10" rx="1.6"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>'
+  "Streaming & audio": '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"/>',
+  "PC hardware": '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
 };
 function categoryIcon(category) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[category] || ICON_PATHS["All products"]}</svg>`;
 }
 const HEART_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
-const BRAND_NAMES = {
-  "8BITDO": "8BitDo", "ASUS": "ASUS", "ASUS ROG": "ASUS ROG", "ASUS TUF": "ASUS TUF", "BENQ": "BenQ", "GAMESIR": "GameSir", "HYPERX": "HyperX", "LOGITECH G": "Logitech G",
-  "NZXT": "NZXT", "PLAYSTATION": "PlayStation", "POWERA": "PowerA", "STEELSERIES": "SteelSeries", "WD BLACK": "WD Black", "XBOX": "Xbox"
-};
+function fullProductName(product) {
+  const brand = brandLabel(product.brand);
+  return product.name.toLowerCase().startsWith(brand.toLowerCase()) ? product.name : `${brand} ${product.name}`;
+}
 function brandLabel(brand) {
   const raw = String(brand || "").trim();
   const key = raw.toUpperCase();
@@ -412,7 +181,7 @@ function brandLabel(brand) {
 }
 const CATEGORY_WORDS = {
   "Consoles & handhelds": "console handheld", "Controllers": "controller gamepad", "Keyboards": "keyboard", "Mice": "mouse",
-  "Headsets": "headset headphones", "Audio": "audio microphone", "Monitors": "monitor display", "PCs & laptops": "pc laptop computer", "Components": "component gpu cpu ssd"
+  "Headsets": "headset headphones", "Streaming & audio": "audio microphone streaming capture webcam", "PC hardware": "pc laptop computer monitor display component gpu cpu ssd"
 };
 function isWireless(product) {
   return /wireless|lightspeed|hyperspeed|bluetooth|2\.4\s?ghz/i.test(`${product.name} ${product.specs || ""}`);
@@ -421,12 +190,48 @@ function specText(product) {
   const specs = String(product.specs || "").trim();
   return /not listed|check the/i.test(specs) ? "" : specs;
 }
-function firstSpec(product) {
-  return specText(product).split(" · ").slice(0, 2).join(" · ");
-}
 function matchesTerms(product, terms) {
   const haystack = `${brandLabel(product.brand)} ${product.name} ${product.category} ${CATEGORY_WORDS[product.category] || ""} ${specText(product)}`.toLocaleLowerCase();
   return terms.every(term => haystack.includes(term));
+}
+// Typo help: closest brand/product word within a small edit distance.
+function editDistance(a, b) {
+  if (Math.abs(a.length - b.length) > 2) return 3;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    for (let j = 1; j <= b.length; j++) {
+      row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    prev = row;
+  }
+  return prev[b.length];
+}
+function didYouMean(query) {
+  const vocab = new Map();
+  catalogProducts.forEach(product => {
+    const brand = brandLabel(product.brand);
+    vocab.set(brand.toLocaleLowerCase(), brand);
+    `${product.name} ${product.category}`.split(/[\s/&-]+/).forEach(word => {
+      const w = word.toLocaleLowerCase();
+      if (w.length >= 4 && !/\d/.test(w)) vocab.set(w, word);
+    });
+  });
+  const words = query.toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  let changed = false;
+  const fixed = words.map(word => {
+    if (word.length < 4 || vocab.has(word)) return word;
+    let best = null, bestDistance = word.length >= 6 ? 2 : 1;
+    vocab.forEach((label, key) => {
+      const d = editDistance(word, key);
+      if (d <= bestDistance && (!best || d < best.d)) best = { d, label: key };
+    });
+    if (best) { changed = true; return best.label; }
+    return word;
+  });
+  if (!changed) return "";
+  const result = fixed.join(" ");
+  return catalogProducts.some(product => matchesTerms(product, fixed)) ? result : "";
 }
 function savedOnly() {
   return watchlistFilter.getAttribute("aria-pressed") === "true";
@@ -435,7 +240,12 @@ function reducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 function scrollToCatalog() {
-  document.querySelector("#catalog").scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+  // Scroll to the category row (not the product heading) so the tiles stay visible under the sticky header.
+  const target = document.querySelector("#category-list") || document.querySelector("#catalog");
+  const header = document.querySelector(".tm-header");
+  const offset = (header ? header.offsetHeight : 0) + 12;
+  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top: Math.max(0, top), behavior: reducedMotion() ? "auto" : "smooth" });
 }
 function setWireless(value) {
   wirelessOnly = value;
@@ -445,21 +255,67 @@ function updateSearchState() {
   searchWrap.classList.toggle("has-text", searchInput.value.length > 0);
 }
 
-function searchableProducts(allProducts) {
+// "Featured" puts products that have a photo and specs ahead of bare listings.
+function featuredScore(product) {
+  return (product.imageUrl ? 2 : 0) + (specText(product) ? 1 : 0);
+}
+
+function searchableProducts(allProducts, { ignoreTier = false, ignoreWireless = false } = {}) {
   const terms = searchInput.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   const onlySaved = savedOnly();
   const visible = allProducts.filter(product => {
     if (sharedIds && !sharedIds.includes(product.id)) return false;
     if (activeCategory !== "All products" && product.category !== activeCategory) return false;
     if (activeBrand !== "All brands" && brandLabel(product.brand) !== activeBrand) return false;
-    if (wirelessOnly && !isWireless(product)) return false;
+    if (wirelessOnly && !ignoreWireless && !isWireless(product)) return false;
+    if (!ignoreTier && activeTier !== "All tiers" && tierOf(product) !== activeTier) return false;
     if (onlySaved && !watchlist.has(product.id)) return false;
     return !terms.length || matchesTerms(product, terms);
   });
+  if (sortSelect.value === "popular") visible.sort((a, b) => featuredScore(b) - featuredScore(a));
   if (sortSelect.value === "name") visible.sort((a, b) => a.name.localeCompare(b.name));
   if (sortSelect.value === "brand") visible.sort((a, b) => brandLabel(a.brand).localeCompare(brandLabel(b.brand)) || a.name.localeCompare(b.name));
   return visible;
 }
+
+const tierOf = product => (product.verdict && product.verdict.tier) || "";
+function checkedDate(value) {
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
+}
+function verdictMarkup(product) {
+  const v = product.verdict;
+  if (!v) return "";
+  const checked = product.checked && checkedDate(product.checked);
+  return `<dl class="tm-verdict"><dt>Best for</dt><dd>${escapeHtml(v.bestFor)}</dd><dt>The catch</dt><dd>${escapeHtml(v.downside)}</dd>${v.skipIf ? `<dt>Skip it if</dt><dd>${escapeHtml(v.skipIf)}.</dd>` : ""}<dt>Typical price tier</dt><dd>${escapeHtml(v.tier)}. A rough guide, not a quote.</dd><dt>Last checked</dt><dd>${checked ? `${escapeHtml(checked)}, against the manufacturer's page.` : "Not yet re-checked against the manufacturer's page. Confirm key specs with the store or maker."}</dd></dl>`;
+}
+function quickFactsMarkup(product) {
+  const v = product.verdict || {};
+  const checked = product.checked && checkedDate(product.checked);
+  const rows = [];
+  if (v.tier) rows.push(`<div><dt>Price tier</dt><dd>${escapeHtml(v.tier)}</dd></div>`);
+  rows.push(`<div><dt>Last checked</dt><dd>${checked ? escapeHtml(checked) : "Not yet re-checked"}</dd></div>`);
+  return `<dl class="detail-quick-facts">${rows.join("")}</dl>${reviewMarkup(product)}`;
+}
+function alternativesMarkup(product) {
+  const picks = (product.alts || []).map(alt => ({ why: alt.why, other: products.find(item => item.id === alt.id) })).filter(alt => alt.other);
+  if (!picks.length) return "";
+  return `<div class="tm-alts"><h3>If not this, consider</h3><ul>${picks.map(({ other, why }) => `<li><a href="/p/${escapeHtml(other.id)}/" data-open-product="${escapeHtml(other.id)}"><span class="tm-alt-text"><strong>${escapeHtml(other.name)}</strong><span class="tm-alt-why">${escapeHtml(why)}</span><small>${escapeHtml(brandLabel(other.brand))}${other.verdict && other.verdict.tier ? ` · ${escapeHtml(other.verdict.tier)}` : ""}</small></span><span class="tm-alt-go" aria-hidden="true">›</span></a></li>`).join("")}</ul></div>`;
+}
+const YT_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="m10 9 5 3-5 3z" fill="#fff"/></svg>';
+function reviewMarkup(product) {
+  return `<p class="tm-review-row"><a class="tm-review" href="${escapeHtml(reviewSearchUrl(product))}" target="_blank" rel="noopener noreferrer nofollow">${YT_ICON}<span>Watch reviews on YouTube</span><span aria-hidden="true">↗</span></a><small>Opens a YouTube search. Reviews are made by other people.</small></p>`;
+}
+function renderSpotlight() {
+  const box = document.querySelector("#spotlight");
+  const pool = products.filter(p => p.verdict && p.verdict.downside);
+  if (!box || !pool.length) return;
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  const name = escapeHtml(fullProductName(pick));
+  const best = pick.verdict.bestFor ? `<p class="tm-spot-best">Best for: ${escapeHtml(pick.verdict.bestFor.charAt(0).toLowerCase() + pick.verdict.bestFor.slice(1))}.</p>` : "";
+  box.innerHTML = `<p class="tm-spot-label">Before you buy <span class="tm-spot-random">· a random pick each visit</span> <button type="button" class="tm-spot-again" data-spot-again>Another</button></p><p class="tm-spot-name">${name}</p><p class="tm-spot-catch"><span class="tm-spot-tag">The catch:</span> ${escapeHtml(pick.verdict.downside)}.</p>${best}<a class="tm-spot-link" href="/p/${escapeHtml(pick.id)}/">Read the full verdict<span class="sr-only"> for ${name}</span></a>`;
+}
+let activeTier = "All tiers";
 
 function cardMarkup(product) {
   const name = escapeHtml(product.name);
@@ -467,7 +323,6 @@ function cardMarkup(product) {
   const kind = escapeHtml(product.category);
   const productId = escapeHtml(product.id);
   const saved = watchlist.has(product.id);
-  const spec = firstSpec(product);
   const icon = categoryIcon(product.category);
   const media = product.imageUrl
     ? `<img class="tm-photo" src="${escapeHtml(product.imageUrl)}" alt="${brand} ${name}" loading="lazy" decoding="async"><span class="tm-icon" aria-hidden="true" hidden>${icon}</span>`
@@ -475,7 +330,7 @@ function cardMarkup(product) {
   return `<article class="tm-card" data-kind="${kind}">
     <button class="tm-open" type="button" data-product-id="${productId}" aria-label="${brand} ${name}: see where to buy">
       <span class="tm-tile">${media}${isWireless(product) ? '<span class="tm-pill">Wireless</span>' : ""}</span>
-      <span class="tm-body"><span class="tm-brand">${brand}</span><span class="tm-name">${name}</span>${spec ? `<span class="tm-spec">${escapeHtml(spec)}</span>` : ""}</span>
+      <span class="tm-body"><span class="tm-brand">${brand}</span><span class="tm-name">${name}</span>${product.summary ? `<span class="tm-summary">${escapeHtml(product.summary)}</span>` : ""}${product.verdict && product.verdict.tier ? `<span class="tm-tier">${escapeHtml(product.verdict.tier)}</span>` : ""}</span>
     </button>
     <button class="tm-heart${saved ? " saved" : ""}" type="button" data-watch-id="${productId}" aria-pressed="${saved}" aria-label="${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list">${HEART_ICON}</button>
   </article>`;
@@ -577,8 +432,8 @@ function renderAdditionalProductPhotos(product) {
         const slideshowButton = dialogContent.querySelector("#gallery-slideshow-toggle");
         if (slideshowButton) slideshowButton.disabled = true;
         status.innerHTML = product.imageSource
-          ? `Only the main photo is available here. <a href="${escapeHtml(product.imageSource)}" target="_blank" rel="noopener noreferrer">View the product photo gallery ↗</a>`
-          : "Only the main photo is available for this product.";
+          ? `<a href="${escapeHtml(product.imageSource)}" target="_blank" rel="noopener noreferrer">More photos on the maker's page ↗</a>`
+          : "";
         return;
       }
       const allPhotos = [{
@@ -603,11 +458,12 @@ function renderAdditionalProductPhotos(product) {
       gallery.dataset.selectedIndex = String(defaultIndex);
       dialogContent.querySelectorAll("[data-photo-step]").forEach(button => {
         button.disabled = false;
+        button.hidden = false;
       });
       const slideshowButton = dialogContent.querySelector("#gallery-slideshow-toggle");
-      if (slideshowButton) slideshowButton.disabled = allPhotos.length < 2;
+      if (slideshowButton) { slideshowButton.disabled = allPhotos.length < 2; slideshowButton.hidden = false; }
       const counter = dialogContent.querySelector("#photo-gallery-counter");
-      if (counter) counter.textContent = `${defaultIndex + 1} / ${allPhotos.length}`;
+      if (counter) { counter.textContent = `${defaultIndex + 1} / ${allPhotos.length}`; counter.hidden = false; }
       selectProductGalleryPhoto(defaultIndex);
       status.textContent = `${allPhotos.length} photos`;
       startGallerySlideshow();
@@ -807,10 +663,102 @@ function renderActiveFilters() {
   if (activeCategory !== "All products") chips.push(["category", activeCategory]);
   if (activeBrand !== "All brands") chips.push(["brand", activeBrand]);
   if (wirelessOnly) chips.push(["wireless", "Wireless only"]);
+  if (activeTier !== "All tiers") chips.push(["tier", `Tier: ${activeTier}`]);
   if (savedOnly()) chips.push(["saved", "Saved only"]);
   const html = chips.map(([kind, label]) => `<button type="button" class="tm-chip" data-clear="${kind}" aria-label="Remove filter: ${escapeHtml(label)}">${escapeHtml(label)} <span aria-hidden="true">×</span></button>`);
   if (chips.length > 1) html.push(`<button type="button" class="tm-link" data-clear="all">Clear all</button>`);
   activeFiltersEl.innerHTML = html.join("");
+}
+
+function renderWirelessCount() {
+  const base = searchableProducts(catalogProducts, { ignoreWireless: true });
+  const count = base.filter(isWireless).length;
+  wirelessToggle.textContent = `Wireless only (${count})`;
+  wirelessToggle.title = "Show only products that connect without a cable";
+  wirelessToggle.disabled = count === 0 && !wirelessOnly;
+}
+
+function renderTierSelect() {
+  const select = document.querySelector("#tier-select");
+  if (!select) return;
+  const base = searchableProducts(catalogProducts, { ignoreTier: true });
+  const counts = { Budget: 0, "Mid-range": 0, Premium: 0 };
+  base.forEach(product => { if (counts[tierOf(product)] !== undefined) counts[tierOf(product)]++; });
+  select.innerHTML = [`<option value="All tiers">All tiers (${base.length})</option>`,
+    ...Object.keys(counts).map(tier => `<option value="${tier}"${counts[tier] === 0 && tier !== activeTier ? " disabled" : ""}>${tier} (${counts[tier]})</option>`)].join("");
+  select.value = activeTier;
+}
+
+const CATEGORY_HINTS = [
+  [/mouse|mice/i, "Mice"], [/keyboard|keypad/i, "Keyboards"], [/headset|headphone|earbud/i, "Headsets"],
+  [/controller|gamepad|joystick/i, "Controllers"], [/console|handheld|\bvr\b|playstation|xbox|switch/i, "Consoles & handhelds"],
+  [/capture|webcam|camera|microphone|\bmic\b|speaker|soundbar|stream/i, "Streaming & audio"], [/monitor|gpu|graphics|\bpc\b|desktop|laptop/i, "PC hardware"]
+];
+
+function mailtoLink(subject, body) {
+  const address = TIM.contact || "";
+  return address ? `mailto:${address}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}` : "";
+}
+
+function renderEmptyState(visibleCount) {
+  emptyState.hidden = visibleCount !== 0;
+  if (visibleCount !== 0) { emptyState.innerHTML = ""; return; }
+  const query = searchInput.value.trim();
+  const otherFilters = activeCategory !== "All products" || activeBrand !== "All brands" || wirelessOnly || activeTier !== "All tiers" || savedOnly();
+  const button = (action, label, primary) => `<button type="button" class="${primary ? "tm-primary" : "tm-btn"} tm-empty-btn" data-empty-action="${escapeHtml(action)}">${escapeHtml(label)}</button>`;
+  if (savedOnly() && !watchlist.size) {
+    emptyState.innerHTML = `<p class="tm-empty-title">Nothing saved yet.</p><p>Tap the heart on any product to save it here.</p><div class="tm-empty-actions">${button("clear-saved-filter", "Browse all gear", true)}</div>`;
+    return;
+  }
+  const actions = [];
+  let title, body = "";
+  const terms = query.toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  const existsElsewhere = query && catalogProducts.some(product => matchesTerms(product, terms));
+  if (query && existsElsewhere) {
+    title = `No results for “${escapeHtml(query)}” with these filters.`;
+    body = "<p>The search does match other products in the catalog.</p>";
+    actions.push(button("clear-filters", "Clear filters, keep search", true));
+    actions.push(button("clear-query", "Clear search"));
+  } else if (query) {
+    const suggestion = didYouMean(query);
+    title = suggestion ? `No results for “${escapeHtml(query)}”. Did you mean “${escapeHtml(suggestion)}”?` : `We don't have “${escapeHtml(query)}” yet.`;
+    if (suggestion) actions.push(button(`query:${suggestion}`, `Search “${suggestion}”`, true));
+    const brands = new Map();
+    catalogProducts.forEach(product => brands.set(brandLabel(product.brand), (brands.get(brandLabel(product.brand)) || 0) + 1));
+    const covered = [...brands.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([name]) => name);
+    body = `<p>It may be spelled differently, or it isn't in the catalog yet. We cover ${escapeHtml(covered.slice(0, -1).join(", "))} and ${escapeHtml(covered[covered.length - 1])} so far.</p>`;
+    const hint = CATEGORY_HINTS.find(([pattern]) => pattern.test(query));
+    if (suggestion) {
+      actions.push(button("clear-query", "Browse all gear"));
+    } else if (hint && catalogProducts.some(product => product.category === hint[1])) {
+      const count = catalogProducts.filter(product => product.category === hint[1]).length;
+      actions.push(button(`category:${hint[1]}`, `Browse ${hint[1].toLowerCase()} (${count})`, true));
+    } else {
+      actions.push(button("clear-query", "Browse all gear", true));
+    }
+    const suggest = mailtoLink("Tech It More: please add a product", `I searched for "${query}" and didn't find it. Please consider adding it.`);
+    if (suggest) actions.push(`<a class="tm-btn tm-empty-btn" href="${escapeHtml(suggest)}">Suggest “${escapeHtml(query.slice(0, 40))}”</a>`);
+    if (otherFilters) actions.push(button("clear-filters", "Clear filters, keep search"));
+  } else if (activeTier !== "All tiers" && searchableProducts(catalogProducts, { ignoreTier: true }).length) {
+    const others = searchableProducts(catalogProducts, { ignoreTier: true }).length;
+    const what = activeCategory === "All products" ? "products" : activeCategory.toLowerCase();
+    title = `No ${activeTier.toLowerCase()} ${escapeHtml(what)} yet.`;
+    body = `<p>${others} matching ${others === 1 ? "product sits" : "products sit"} in other tiers.</p>`;
+    actions.push(button("clear-tier", "Show all tiers", true));
+    const suggest = mailtoLink(`Tech It More: ${activeTier.toLowerCase()} pick suggestion`, `I'd like to see a ${activeTier.toLowerCase()} ${what} pick. My suggestion: `);
+    if (suggest) actions.push(`<a class="tm-btn tm-empty-btn" href="${escapeHtml(suggest)}">Suggest one</a>`);
+  } else {
+    title = otherFilters ? "No products match these filters." : "No products to show.";
+    body = otherFilters ? "<p>Try removing a filter.</p>" : "";
+    if (otherFilters) actions.push(button("clear-all", "Clear all filters", true));
+  }
+  emptyState.innerHTML = `<p class="tm-empty-title">${title}</p>${body}<div class="tm-empty-actions">${actions.join("")}</div>`;
+}
+
+function setTier(value) {
+  activeTier = value;
+  const select = document.querySelector("#tier-select");
+  if (select) select.value = value;
 }
 
 function clearFilter(kind) {
@@ -818,6 +766,7 @@ function clearFilter(kind) {
   if (kind === "category" || kind === "all") activeCategory = "All products";
   if (kind === "brand" || kind === "all") activeBrand = "All brands";
   if (kind === "wireless" || kind === "all") setWireless(false);
+  if (kind === "tier" || kind === "all") setTier("All tiers");
   if (kind === "saved" || kind === "all") setWatchlistFilter(false);
   updateSearchState();
   renderCategories();
@@ -825,7 +774,7 @@ function clearFilter(kind) {
 }
 
 function renderRecent() {
-  const home = !searchInput.value.trim() && activeCategory === "All products" && activeBrand === "All brands" && !wirelessOnly && !savedOnly() && !sharedIds;
+  const home = !searchInput.value.trim() && activeCategory === "All products" && activeBrand === "All brands" && activeTier === "All tiers" && !wirelessOnly && !savedOnly() && !sharedIds;
   const items = recentIds.map(id => catalogProducts.find(product => product.id === id)).filter(Boolean);
   recentRow.hidden = !(home && items.length);
   if (recentRow.hidden) return;
@@ -846,6 +795,7 @@ function syncUrl() {
   if (activeCategory !== "All products") params.set("cat", activeCategory);
   if (activeBrand !== "All brands") params.set("brand", activeBrand);
   if (wirelessOnly) params.set("wireless", "1");
+  if (activeTier !== "All tiers") params.set("tier", activeTier);
   if (sortSelect.value !== "popular") params.set("sort", sortSelect.value);
   if (sharedIds) params.set("list", sharedIds.join(","));
   const search = params.toString();
@@ -858,6 +808,7 @@ function readUrlState() {
   if (categories.includes(params.get("cat"))) activeCategory = params.get("cat");
   if (params.get("brand")) activeBrand = params.get("brand");
   if (params.get("wireless") === "1") setWireless(true);
+  if (["Budget", "Mid-range", "Premium"].includes(params.get("tier"))) setTier(params.get("tier"));
   if ([...sortSelect.options].some(option => option.value === params.get("sort"))) sortSelect.value = params.get("sort");
   if (params.get("list")) {
     const ids = params.get("list").split(",").filter(id => catalogProducts.some(product => product.id === id));
@@ -900,6 +851,8 @@ function moveSuggestion(delta) {
 
 function renderCatalog(append = false) {
   if (!append) renderBrandSelect();
+  if (!append) renderTierSelect();
+  if (!append) renderWirelessCount();
   const visible = searchableProducts(catalogProducts);
   const alreadyRendered = append ? grid.children.length : 0;
   if (!append) grid.innerHTML = "";
@@ -907,10 +860,7 @@ function renderCatalog(append = false) {
   const rendered = Math.min(visible.length, alreadyRendered + catalogPageSize);
   resultsCount.textContent = `${visible.length} ${visible.length === 1 ? "product" : "products"}`;
   catalogTitle.textContent = sharedIds ? "Shared list" : activeCategory === "All products" ? "All gear" : activeCategory;
-  emptyState.textContent = savedOnly() && !watchlist.size
-    ? "Nothing saved yet. Tap the heart on any product to save it here."
-    : "No products match. Try a different search or clear a filter.";
-  emptyState.hidden = visible.length !== 0;
+  renderEmptyState(visible.length);
   loadMoreButton.hidden = rendered >= visible.length;
   if (!loadMoreButton.hidden) {
     const remaining = visible.length - rendered;
@@ -934,39 +884,25 @@ function renderCategories() {
   }).join("");
 }
 
+const STORE_HINTS = {
+  Amazon: "Wide selection", "Best Buy": "Local pickup", Newegg: "PC specialist", "Micro Center": "In-store pickup",
+  Walmart: "Everyday retailer", Target: "Everyday retailer", GameStop: "Trade-ins", eBay: "Used & open-box"
+};
+const storeHint = name => STORE_HINTS[name] || "Official store";
 function retailerSearchUrl(store, productName) {
-  const baseUrl = STORE_SEARCH_URLS[store];
-  if (!baseUrl) return "#";
-  const url = new URL(baseUrl);
-  const queryParam = {
-    "Amazon": "k",
-    "Dell": "q",
-    "Apple Store": "q",
-    "Google Store": "q",
-    "Micro Center": "Ntt",
-    "Best Buy": "st",
-    "Walmart": "q",
-    "Newegg": "d",
-    "B&H Photo": "Ntt",
-    "Target": "searchTerm",
-    "eBay": "_nkw",
-    "Steam": "term",
-    "Nintendo": "q",
-    "ASUS Store": "q",
-    "Samsung Store": "q",
-    "Anker Store": "q",
-    "Sonos": "q"
-  }[store];
-  if (queryParam) url.searchParams.set(queryParam, productName);
-  else url.searchParams.set("q", productName);
+  const config = TIM.stores[store];
+  if (!config) return "#";
+  const url = new URL(config.url);
+  url.searchParams.set(config.param || "q", productName);
   return url.href;
 }
 
 async function openProduct(productId, { fromHistory = false } = {}) {
   const requestId = ++productDialogRequest;
+  stopGallerySlideshow();
   try {
     const product = catalogProducts.find(item => item.id === productId);
-    if (!product) throw new Error(`Product "${productId}" was not found in the local database.`);
+    if (!product) throw new Error(`Product "${productId}" was not found in the catalog.`);
     if (!fromHistory && !handlingProductHistory) {
       const currentProductId = new URLSearchParams(window.location.hash.slice(1)).get("product");
       if (currentProductId !== productId) {
@@ -978,51 +914,51 @@ async function openProduct(productId, { fromHistory = false } = {}) {
     const productName = escapeHtml(product.name);
     const brand = escapeHtml(product.brand);
     const category = escapeHtml(product.category);
-    const specs = escapeHtml(product.specs || "Product specifications are not listed; check the linked product record.");
+    const specs = escapeHtml(product.specs || "Specifications are not listed yet. Check the store pages for details.");
     const icon = escapeHtml(product.icon);
     const productIdAttribute = escapeHtml(product.id);
     const artClass = product.art ? ` ${escapeHtml(product.art)}` : "";
     const photoCredit = `<p class="photo-credit"><span id="photo-credit-label">Product photo: </span><a id="photo-credit-link" href="${escapeHtml(product.imageSource || product.productSource || "https://commons.wikimedia.org/")}" target="_blank" rel="noopener noreferrer">${escapeHtml(product.imageCreator || (product.imageSource ? "manufacturer source" : "photo source"))} ↗</a>${product.productSource ? ` · <a href="${escapeHtml(product.productSource)}" target="_blank" rel="noopener noreferrer">product record ↗</a>` : ""}</p>`;
     const rows = (product.retailerSearchStores || [])
-      .filter((storeName, index, stores) => STORE_SEARCH_URLS[storeName] && stores.indexOf(storeName) === index)
+      .slice().sort((a, b) => (STORE_HINTS[a] ? 1 : 0) - (STORE_HINTS[b] ? 1 : 0))
+      .filter((storeName, index, stores) => TIM.stores[storeName] && stores.indexOf(storeName) === index)
       .map(storeName => {
         const store = escapeHtml(storeName);
-        return `<a class="store-gateway-link" href="${escapeHtml(retailerSearchUrl(storeName, `${product.brand} ${product.name}`))}" target="_blank" rel="noopener noreferrer">
+        return `<a class="store-gateway-link" href="${escapeHtml(retailerSearchUrl(storeName, fullProductName(product)))}" target="_blank" rel="noopener noreferrer">
           <span class="store-icon" aria-hidden="true">${escapeHtml(storeName.charAt(0))}</span>
           <span>${store}</span>
-          <span aria-hidden="true">Search ↗</span>
+          <span class="store-hint">${escapeHtml(storeHint(storeName))} ↗</span>
         </a>`;
       }).join("") || `<p class="gateway-disclosure">No product-specific retailer searches are listed for this item yet.</p>`;
     const offersHeading = "Find this product at retailers";
     const offersNotice = "(opens each store's own search)";
-    const offerNote = `<p class="gateway-disclosure">Each link opens the store's own search page for this product.</p>`;
+    const offerNote = `<p class="gateway-disclosure">Each link opens the store's own search results for this product, so you can pick the exact model and seller yourself. Tech It More doesn't quote prices.</p>`;
     dialogContent.innerHTML = `<div class="detail-content" data-product-id="${productIdAttribute}" data-kind="${category}">
       <div class="detail-top">
         <span class="product-art detail-art${artClass}" aria-hidden="true">${categoryIcon(product.category)}</span>
-        <div class="detail-title-wrap"><p class="product-brand">${brand} · ${category}</p><h2 id="detail-name">${productName}</h2><p class="detail-subtitle">${specs}</p></div>
+        <div class="detail-title-wrap"><p class="product-brand">${brand} · ${category}</p><h2 id="detail-name">${productName}</h2><p class="detail-subtitle">${specs}</p><button class="tm-where" type="button" data-scroll-offers>Where to buy ↓</button></div>
       </div>
       <div class="product-photo-gallery" id="product-photo-gallery" data-selected-index="0">
         <div class="detail-photo-wrap">
-          <button class="photo-gallery-arrow previous" type="button" data-photo-step="-1" aria-label="Show previous product photo" disabled>‹</button>
+          <button class="photo-gallery-arrow previous" type="button" data-photo-step="-1" aria-label="Show previous product photo" disabled hidden>‹</button>
         <img class="detail-photo" id="gallery-main-photo" src="${escapeHtml(product.imageUrl || "")}" alt="${brand} ${productName} ${/\.svg(\?|$)/.test(product.imageUrl) ? "illustration" : "product photo"}" role="button" tabindex="0" aria-label="Open ${productName} photo full screen" decoding="async" ${product.imageUrl ? "" : "hidden"}>
         <div class="photo-unavailable detail-photo-unavailable"${product.imageUrl ? " hidden" : ""}><span class="product-art detail-art${artClass}" aria-hidden="true">${categoryIcon(product.category)}</span><span>Official product photo unavailable</span></div>
-          <span class="photo-gallery-counter" id="photo-gallery-counter" aria-live="polite">1 / 1</span>
-          <button class="photo-gallery-arrow next" type="button" data-photo-step="1" aria-label="Show next product photo" disabled>›</button>
+          <span class="photo-gallery-counter" id="photo-gallery-counter" aria-live="polite" hidden>1 / 1</span>
+          <button class="photo-gallery-arrow next" type="button" data-photo-step="1" aria-label="Show next product photo" disabled hidden>›</button>
         </div>
         <div class="photo-gallery-thumbnails" id="photo-gallery-thumbnails" role="group" aria-label="Product photos" hidden></div>
-        <button class="gallery-slideshow-toggle" id="gallery-slideshow-toggle" type="button" aria-pressed="false" aria-label="Play photo slideshow" disabled>▶ Play</button>
-        <p class="photo-gallery-status" id="photo-gallery-status" role="status">Loading additional product photos…</p>
+        <button class="gallery-slideshow-toggle" id="gallery-slideshow-toggle" type="button" aria-pressed="false" aria-label="Play photo slideshow" disabled hidden>▶ Play</button>
+        <p class="photo-gallery-status" id="photo-gallery-status" role="status"></p>
+        <div class="detail-quick">${quickFactsMarkup(product)}</div>
       </div>
       <div class="detail-info-column">
+        ${verdictMarkup(product)}
         ${photoCredit}
-        <h3 class="offers-heading">${offersHeading} <span class="offers-notice">${offersNotice}</span></h3>
+        <h3 class="offers-heading" id="offers-heading">${offersHeading} <span class="offers-notice">${offersNotice}</span></h3>
         <div class="offer-list store-gateway-list">${rows}</div>
         ${offerNote}
-        <div class="review-feature">
-          <span class="review-feature-icon" aria-hidden="true">▶</span>
-          <span><strong>Watch before you buy</strong><small>See video reviews for this exact product</small></span>
-          <a class="review-link" href="${reviewSearchUrl(product)}" target="_blank" rel="noopener noreferrer">Find reviews <span aria-hidden="true">↗</span></a>
-        </div>
+        ${reviewMarkup(product)}
+        ${alternativesMarkup(product)}
         <button class="share-product" type="button" data-share-product="${product.id}">↗ Share this product</button>
       </div>
     </div>`;
@@ -1122,11 +1058,28 @@ watchlistFilter.addEventListener("click", () => {
   const selected = watchlistFilter.getAttribute("aria-pressed") === "true";
   setWatchlistFilter(!selected);
   renderCatalog();
+  window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
 });
 exportButton.addEventListener("click", () => {
-  exportLocalData().catch(error => showError("Could not export local database data.", error));
+  exportLocalData().catch(error => showError("Could not export your data.", error));
 });
 dialogContent.addEventListener("click", event => {
+  const altLink = event.target.closest("[data-open-product]");
+  if (altLink && !(event.metaKey || event.ctrlKey || event.shiftKey || event.button)) {
+    event.preventDefault();
+    openProduct(altLink.dataset.openProduct).then(() => {
+      const scroller = dialogContent.querySelector(".detail-content");
+      if (scroller) scroller.scrollTop = 0;
+      const info = dialogContent.querySelector(".detail-info-column");
+      if (info) info.scrollTop = 0;
+    });
+    return;
+  }
+  if (event.target.closest("[data-scroll-offers]")) {
+    const heading = dialogContent.querySelector("#offers-heading");
+    if (heading) heading.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+    return;
+  }
   if (event.target.matches("#gallery-main-photo")) {
     openPhotoLightbox();
     return;
@@ -1146,8 +1099,7 @@ dialogContent.addEventListener("click", event => {
   }
   const shareButton = event.target.closest("[data-share-product]");
   if (shareButton) {
-    const url = new URL(window.location.href);
-    url.hash = `product=${encodeURIComponent(shareButton.dataset.shareProduct)}`;
+    const url = new URL(`/p/${encodeURIComponent(shareButton.dataset.shareProduct)}/`, window.location.origin);
     if (navigator.share) {
       navigator.share({ title: "Tech It More product", text: "See this product and find it at US retailers.", url: url.href })
         .catch(error => {
@@ -1280,21 +1232,12 @@ document.addEventListener("visibilitychange", () => {
 });
 
 async function start() {
-  if (!("indexedDB" in window)) {
-    throw new Error("This browser does not support IndexedDB, which is required for the local product database.");
-  }
-  database = await openDatabase();
-  await pruneDatabaseToGamingCatalog();
-  await seedDatabaseIfNeeded();
-  const retailerSearchStoresByProduct = productRetailerStores;
-  catalogProducts = (await readProducts()).map(product => ({
-    ...product,
-    retailerSearchStores: retailerSearchStoresByProduct.get(product.id) || []
-  }));
-  watchlist = new Set(await readSetting("watchlist") || []);
+  catalogProducts = products.map(product => ({ ...product, retailerSearchStores: product.stores || [] }));
+  const knownIds = new Set(catalogProducts.map(product => product.id));
+  watchlist = new Set((await readSetting("watchlist") || []).filter(id => knownIds.has(id)));
   watchlistCount.textContent = String(watchlist.size);
   applyTheme(await readSetting("theme") || (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
-  recentIds = (await readSetting("recent") || []).filter(id => catalogProducts.some(product => product.id === id));
+  recentIds = (await readSetting("recent") || []).filter(id => knownIds.has(id));
   readUrlState();
   renderCategories();
   renderWatchlistPanel();
@@ -1317,22 +1260,8 @@ themeToggle.addEventListener("click", async () => {
 
 start().catch(error => {
   console.error("Tech It More could not start.", error);
-  let notice = document.querySelector("#data-note");
-  if (!notice) {
-    notice = document.createElement("div");
-    notice.id = "data-note";
-    notice.className = "tm-empty";
-    (document.querySelector("#main") || document.body).prepend(notice);
-  }
-  const icon = document.createElement("span");
-  icon.className = "notice-icon";
-  icon.setAttribute("aria-hidden", "true");
-  icon.textContent = "!";
-  const message = document.createElement("p");
-  const heading = document.createElement("strong");
-  heading.textContent = "Database unavailable:";
-  message.append(heading, ` ${error.message}. Try opening this page in a recent browser and check local storage permissions.`);
-  notice.replaceChildren(icon, message);
+  emptyState.textContent = "Sorry, the catalog could not load. Try reloading the page.";
+  emptyState.hidden = false;
 });
 
 // Show the matching shortcut hint on Apple devices.
@@ -1396,6 +1325,26 @@ brandSelect.addEventListener("change", () => {
 wirelessToggle.addEventListener("click", () => {
   setWireless(!wirelessOnly);
   renderCatalog();
+});
+emptyState.addEventListener("click", event => {
+  const button = event.target.closest("[data-empty-action]");
+  if (!button) return;
+  const action = button.dataset.emptyAction;
+  if (action === "clear-query") clearFilter("query");
+  else if (action === "clear-tier") clearFilter("tier");
+  else if (action === "clear-all") clearFilter("all");
+  else if (action === "clear-saved-filter") clearFilter("saved");
+  else if (action === "clear-filters") {
+    activeCategory = "All products"; activeBrand = "All brands"; setWireless(false); setTier("All tiers"); setWatchlistFilter(false);
+    renderCategories(); renderCatalog();
+  } else if (action.startsWith("query:")) {
+    searchInput.value = action.slice("query:".length);
+    updateSearchState(); renderCatalog(); searchInput.focus();
+  } else if (action.startsWith("category:")) {
+    searchInput.value = ""; activeBrand = "All brands"; setWireless(false); setTier("All tiers"); setWatchlistFilter(false);
+    activeCategory = action.slice("category:".length);
+    updateSearchState(); renderCategories(); renderCatalog(); scrollToCatalog();
+  }
 });
 activeFiltersEl.addEventListener("click", event => {
   const button = event.target.closest("[data-clear]");
@@ -1514,3 +1463,25 @@ document.querySelectorAll(".social-email").forEach(link => {
     );
   });
 });
+
+const tierSelect = document.querySelector("#tier-select");
+if (tierSelect) tierSelect.addEventListener("change", () => { setTier(tierSelect.value); renderCatalog(); });
+renderSpotlight();
+document.addEventListener("click", event => {
+  if (event.target.closest("[data-spot-again]")) renderSpotlight();
+});
+
+// On phones the "Before you buy" box moves below the product list so the first screen shows products.
+(function placeSpotlight() {
+  const box = document.querySelector("#spotlight");
+  const rail = document.querySelector("#category-list");
+  const how = document.querySelector("#how-it-works");
+  if (!box || !rail || !how || !window.matchMedia) return;
+  const query = window.matchMedia("(max-width: 760px)");
+  const place = () => {
+    if (query.matches) { how.parentNode.insertBefore(box, how); box.classList.add("tm-spot-moved"); }
+    else { rail.parentNode.insertBefore(box, rail); box.classList.remove("tm-spot-moved"); }
+  };
+  place();
+  if (query.addEventListener) query.addEventListener("change", place);
+})();

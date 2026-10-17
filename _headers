@@ -1,7 +1,34 @@
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'self'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' https:; font-src 'self'; connect-src 'self' https://commons.wikimedia.org; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' https://media.us.lg.com https://assets2.razerzone.com https://cdn.fastly.steamstatic.com https://assets.nintendo.com https://dlcdnwebimgs.asus.com https://images.ctfassets.net https://nzxt.com https://assets.xboxservices.com https://gmedia.playstation.com https://res.cloudinary.com https://assets.corsair.com https://lookaside.fbsbx.com https://www.nvidia.com https://upload.wikimedia.org; font-src 'self'; connect-src 'self' https://commons.wikimedia.org; upgrade-insecure-requests
   Referrer-Policy: strict-origin-when-cross-origin
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
   Strict-Transport-Security: max-age=31536000
+
+/assets/*
+  Cache-Control: public, max-age=604800
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/tiles/*
+  Cache-Control: public, max-age=604800
+
+/og-image.png
+  Cache-Control: public, max-age=86400
+
+# These four files are always requested with ?v=<hash> (scripts/build.mjs rewrites the hash on every change),
+# so a changed file gets a new URL and the old one can be cached for a year.
+/site.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/app.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/products.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/theme-init.js
+  Cache-Control: public, max-age=31536000, immutable

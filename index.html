@@ -3,24 +3,33 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f7f8fa" id="theme-color">
-    <meta name="description" content="Tech It More helps you find gaming gear and shop for it at US stores.">
+    <meta name="theme-color" content="#f3f2fa" id="theme-color">
+    <meta name="description" content="Browse keyboards, mice, headsets, controllers, monitors and more, then open Amazon, Best Buy, Newegg and other US stores to compare. Independent, no accounts.">
     <link rel="canonical" href="https://tech-it-more-gaming-catalog.pages.dev/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Tech It More">
-    <meta property="og:title" content="Tech It More — Find tech worth more">
-    <meta property="og:description" content="Browse gaming gear, then open each US store's own page to find it.">
+    <meta property="og:title" content="Tech It More: gaming gear catalog and where to buy it (US)">
+    <meta property="og:description" content="Browse gaming gear, then open each US store's own search to compare prices and stock.">
+    <meta property="og:image" content="https://tech-it-more-gaming-catalog.pages.dev/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Tech It More: find gaming gear and where to buy it in the US">
     <meta property="og:url" content="https://tech-it-more-gaming-catalog.pages.dev/">
-    <meta name="twitter:card" content="summary">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Tech It More","url":"https://tech-it-more-gaming-catalog.pages.dev/","description":"Independent research for gaming gear, with links to US retailers."}</script>
-    <title>Tech It More — Find tech worth more</title>
-    <link rel="stylesheet" href="site.css?v=20261013-combined">
-    <script src="catalog-products.js?v=20261012-noprice" defer></script>
-    <script src="gaming-products.js?v=20261012-noprice" defer></script>
-    <script src="app.js?v=20261016-dbfix" defer></script>
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Tech It More","url":"https://tech-it-more-gaming-catalog.pages.dev/","description":"Independent catalog of gaming gear with links to US retailers.","potentialAction":{"@type":"SearchAction","target":"https://tech-it-more-gaming-catalog.pages.dev/?q={search_term_string}","query-input":"required name=search_term_string"}}</script>
+    <title>Tech It More: gaming gear catalog and where to buy it (US)</title>
+    <script src="theme-init.js?v=b41f54c4"></script>
+    <link rel="preload" href="/fonts/lora-latin.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="/fonts/carlito-regular.woff" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="site.css?v=ec7faa32">
+    <script src="products.js?v=e20f7a22" defer></script>
+    <script src="app.js?v=41b4bd8a" defer></script>
   </head>
   <body>
+<!--build:noscript-->
+    <noscript><div class="tm-noscript"><p><strong>Search and filters need JavaScript.</strong> You can still browse by category:</p><ul><li><a href="/c/consoles-handhelds/">Consoles &amp; handhelds</a></li><li><a href="/c/controllers/">Controllers</a></li><li><a href="/c/keyboards/">Keyboards</a></li><li><a href="/c/mice/">Mice</a></li><li><a href="/c/headsets/">Headsets</a></li><li><a href="/c/streaming-audio/">Streaming &amp; audio</a></li><li><a href="/c/pc-hardware/">PC hardware</a></li></ul></div></noscript>
+<!--/build:noscript-->
     <a class="skip-link" href="#catalog-title">Skip to products</a>
     <header class="tm-header">
       <div class="tm-header-inner">
@@ -43,12 +52,13 @@
     <main class="tm-main" id="main">
       <section class="tm-hero" aria-labelledby="hero-title">
         <h1 id="hero-title">Find gaming gear worth buying.</h1>
-        <p class="tm-lead">Browse <span id="hero-count">253</span> gaming products, then open any one to find it at Amazon, Best Buy, Newegg and other US retailers.</p>
-        <p class="tm-trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3z"/><path d="m9 12 2 2 4-4"/></svg><span>We're independent and sell nothing. Every link opens the store's own search, where you see its real price and stock.</span></p>
+        <p class="tm-lead">Browse <span id="hero-count">49</span> gaming products, then open any one to find it at Amazon, Best Buy, Newegg and other US retailers.</p>
+        <p class="tm-trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3z"/><path d="m9 12 2 2 4-4"/></svg><span>We're independent and sell nothing. Store links open each US retailer's own search, where you see its current price and stock.</span></p>
         <div class="tm-hero-actions">
           <button class="tm-primary" id="surprise-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3.5"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/></svg>Surprise me</button>
           <span class="tm-hint">Press <kbd>/</kbd> to search from anywhere</span>
         </div>
+        <aside class="tm-spotlight" id="spotlight" aria-label="Before you buy"></aside>
         <div class="tm-rail" id="category-list" role="group" aria-label="Browse by category"></div>
       </section>
 
@@ -60,10 +70,11 @@
         <div class="tm-toolbar">
           <div>
             <h2 id="catalog-title" tabindex="-1">All gear</h2>
-            <p class="tm-results" id="results-count" aria-live="polite">253 products</p>
+            <p class="tm-results" id="results-count" aria-live="polite">49 products</p>
           </div>
           <div class="tm-filters">
             <label class="tm-field"><span>Brand</span><select id="brand-select" aria-label="Filter by brand"><option>All brands</option></select></label>
+            <label class="tm-field"><span>Price tier</span><select id="tier-select" aria-label="Filter by typical price tier"><option value="All tiers">All tiers</option><option value="Budget">Budget</option><option value="Mid-range">Mid-range</option><option value="Premium">Premium</option></select></label>
             <button class="tm-toggle" id="wireless-toggle" type="button" aria-pressed="false">Wireless only</button>
             <label class="tm-field"><span>Sort</span><select id="sort-select" aria-label="Sort products">
               <option value="popular">Featured</option>
@@ -76,8 +87,8 @@
         </div>
         <div class="tm-chips" id="active-filters" aria-label="Active filters"></div>
         <section class="tm-recent" id="recent-row" aria-label="Recently viewed" hidden></section>
-        <div class="tm-grid" id="product-grid" aria-live="polite"></div>
-        <p class="tm-empty" id="empty-state" hidden>No products match. Try a different search or clear a filter.</p>
+        <div class="tm-grid" id="product-grid"></div>
+        <div class="tm-empty" id="empty-state" hidden></div>
         <button class="tm-more" id="load-more" type="button" hidden>Show more products</button>
       </section>
 
@@ -92,49 +103,49 @@
 
       <section class="tm-faq" id="faq" aria-labelledby="faq-title">
         <h2 id="faq-title">Questions, answered</h2>
-        <details><summary>Do you sell these products?</summary><p>No. Tech It More is an independent research tool. Each product links to the retailers' own pages, and you buy from them directly.</p></details>
-        <details><summary>Where can I see prices?</summary><p>Open any product and use its store links. Each store shows its own current price, stock and sales.</p></details>
-        <details><summary>Do store links confirm that a product is in stock?</summary><p>No. Each link opens a search for the product's brand and model. Only the store's own page can confirm availability.</p></details>
-        <details><summary>Where is my saved list stored?</summary><p>Only in this browser. There are no accounts and nothing is uploaded, so clearing your browser data also clears the list. Use "Copy link to saved list" to share it, or Export my data to keep a copy.</p></details>
-        <details><summary>Are you affiliated with the brands or stores shown?</summary><p>No. Brand and store names and product photos belong to their owners and appear only to help you find products.</p></details>
+        <details><summary>What is Tech It More, and how does it make money?</summary><p>It is an independent catalog. It sells nothing, runs no ads, and has no affiliate tags. If that changes, affiliate links will be labelled clearly. We don't quote prices ourselves: store links open each US retailer's own search page, which is the only place that can confirm price and stock.</p></details>
+        <details><summary>Wireless or wired for competitive play?</summary><p>A 2.4GHz dongle is generally as responsive as a cable for most players, and usually lower latency than Bluetooth. Pick wired if you never want to think about charging.</p></details>
+        <details><summary>What does "typical price tier" mean?</summary><p>Budget, mid-range or premium is a rough guide to where a product sits among similar gear. It is not a price. Check the store for what it costs today.</p></details>
+        <details><summary>What leaves my browser?</summary><p>Product photos load from manufacturers' servers. Opening a product may fetch extra photos from Wikimedia Commons. There are no accounts, trackers or ads. Your saved list stays in this browser only.</p></details>
+        <details><summary>Where is my saved list stored?</summary><p>Only in this browser, so clearing browser data clears it. Use "Copy link to saved list" to share it, or Export my data to keep a copy.</p></details>
       </section>
     </main>
 
-    <footer class="tm-footer">
-      <div class="tm-footer-inner">
-        <div class="tm-footer-grid">
-          <div>
-            <a class="brand" href="#" aria-label="Tech It More home"><span class="brand-mark" aria-hidden="true">t</span><span>tech<span class="brand-it">it</span><span class="brand-light">more</span></span></a>
-            <p>An independent catalog of gaming gear. We link to US retailers so you can compare where to buy.</p>
-          </div>
-          <nav aria-label="Browse gear"><h2>Browse</h2>
-            <button type="button" data-query="controller">Controllers</button>
-            <button type="button" data-query="keyboard">Keyboards</button>
-            <button type="button" data-query="mouse">Mice</button>
-            <button type="button" data-query="headset">Headsets</button>
-            <button type="button" data-query="monitor">Monitors</button>
-          </nav>
-          <nav aria-label="About"><h2>About</h2>
-            <a href="#how-it-works">How it works</a>
-            <a href="#faq">Questions</a>
-            <button type="button" id="export-button">Export my data</button>
-          </nav>
-        </div>
-        <div class="tm-legal"><p>© 2026 Tech It More. Not affiliated with the brands or stores shown; names and photos belong to their owners.</p></div>
+    <!--build:footer-->
+<footer class="tm-footer">
+  <div class="tm-footer-inner">
+    <div class="tm-footer-grid">
+      <div>
+        <a class="brand" href="/" aria-label="Tech It More home"><span class="brand-mark" aria-hidden="true">t</span><span>tech<span class="brand-it">it</span><span class="brand-light">more</span></span></a>
+        <p>An independent catalog of gaming gear. Every product here has specs, a photo and a plain verdict. We link to US retailers so you can compare where to buy.</p>
       </div>
-       <br>
-        <div class="footer-socials" aria-label="Contact and social links">
-          <a class="social-button social-email" href="mailto:techitmore.contact@gmail.com?subject=Tech%20It%20More%20Gaming%20Catalog" aria-label="Send an email" title="Email">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5 12 13.5l8.5-6"/></svg>
-            </a>
-            <a class="social-button" href="https://discord.com/users/743614856128888862" target="_blank" rel="noopener noreferrer" aria-label="Open Discord" title="Discord">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.54 5.34a16.3 16.3 0 0 0-3.94-1.2l-.48.98a14.6 14.6 0 0 0-6.24 0l-.48-.98a16.3 16.3 0 0 0-3.94 1.2C2.1 8.38 1.42 11.35 1.7 14.27a16.1 16.1 0 0 0 4.86 2.43l1.18-1.62c-.65-.24-1.27-.54-1.85-.89l.45-.34c3.56 1.65 7.66 1.65 11.22 0l.45.34c-.58.35-1.2.65-1.85.89l1.18 1.62a16.1 16.1 0 0 0 4.86-2.43c.33-3.39-.58-6.34-2.66-8.93ZM8.5 13.85c-1.05 0-1.92-.97-1.92-2.16s.85-2.16 1.92-2.16 1.93.97 1.93 2.16-.86 2.16-1.93 2.16Zm7 0c-1.05 0-1.92-.97-1.92-2.16s.85-2.16 1.92-2.16 1.93.97 1.93 2.16-.86 2.16-1.93 2.16Z" /></svg>
-            </a>
-            <a class="social-button" href="https://github.com/FaresBoukraya" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub" title="GitHub">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.7-2.3 4.5-4.5 4.8.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z" /></svg>
-            </a>
-        </div>
-    </footer>
+      <nav class="tm-footer-browse" aria-label="Browse gear"><h2>Browse</h2>
+        <a href="/c/consoles-handhelds/">Consoles &amp; handhelds</a>
+        <a href="/c/controllers/">Controllers</a>
+        <a href="/c/keyboards/">Keyboards</a>
+        <a href="/c/mice/">Mice</a>
+        <a href="/c/headsets/">Headsets</a>
+        <a href="/c/streaming-audio/">Streaming &amp; audio</a>
+        <a href="/c/pc-hardware/">PC hardware</a>
+      </nav>
+      <nav aria-label="About"><h2>About</h2>
+        <a href="/how-we-choose/">How we choose</a>
+        <a href="/#how-it-works">How it works</a>
+        <a href="/#faq">Questions</a>
+        <a href="mailto:techitmore.contact@gmail.com?subject=Tech%20It%20More%3A%20wrong%20link%20or%20product%20suggestion">Report a wrong link or suggest a product</a>
+        <button type="button" id="export-button">Export my data</button>
+      </nav>
+    </div>
+    <div class="footer-socials" aria-label="Contact and code">
+      <a class="social-button" href="mailto:techitmore.contact@gmail.com?subject=Tech%20It%20More" aria-label="Send an email" title="Send an email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5 12 13.5l8.5-6"/></svg></a>
+      
+      <a class="social-button" href="https://github.com/FaresBoukraya/tech-it-more-gaming-catalog" target="_blank" rel="noopener noreferrer" aria-label="Source code on GitHub" title="Source code on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.7-2.3 4.5-4.5 4.8.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z"/></svg></a>
+    </div>
+    <div class="tm-legal"><p>© 2026 Tech It More. Independent and not affiliated with the brands or stores shown; names and photos belong to their owners. Photos load from manufacturers' servers; opening a product may also load extra photos from Wikimedia Commons. Store links open each retailer's own search page.</p></div>
+  </div>
+</footer>
+
+<!--/build:footer-->
 
     <button class="tm-top" id="back-to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V6M6 11l6-6 6 6"/></svg></button>
 

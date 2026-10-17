@@ -1,0 +1,12 @@
+{
+  "name": "tech-it-more",
+  "private": true,
+  "type": "module",
+  "description": "Tech It More gaming gear catalog. No dependencies.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs --check",
+    "images": "node scripts/fetch-images.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

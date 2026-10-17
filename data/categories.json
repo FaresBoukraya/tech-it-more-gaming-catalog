@@ -1,0 +1,100 @@
+[
+  {
+    "label": "Consoles & handhelds",
+    "slug": "consoles-handhelds",
+    "art": "art-console",
+    "icon": "◈",
+    "title": "Gaming consoles, handhelds and VR headsets",
+    "intro": "Consoles, handheld gaming PCs and VR headsets. Prices and bundles change often, so use the store links to compare the current offers.",
+    "tips": [
+      "Check which game library you are buying into. Console games, PC storefronts and VR stores are largely separate.",
+      "Confirm the exact model and edition. Many consoles come in several storage sizes and bundles.",
+      "Modern games are large, so storage size and expandability matter more than they used to.",
+      "For handhelds, look at battery life and screen type as well as raw performance."
+    ]
+  },
+  {
+    "label": "Controllers",
+    "slug": "controllers",
+    "art": "art-console",
+    "icon": "◈",
+    "title": "Gaming controllers",
+    "intro": "Gamepads and controllers for consoles and PC.",
+    "tips": [
+      "Make sure the controller supports your platform: Xbox, PlayStation, Switch and PC are not all interchangeable.",
+      "Wireless is convenient, but check the battery life and whether it connects by Bluetooth or a dedicated dongle.",
+      "Stick drift is a common failure on analog sticks. Models with Hall effect sticks avoid the part that usually wears out.",
+      "Back paddles and button remapping are worth having if you play competitively."
+    ]
+  },
+  {
+    "label": "Keyboards",
+    "slug": "keyboards",
+    "art": "art-keyboard",
+    "icon": "▦",
+    "title": "Gaming keyboards",
+    "intro": "Mechanical, optical and analog gaming keyboards in full-size, tenkeyless and compact layouts.",
+    "tips": [
+      "Pick the switch type you like: linear for smooth presses, tactile for a bump, clicky for audible feedback.",
+      "Choose a size that fits your desk and mouse space. Tenkeyless and 75% boards leave more room for mouse movement.",
+      "For wireless boards, a 2.4GHz connection is usually lower latency than Bluetooth.",
+      "Analog or magnetic switches with adjustable actuation and rapid trigger are mainly useful in fast competitive shooters."
+    ]
+  },
+  {
+    "label": "Mice",
+    "slug": "mice",
+    "art": "art-mouse",
+    "icon": "◉",
+    "title": "Gaming mice",
+    "intro": "Wired and wireless gaming mice, from ultralight esports shapes to ergonomic designs.",
+    "tips": [
+      "Shape and size matter more than the sensor spec. Match the mouse to your hand size and grip style.",
+      "Lighter mice are easier to flick, but some people prefer a heavier, more stable feel.",
+      "Sensors on current gaming mice are all accurate enough for most players, so a bigger DPI number is not a reason to pay more.",
+      "For wireless mice, check battery life and whether the receiver supports a high polling rate."
+    ]
+  },
+  {
+    "label": "Headsets",
+    "slug": "headsets",
+    "art": "art-headphones",
+    "icon": "◖",
+    "title": "Gaming headsets",
+    "intro": "Wired and wireless gaming headsets with built-in or detachable microphones.",
+    "tips": [
+      "Check platform support. A wireless dongle that works on PC may not work on every console.",
+      "Comfort over long sessions depends on weight, clamping force and ear cup size.",
+      "If voice chat matters, look for a detachable or boom microphone and read reviews of the mic specifically.",
+      "For wireless models, compare battery life and whether the headset can be used while charging."
+    ]
+  },
+  {
+    "label": "Streaming & audio",
+    "slug": "streaming-audio",
+    "art": "art-headphones",
+    "icon": "◖",
+    "title": "Streaming and audio gear",
+    "intro": "Capture cards, webcams, microphones and speakers for streaming and desk setups.",
+    "tips": [
+      "Check the connection: capture cards and webcams need a fast USB port, and some will not work on a hub.",
+      "A USB microphone is simpler than an XLR setup, but it picks up keyboard noise; position it close and use a pop filter.",
+      "For a capture card, compare the pass-through resolution with what it can record. They are often different.",
+      "For webcams, sensor size and lighting matter more than the headline resolution."
+    ]
+  },
+  {
+    "label": "PC hardware",
+    "slug": "pc-hardware",
+    "art": "art-computer",
+    "icon": "⌁",
+    "title": "PCs, monitors and components",
+    "intro": "Prebuilt PCs, gaming monitors and parts such as graphics cards, for desktops and desk setups.",
+    "tips": [
+      "For a monitor, match resolution to your graphics card first, then pick the refresh rate your games can actually reach.",
+      "Check a graphics card against your case length and power supply before buying; models differ in size and power connector.",
+      "A prebuilt saves time but usually costs more than the same parts bought separately.",
+      "Panel type changes the look: OLED has the deepest blacks, IPS is brighter and avoids the burn-in concern."
+    ]
+  }
+]
