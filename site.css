@@ -1029,3 +1029,84 @@ select option:disabled { color: #8a90a8; }
 @media (min-width: 761px) {
   .tm-footer nav a, .tm-footer nav button, .tm-footer-cats a { min-height: 32px; }
 }
+
+/* ======================================================================
+   Mobile polish
+   ====================================================================== */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+a, button, summary, select, input, label { touch-action: manipulation; }
+body { overflow-wrap: break-word; }
+img, svg, video { max-width: 100%; }
+
+/* Notches / home indicator (viewport-fit=cover) */
+.tm-header-inner, main.tm-main, .tm-footer-inner { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+.tm-top { right: calc(16px + env(safe-area-inset-right)); bottom: calc(16px + env(safe-area-inset-bottom)); }
+.toast { bottom: calc(19px + env(safe-area-inset-bottom)); max-width: calc(100vw - 32px); }
+.tm-footer { padding-bottom: env(safe-area-inset-bottom); }
+
+@media (max-width: 760px), (pointer: coarse) {
+  /* 16px fields: iOS Safari zooms the page on focus when text is smaller */
+  .tm-search-field input, .tm-field select, select, input[type="search"], input[type="text"], textarea { font-size: 16px; }
+  .tm-search-field { min-height: 44px; }
+  .tm-search-clear { width: 36px; height: 36px; font-size: 20px; }
+  .tm-btn.tm-theme, .tm-header .tm-btn { min-width: 44px; }
+  .tm-header .brand { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+@media (max-width: 760px) {
+  /* Header tucks away while reading, returns on scroll up */
+  .tm-header { transition: transform .22s ease; will-change: transform; }
+  .tm-header.tm-header-hidden { transform: translateY(-100%); }
+
+  /* Readable small print in the product popup */
+  .detail-subtitle, .gateway-disclosure, .store-gateway-link, .photo-gallery-status,
+  .store-gateway-link .store-hint, .review-link { font-size: 12px; }
+  .photo-credit, .toast { font-size: 12px; }
+  .store-gateway-link { min-height: 48px; padding: 8px 12px; }
+  .share-product { height: 44px; padding: 0 16px; }
+  .tm-review { min-height: 44px; }
+  .tm-spot-again { min-height: 40px; }
+  .tm-pill { font-size: 12px; }
+  .tm-tier { font-size: 12px; }
+
+  /* Product popup close button and gallery arrows within thumb reach */
+  .dialog-close, .detail-close, .photo-lightbox-close { width: 44px; height: 44px; }
+
+  /* Category rail: snap, and a hint that it scrolls */
+  .tm-rail { scroll-snap-type: x proximity; scroll-padding-left: 0; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+  .tm-rail > * { scroll-snap-align: start; }
+  .tm-rail { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); }
+
+  /* Chips and filter rows wrap instead of overflowing */
+  .tm-chips, .tm-active { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* Tables / code never push the page wider than the screen */
+  table { display: block; max-width: 100%; overflow-x: auto; }
+  pre, code { white-space: pre-wrap; word-break: break-word; }
+}
+
+/* Static product / category / guide pages */
+@media (max-width: 760px) {
+  .tm-crumbs a { display: inline-flex; align-items: center; min-height: 44px; }
+  .product-page a, .category-page a, article a { overflow-wrap: anywhere; }
+  .skip-link:not(:focus) { position: absolute; left: -9999px; }
+}
+
+@media (max-width: 360px) {
+  .tm-hero h1 { font-size: 27px; }
+  .tm-rail { grid-auto-columns: 168px; }
+  .tm-name { font-size: 13.5px; }
+  .tm-footer-grid { grid-template-columns: 1fr; }
+}
+
+/* Landscape phones: keep the popup photo small so the info is visible */
+@media (max-height: 500px) and (orientation: landscape) {
+  .tm-header { position: static; }
+  .detail-photo-wrap { height: 120px; }
+}
+
+@media (max-width: 760px) {
+  /* Standalone links on static pages get a full-size tap area */
+  .tm-credit a, main p > a:only-of-type, main p > a:first-child:has(+ a) , main p > a + a { display: inline-block; padding: 12px 2px; }
+  .tm-header .brand, .tm-footer .brand { padding-block: 8px; }
+}

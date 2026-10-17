@@ -1485,3 +1485,23 @@ document.addEventListener("click", event => {
   place();
   if (query.addEventListener) query.addEventListener("change", place);
 })();
+
+// Mobile: tuck the sticky header away while scrolling down, bring it back on scroll up.
+(() => {
+  const header = document.querySelector(".tm-header");
+  if (!header) return;
+  const phone = window.matchMedia("(max-width: 760px)");
+  let lastY = window.scrollY;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = Math.max(0, window.scrollY);
+    const dy = y - lastY;
+    const typing = header.contains(document.activeElement) && document.activeElement.tagName === "INPUT";
+    if (!phone.matches || y < 80 || typing || dy < -6) header.classList.remove("tm-header-hidden");
+    else if (dy > 8) header.classList.add("tm-header-hidden");
+    if (Math.abs(dy) > 6) lastY = y;
+  };
+  window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  header.addEventListener("focusin", () => header.classList.remove("tm-header-hidden"));
+})();
