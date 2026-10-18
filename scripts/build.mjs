@@ -222,24 +222,29 @@ ${extraLd.map(ld => `<script type="application/ld+json">${jsonLd(ld)}</script>`)
 `;
 }
 const social = (href, label, path, ext) => `<a class="social-button" href="${href}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''} aria-label="${label}" title="${label}"><svg viewBox="0 0 24 24" aria-hidden="true">${path}</svg></a>`;
-const footerHtml = app => `<footer class="tmf">
-  <div class="tmf-inner">
-    <div class="tmf-top">
-      <a class="brand" href="/" aria-label="Tech It More home"><span class="brand-mark" aria-hidden="true">t</span><span>tech<span class="brand-it">it</span><span class="brand-light">more</span></span></a>
-      <nav class="tmf-cats" aria-label="Browse gear">${categories.map(c => `<a href="${categoryUrl(c)}">${esc(c.label)}</a>`).join('')}</nav>
-      <div class="footer-socials" aria-label="Contact and code">
-        ${social(`mailto:${MAIL}?subject=Tech%20It%20More`, 'Send an email', '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5 12 13.5l8.5-6"/>', false)}
-        ${siteData.discordUrl ? social(siteData.discordUrl, 'Join the Discord', '<path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>', true) : ''}
-        ${social('https://github.com/FaresBoukraya/tech-it-more-gaming-catalog', 'Source code on GitHub', '<path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.7-2.3 4.5-4.5 4.8.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z"/>', true)}
+const footerHtml = app => `<footer class="tm-footer">
+  <div class="tm-footer-inner">
+    <div class="tm-footer-grid">
+      <div>
+        <a class="brand" href="/" aria-label="Tech It More home"><span class="brand-mark" aria-hidden="true">t</span><span>tech<span class="brand-it">it</span><span class="brand-light">more</span></span></a>
+        <p>An independent catalog of gaming gear. Every product here has specs, a photo and a plain verdict. We link to US retailers so you can compare where to buy.</p>
       </div>
+      <nav class="tm-footer-browse" aria-label="Browse gear"><h2>Browse</h2>
+${categories.map(c => `        <a href="${categoryUrl(c)}">${esc(c.label)}</a>`).join('\n')}
+      </nav>
+      <nav aria-label="About"><h2>About</h2>
+        <a href="/how-we-choose/">How we choose</a>
+        <a href="/#how-it-works">How it works</a>
+        <a href="/#faq">Questions</a>
+        <a href="mailto:${MAIL}?subject=Tech%20It%20More%3A%20wrong%20link%20or%20product%20suggestion">Report a wrong link or suggest a product</a>
+${app ? '        <button type="button" id="export-button">Export my data</button>\n' : ''}      </nav>
     </div>
-    <nav class="tmf-about" aria-label="About">
-      <a href="/how-we-choose/">How we choose</a>
-      <a href="/#how-it-works">How it works</a>
-      <a href="/#faq">Questions</a>
-      <a href="mailto:${MAIL}?subject=Tech%20It%20More%3A%20wrong%20link%20or%20product%20suggestion">Report a wrong link or suggest a product</a>
-${app ? '      <button type="button" id="export-button">Export my data</button>\n' : ''}    </nav>
-    <p class="tmf-legal">© 2026 Tech It More. Independent and not affiliated with the brands or stores shown; names and photos belong to their owners. Photos load from manufacturers' servers; opening a product may also load extra photos from Wikimedia Commons. Store links open each retailer's own search page.</p>
+    <div class="footer-socials" aria-label="Contact and code">
+      ${social(`mailto:${MAIL}?subject=Tech%20It%20More`, 'Send an email', '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5 12 13.5l8.5-6"/>', false)}
+      ${siteData.discordUrl ? social(siteData.discordUrl, 'Join the Discord', '<path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>', true) : ''}
+      ${social('https://github.com/FaresBoukraya/tech-it-more-gaming-catalog', 'Source code on GitHub', '<path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.7-2.3 4.5-4.5 4.8.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z"/>', true)}
+    </div>
+    <div class="tm-legal"><p>© 2026 Tech It More. Independent and not affiliated with the brands or stores shown; names and photos belong to their owners. Photos load from manufacturers' servers; opening a product may also load extra photos from Wikimedia Commons. Store links open each retailer's own search page.</p></div>
   </div>
 </footer>
 `;

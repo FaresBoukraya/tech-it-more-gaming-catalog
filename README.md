@@ -21,7 +21,7 @@ Pick a product and you get its specs, a photo, and a verdict in three lines: **b
 
 These are buying notes, not tested reviews. See [How we choose](https://tech-it-more-gaming-catalog.pages.dev/how-we-choose/) for exactly what goes into a verdict and what doesn't.
 
-**Current catalog:** 49 published products across 7 categories: Consoles & handhelds, Controllers, Keyboards, Mice, Headsets, Streaming & audio, and PC hardware. A product is only published once it has specs, a photo and a verdict. Thinner entries wait in `data/backlog.json`.
+**Current catalog:** 52 published products across 7 categories: Consoles & handhelds, Controllers, Keyboards, Mice, Headsets, Streaming & audio, and PC hardware. A product is only published once it has specs, a photo and a verdict. Thinner entries wait in `data/backlog.json`.
 
 ## Features
 

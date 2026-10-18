@@ -857,6 +857,12 @@ function renderCatalog(append = false) {
   const alreadyRendered = append ? grid.children.length : 0;
   if (!append) grid.innerHTML = "";
   grid.insertAdjacentHTML("beforeend", visible.slice(alreadyRendered, alreadyRendered + catalogPageSize).map(cardMarkup).join(""));
+  if (!append) {
+    /* the first row is above the fold: load it right away instead of lazily */
+    grid.querySelectorAll(".tm-photo").forEach((img, index) => {
+      if (index < 4) { img.loading = "eager"; img.setAttribute("fetchpriority", "high"); }
+    });
+  }
   const rendered = Math.min(visible.length, alreadyRendered + catalogPageSize);
   resultsCount.textContent = `${visible.length} ${visible.length === 1 ? "product" : "products"}`;
   catalogTitle.textContent = sharedIds ? "Shared list" : activeCategory === "All products" ? "All gear" : activeCategory;
@@ -1047,10 +1053,18 @@ grid.addEventListener("click", event => {
   }
 });
 
+/* Typing stays smooth: the input state updates instantly, but the heavier grid and
+   suggestion rendering is batched into one frame after a short pause in typing. */
+let searchRenderTimer = 0;
 searchInput.addEventListener("input", () => {
   updateSearchState();
-  renderCatalog();
-  renderSuggestions();
+  window.clearTimeout(searchRenderTimer);
+  searchRenderTimer = window.setTimeout(() => {
+    window.requestAnimationFrame(() => {
+      renderCatalog();
+      renderSuggestions();
+    });
+  }, 70);
 });
 loadMoreButton.addEventListener("click", () => renderCatalog(true));
 sortSelect.addEventListener("change", () => renderCatalog());
