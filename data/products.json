@@ -1353,5 +1353,97 @@
   },
   "summary": "Plug-in USB mic for streaming and Discord",
   "alts": []
+ },
+ {
+  "id": "logitech-g502-x-plus",
+  "brand": "LOGITECH G",
+  "name": "G502 X Plus Wireless Gaming Mouse",
+  "category": "Mice",
+  "specs": "LIGHTSPEED wireless · LIGHTFORCE hybrid switches · 13 programmable controls · 8-LED LIGHTSYNC RGB",
+  "imageUrl": "https://resource.logitechg.com/w_544,h_466,ar_7:6,c_pad,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/gaming/en/products/g502x-plus/2026-update/gallery/g502-x-plus-top-angle-black-purple-gallery-1.png",
+  "imageSource": "https://www.logitechg.com/en-us/shop/p/g502-x-plus-wireless-lightforce",
+  "imageCreator": "Logitech G official product image",
+  "verdict": {
+   "bestFor": "Players who want a feature-packed wireless mouse with lots of programmable controls",
+   "downside": "Large and heavier than the ultralight wireless mice, and priced at the top of the range",
+   "skipIf": "you want an ultralight mouse for fast aim, or you have small hands",
+   "tier": "Premium"
+  },
+  "summary": "Feature-packed wireless mouse with 13 programmable controls",
+  "alts": [
+   {
+    "id": "razer-basilisk-v3",
+    "why": "Another feature-rich ergonomic mouse"
+   },
+   {
+    "id": "razer-deathadder-v3",
+    "why": "Lighter ergonomic wireless shape"
+   },
+   {
+    "id": "logitech-pro-x-superlight-2",
+    "why": "Much lighter and more minimal instead"
+   }
+  ],
+  "checked": "2026-10-18"
+ },
+ {
+  "id": "logitech-pro-x-superlight-2",
+  "brand": "LOGITECH G",
+  "name": "PRO X Superlight 2 Wireless Gaming Mouse",
+  "category": "Mice",
+  "specs": "60g · LIGHTSPEED wireless, up to 8 kHz polling · HERO 2 sensor, up to 44K DPI · Up to 95-hour battery",
+  "imageUrl": "https://resource.logitechg.com/w_544,h_466,ar_7:6,c_pad,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/gaming/en/products/pro-x-superlight-2/new-gallery-assets-2025/pro-x-superlight-2-mice-top-angle-white-gallery-1.png",
+  "imageSource": "https://www.logitechg.com/en-us/shop/p/pro-x2-superlight-wireless-mouse",
+  "imageCreator": "Logitech G official product image",
+  "verdict": {
+   "bestFor": "Competitive players who want a very light wireless mouse with fast, precise tracking",
+   "downside": "One of the most expensive mice in the category",
+   "skipIf": "you're on a tight budget, or a cheaper light mouse already covers you",
+   "tier": "Premium"
+  },
+  "summary": "Pro-grade 60g wireless mouse built for competitive play",
+  "alts": [
+   {
+    "id": "razer-viper-v3-pro",
+    "why": "Close rival in the ultralight wireless class"
+   },
+   {
+    "id": "corsair-m75-air",
+    "why": "Lightweight wireless from another brand"
+   },
+   {
+    "id": "logitech-g502-x-plus",
+    "why": "Heavier, but far more buttons"
+   }
+  ],
+  "checked": "2026-10-18"
+ },
+ {
+  "id": "msi-claw-8-ai-plus",
+  "brand": "MSI",
+  "name": "Claw 8 AI+ Handheld Gaming PC",
+  "category": "Consoles & handhelds",
+  "specs": "8″ FHD+ 120Hz VRR touchscreen · Up to Intel Core Ultra 7 · 32GB LPDDR5x · Hall Effect sticks and triggers · 80Whr battery · 795g",
+  "imageUrl": "https://storage-asset.msi.com/global/picture/product/product_1777014915761e885681c4cb2c1d73b18c62b15d1a.webp",
+  "imageSource": "https://www.msi.com/Handheld/Claw-8-AI-Plus-A2VMX/Specification",
+  "imageCreator": "MSI official product image",
+  "verdict": {
+   "bestFor": "Players who want a Windows handheld with a larger 8-inch screen and a big battery",
+   "downside": "Heavy at 795g, and priced at the top of the handheld range",
+   "skipIf": "you want a light, pocketable handheld, or a simple console-style experience",
+   "tier": "Premium"
+  },
+  "summary": "Large 8-inch Windows handheld with a big battery",
+  "alts": [
+   {
+    "id": "rog-ally-x",
+    "why": "Lighter Windows handheld"
+   },
+   {
+    "id": "steam-deck-oled",
+    "why": "Lighter, SteamOS-based handheld"
+   }
+  ],
+  "checked": "2026-10-18"
  }
 ]

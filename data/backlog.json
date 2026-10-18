@@ -30,12 +30,6 @@
   "productSource": "https://www.wikidata.org/wiki/Q137682470"
  },
  {
-  "id": "tim-logitech-g-g502-x-plus",
-  "brand": "LOGITECH G",
-  "name": "G502 X Plus Gaming Mouse",
-  "category": "Mice"
- },
- {
   "id": "tim-logitech-g-g502-x-lightspeed",
   "brand": "LOGITECH G",
   "name": "G502 X Lightspeed Gaming Mouse",
@@ -45,12 +39,6 @@
   "id": "tim-logitech-g-g502-hero",
   "brand": "LOGITECH G",
   "name": "G502 Hero Gaming Mouse",
-  "category": "Mice"
- },
- {
-  "id": "tim-logitech-g-pro-x-superlight-2",
-  "brand": "LOGITECH G",
-  "name": "Pro X Superlight 2 Gaming Mouse",
   "category": "Mice"
  },
  {
@@ -1215,12 +1203,6 @@
   "id": "tim-lenovo-legion-go-s-handheld",
   "brand": "LENOVO",
   "name": "Legion Go S Handheld",
-  "category": "Consoles & handhelds"
- },
- {
-  "id": "tim-msi-claw-8-ai-handheld",
-  "brand": "MSI",
-  "name": "Claw 8 AI+ Handheld",
   "category": "Consoles & handhelds"
  },
  {
