@@ -1110,3 +1110,22 @@ img, svg, video { max-width: 100%; }
   .tm-credit a, main p > a:only-of-type, main p > a:first-child:has(+ a) , main p > a + a { display: inline-block; padding: 12px 2px; }
   .tm-header .brand, .tm-footer .brand { padding-block: 8px; }
 }
+/* Compact Browse + About columns */
+.tm-footer h2 { margin: 0 0 6px; font-size: 13px; }
+
+.tm-footer nav { gap: 0; }
+.tm-footer nav.tm-footer-browse { column-gap: 28px; row-gap: 0; }
+
+.tm-footer nav a,
+.tm-footer nav button {
+  min-height: 0;
+  padding: 3px 0;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* keep easy tap targets on phones/tablets only */
+@media (pointer: coarse) {
+  .tm-footer nav a,
+  .tm-footer nav button { padding: 8px 0; }
+}
