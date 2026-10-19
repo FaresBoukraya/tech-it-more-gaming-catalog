@@ -276,7 +276,8 @@ function searchableProducts(allProducts, { ignoreTier = false, ignoreWireless = 
   });
   if (sortSelect.value === "popular") visible.sort((a, b) => featuredScore(b) - featuredScore(a));
   if (sortSelect.value === "name") visible.sort((a, b) => a.name.localeCompare(b.name));
-  if (sortSelect.value === "brand") visible.sort((a, b) => brandLabel(a.brand).localeCompare(brandLabel(b.brand)) || a.name.localeCompare(b.name));
+  if (sortSelect.value === "tier") { const rank = { Budget: 0, "Mid-range": 1, Premium: 2 }; visible.sort((a, b) => (rank[a.verdict && a.verdict.tier] ?? 3) - (rank[b.verdict && b.verdict.tier] ?? 3) || a.name.localeCompare(b.name)); }
+  else if (sortSelect.value === "brand") visible.sort((a, b) => brandLabel(a.brand).localeCompare(brandLabel(b.brand)) || a.name.localeCompare(b.name));
   return visible;
 }
 
@@ -1625,18 +1626,6 @@ clearSavedButton.addEventListener("click", async () => {
     showError("Could not clear your saved list.", error);
   }
 });
-document.querySelectorAll(".social-email").forEach(link => {
-  link.addEventListener("click", event => {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    event.preventDefault();
-    window.open(
-      "https://mail.google.com/mail/?view=cm&fs=1&to=techitmore.contact@gmail.com&su=Tech%20It%20More%20Gaming%20Catalog",
-      "_blank",
-      "noopener,noreferrer"
-    );
-  });
-});
-
 const tierSelect = document.querySelector("#tier-select");
 if (tierSelect) tierSelect.addEventListener("change", () => { setTier(tierSelect.value); renderCatalog(); });
 renderSpotlight();
