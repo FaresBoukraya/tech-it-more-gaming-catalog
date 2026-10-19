@@ -9,7 +9,6 @@ const categoryList = document.querySelector("#category-list");
 const resultsCount = document.querySelector("#results-count");
 const emptyState = document.querySelector("#empty-state");
 const brandSelect = document.querySelector("#brand-select");
-const wirelessToggle = document.querySelector("#wireless-toggle");
 const quickFilters = document.querySelector("#quick-filters");
 const activeFiltersEl = document.querySelector("#active-filters");
 const recentRow = document.querySelector("#recent-row");
@@ -262,7 +261,6 @@ function scrollToCatalog() {
 function setConnection(mode) {
   wirelessOnly = mode === "wireless";
   wiredOnly = mode === "wired";
-  wirelessToggle.setAttribute("aria-pressed", String(wirelessOnly));
 }
 function setWireless(value) {
   setConnection(value ? "wireless" : "any");
@@ -755,25 +753,6 @@ function renderQuickFilters() {
     `<div class="tm-qf-group" role="group" aria-label="Connection"><span class="tm-qf-label">Connection</span>${btn("data-qf-conn", "wireless", "Wireless", connCounts.wireless, connNow === "wireless")}${btn("data-qf-conn", "wired", "Wired", connCounts.wired, connNow === "wired")}</div>`;
 }
 
-function renderWirelessCount() {
-  const base = searchableProducts(catalogProducts, { ignoreWireless: true });
-  const count = base.filter(isWireless).length;
-  wirelessToggle.textContent = `Wireless only (${count})`;
-  wirelessToggle.title = "Show only products that connect without a cable";
-  wirelessToggle.disabled = count === 0 && !wirelessOnly;
-}
-
-function renderTierSelect() {
-  const select = document.querySelector("#tier-select");
-  if (!select) return;
-  const base = searchableProducts(catalogProducts, { ignoreTier: true });
-  const counts = { Budget: 0, "Mid-range": 0, Premium: 0 };
-  base.forEach(product => { if (counts[tierOf(product)] !== undefined) counts[tierOf(product)]++; });
-  select.innerHTML = [`<option value="All tiers">All tiers (${base.length})</option>`,
-    ...Object.keys(counts).map(tier => `<option value="${tier}"${counts[tier] === 0 && tier !== activeTier ? " disabled" : ""}>${tier} (${counts[tier]})</option>`)].join("");
-  select.value = activeTier;
-}
-
 const CATEGORY_HINTS = [
   [/mouse|mice/i, "Mice"], [/keyboard|keypad/i, "Keyboards"], [/headset|headphone|earbud/i, "Headsets"],
   [/controller|gamepad|joystick/i, "Controllers"], [/console|handheld|\bvr\b|playstation|xbox|switch/i, "Consoles & handhelds"],
@@ -842,8 +821,6 @@ function renderEmptyState(visibleCount) {
 
 function setTier(value) {
   activeTier = value;
-  const select = document.querySelector("#tier-select");
-  if (select) select.value = value;
 }
 
 function clearFilter(kind) {
@@ -938,8 +915,6 @@ function moveSuggestion(delta) {
 
 function renderCatalog(append = false) {
   if (!append) renderBrandSelect();
-  if (!append) renderTierSelect();
-  if (!append) renderWirelessCount();
   if (!append) renderQuickFilters();
   const visible = searchableProducts(catalogProducts);
   const alreadyRendered = append ? grid.children.length : 0;
@@ -1610,10 +1585,6 @@ brandSelect.addEventListener("change", () => {
   activeBrand = brandSelect.value;
   renderCatalog();
 });
-wirelessToggle.addEventListener("click", () => {
-  setWireless(!wirelessOnly);
-  renderCatalog();
-});
 quickFilters.addEventListener("click", event => {
   const tier = event.target.closest("[data-qf-tier]");
   const conn = event.target.closest("[data-qf-conn]");
@@ -1753,8 +1724,6 @@ clearSavedButton.addEventListener("click", async () => {
     showError("Could not clear your saved list.", error);
   }
 });
-const tierSelect = document.querySelector("#tier-select");
-if (tierSelect) tierSelect.addEventListener("change", () => { setTier(tierSelect.value); renderCatalog(); });
 renderSpotlight();
 document.addEventListener("click", event => {
   if (event.target.closest("[data-spot-again]")) renderSpotlight();

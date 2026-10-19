@@ -1769,3 +1769,25 @@ body { overflow-x: clip; overscroll-behavior-y: none; }
 .tm-region-more h3 { margin: 14px 16px 8px; font: 700 14px var(--sans); color: var(--tm-soft); }
 .tm-region-more .tm-store-list { margin: 0 16px 8px; }
 .tm-region-more .tm-note { margin: 8px 16px 14px; }
+
+/* ---------- Email chooser (computers only; phones open their mail app directly) ---------- */
+.tm-mail-backdrop { position: fixed; z-index: 40; inset: 0; background: rgba(15, 26, 43, .45); }
+.tm-mail-menu {
+  position: fixed; z-index: 41; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(92vw, 360px); padding: 18px; border: 1px solid var(--tm-line-strong); border-radius: 16px;
+  background: var(--tm-paper); color: var(--tm-ink); box-shadow: var(--tm-shadow), 0 24px 60px rgba(0, 0, 0, .3);
+  font: 400 15px/1.4 var(--sans);
+}
+.tm-mail-menu-head { display: flex; align-items: center; justify-content: space-between; font-size: 18px; }
+.tm-mail-menu-close { width: 34px; height: 34px; border: 1px solid var(--tm-line-strong); border-radius: 50%; background: transparent; color: var(--tm-ink); font-size: 22px; line-height: 1; cursor: pointer; }
+.tm-mail-menu-addr { margin: 6px 0 14px; color: var(--tm-faint); font-size: 14px; overflow-wrap: anywhere; user-select: all; }
+.tm-mail-menu-list { display: flex; flex-direction: column; gap: 8px; }
+.tm-mail-menu-list a, .tm-mail-menu-list button {
+  display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 14px;
+  border: 1px solid var(--tm-line-strong); border-radius: 10px; background: var(--tm-paper); color: var(--tm-ink);
+  font: 600 15px/1 var(--sans); text-decoration: none; cursor: pointer;
+}
+.tm-mail-menu-list a:first-child { background: var(--tm-accent); border-color: var(--tm-accent); color: var(--tm-accent-ink); }
+[data-theme="dark"] .tm-mail-menu-list a:first-child { background: #9aa4ff; border-color: #9aa4ff; color: #0b1230; }
+.tm-mail-menu-list a:hover, .tm-mail-menu-list button:hover, .tm-mail-menu-close:hover { filter: brightness(1.08); }
+.tm-mail-menu a:focus-visible, .tm-mail-menu button:focus-visible { outline: 3px solid var(--tm-signal); outline-offset: 2px; }
