@@ -2,13 +2,13 @@
   Email links, on every page.
 
   The links are plain mailto: links, so they work with no script at all.
-  A mailto: link only works where a mail app is set up, which is normal on a phone and
-  rare on a computer. So on a computer this file opens a small "Email us" card with:
+  A mailto: link only works where a mail app is set up, and even on a phone that is not
+  guaranteed (no mail app, or the page is open inside another app's browser). So on every
+  device this file opens a small "Email us" card with:
+    - "Mail app on this device" (the normal mailto: link; listed first on phones and tablets)
     - Gmail, Outlook and Yahoo (a new tab, with the subject and message already filled in)
-    - "Mail app on this device" (the normal mailto: link, for people who do have one)
     - Copy address
-  On a phone or tablet nothing changes: the link opens the mail app directly. If that
-  ever opens nothing, the address is copied and a short note says so.
+  Whatever the device, the visitor always has an option that works.
 */
 (function () {
   var toast, toastTimer, menu, backdrop, lastFocus;
@@ -118,21 +118,22 @@
 
     var list = document.createElement("div");
     list.className = "tm-mail-menu-list";
-    providers(m).forEach(function (p) {
+    var app = document.createElement("a");
+    app.href = link.getAttribute("href");
+    app.textContent = "Mail app on this device";
+    app.addEventListener("click", function () { setTimeout(closeMenu, 0); });
+
+    var web = providers(m).map(function (p) {
       var a = document.createElement("a");
       a.href = p.url;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
       a.textContent = "Open in " + p.name;
       a.addEventListener("click", function () { setTimeout(closeMenu, 0); });
-      list.appendChild(a);
+      return a;
     });
 
-    var app = document.createElement("a");
-    app.href = link.getAttribute("href");
-    app.textContent = "Mail app on this device";
-    app.addEventListener("click", function () { setTimeout(closeMenu, 0); });
-    list.appendChild(app);
+    (isTouchDevice ? [app].concat(web) : web.concat([app])).forEach(function (a) { list.appendChild(a); });
 
     var copyBtn = document.createElement("button");
     copyBtn.type = "button";
@@ -176,7 +177,7 @@
     var m = parse(link.getAttribute("href"));
     if (!m.address) return;
 
-    if (isTouchDevice || (menu && menu.contains(link))) { safetyNet(m.address); return; }
+    if (menu && menu.contains(link)) { safetyNet(m.address); return; }
     event.preventDefault();
     openMenu(link, m);
   });
