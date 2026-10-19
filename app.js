@@ -53,6 +53,8 @@ let gallerySlideInterval = 4500;
 let handlingProductHistory = false;
 let productDialogRequest = 0;
 const catalogPageSize = 36;
+const COMPARE_MAX = 3;
+const compareIds = [];
 
 const STORAGE_PREFIX = "tim:";
 const memoryStore = new Map();
@@ -95,7 +97,7 @@ async function toggleWatchlist(productId) {
   const saved = watchlist.has(productId);
   grid.querySelectorAll("[data-watch-id]").forEach(button => {
     if (button.dataset.watchId !== productId) return;
-    const name = button.closest(".tm-card")?.querySelector(".tm-name")?.textContent || "product";
+    const name = button.closest(".tm-item")?.querySelector(".tm-name")?.textContent || "product";
     button.classList.toggle("saved", saved);
     button.setAttribute("aria-pressed", String(saved));
     button.setAttribute("aria-label", `${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list`);
@@ -323,16 +325,25 @@ function cardMarkup(product) {
   const kind = escapeHtml(product.category);
   const productId = escapeHtml(product.id);
   const saved = watchlist.has(product.id);
+  const compared = compareIds.includes(product.id);
   const icon = categoryIcon(product.category);
+  const v = product.verdict || {};
   const media = product.imageUrl
     ? `<img class="tm-photo" src="${escapeHtml(product.imageUrl)}" alt="${brand} ${name}" loading="lazy" decoding="async"><span class="tm-icon" aria-hidden="true" hidden>${icon}</span>`
     : `<span class="tm-icon" aria-hidden="true">${icon}</span>`;
-  return `<article class="tm-card" data-kind="${kind}">
+  const note = v.downside
+    ? `<span class="tm-note"><span class="tm-note-label">The catch</span><span class="tm-note-text">${escapeHtml(v.downside)}.</span></span>`
+    : "";
+  return `<article class="tm-item" data-kind="${kind}">
     <button class="tm-open" type="button" data-product-id="${productId}" aria-label="${brand} ${name}: see where to buy">
-      <span class="tm-tile">${media}${isWireless(product) ? '<span class="tm-pill">Wireless</span>' : ""}</span>
-      <span class="tm-body"><span class="tm-brand">${brand}</span><span class="tm-name">${name}</span>${product.summary ? `<span class="tm-summary">${escapeHtml(product.summary)}</span>` : ""}${product.verdict && product.verdict.tier ? `<span class="tm-tier">${escapeHtml(product.verdict.tier)}</span>` : ""}</span>
+      <span class="tm-tile">${media}</span>
+      <span class="tm-body"><span class="tm-brand">${brand} · ${kind}</span><span class="tm-name">${name}</span>${product.summary ? `<span class="tm-summary">${escapeHtml(product.summary)}</span>` : ""}<span class="tm-meta">${v.tier ? `<span class="tm-tier">${escapeHtml(v.tier)}</span>` : ""}${isWireless(product) ? '<span class="tm-pill">Wireless</span>' : ""}</span></span>
+      ${note}
     </button>
-    <button class="tm-heart${saved ? " saved" : ""}" type="button" data-watch-id="${productId}" aria-pressed="${saved}" aria-label="${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list">${HEART_ICON}</button>
+    <div class="tm-item-tools">
+      <button class="tm-heart${saved ? " saved" : ""}" type="button" data-watch-id="${productId}" aria-pressed="${saved}" aria-label="${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list">${HEART_ICON}</button>
+      <label class="tm-compare-check"><input type="checkbox" data-compare-id="${productId}"${compared ? " checked" : ""}><span>Compare</span><span class="sr-only"> ${brand} ${name}</span></label>
+    </div>
   </article>`;
 }
 
@@ -865,6 +876,8 @@ function renderCatalog(append = false) {
   }
   const rendered = Math.min(visible.length, alreadyRendered + catalogPageSize);
   resultsCount.textContent = `${visible.length} ${visible.length === 1 ? "product" : "products"}`;
+  const applyButton = document.querySelector("#filters-apply");
+  if (applyButton) applyButton.textContent = `Show ${visible.length} ${visible.length === 1 ? "product" : "products"}`;
   catalogTitle.textContent = sharedIds ? "Shared list" : activeCategory === "All products" ? "All gear" : activeCategory;
   renderEmptyState(visible.length);
   loadMoreButton.hidden = rendered >= visible.length;
@@ -936,14 +949,23 @@ async function openProduct(productId, { fromHistory = false } = {}) {
           <span class="store-hint">${escapeHtml(storeHint(storeName))} ↗</span>
         </a>`;
       }).join("") || `<p class="gateway-disclosure">No product-specific retailer searches are listed for this item yet.</p>`;
-    const offersHeading = "Find this product at retailers";
-    const offersNotice = "(opens each store's own search)";
-    const offerNote = `<p class="gateway-disclosure">Each link opens the store's own search results for this product, so you can pick the exact model and seller yourself. Tech It More doesn't quote prices.</p>`;
-    dialogContent.innerHTML = `<div class="detail-content" data-product-id="${productIdAttribute}" data-kind="${category}">
-      <div class="detail-top">
-        <span class="product-art detail-art${artClass}" aria-hidden="true">${categoryIcon(product.category)}</span>
-        <div class="detail-title-wrap"><p class="product-brand">${brand} · ${category}</p><h2 id="detail-name">${productName}</h2><p class="detail-subtitle">${specs}</p><button class="tm-where" type="button" data-scroll-offers>Where to buy ↓</button></div>
-      </div>
+    const v = product.verdict || {};
+    const checked = product.checked && checkedDate(product.checked);
+    const brandName = escapeHtml(brandLabel(product.brand));
+    const specChips = String(product.specs || "").split(/\s*·\s*/).filter(item => item && !/not listed|check the/i.test(item)).slice(0, 4).map(item => `<li>${escapeHtml(item)}</li>`).join("");
+    const headChips = `${v.tier ? `<li class="dx-tier">${escapeHtml(v.tier)}</li>` : ""}${isWireless(product) ? "<li>Wireless</li>" : ""}${specChips}`;
+    const savedNow = watchlist.has(product.id);
+    const comparedNow = compareIds.includes(product.id);
+    const COMPARE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4v16M12 9v11M18 13v7"/></svg>';
+    const verdictCard = (v.bestFor || v.downside || v.skipIf)
+      ? `<section class="dx-verdict" aria-label="Our verdict">
+          ${v.bestFor ? `<div class="dx-block"><h3>Best for</h3><p>${escapeHtml(v.bestFor)}.</p></div>` : ""}
+          ${v.downside ? `<div class="tm-note dx-note"><span class="tm-note-label">The catch</span><span class="tm-note-text dx-note-text">${escapeHtml(v.downside)}.</span></div>` : ""}
+          ${v.skipIf ? `<div class="dx-block"><h3>Skip it if</h3><p>${escapeHtml(v.skipIf)}.</p></div>` : ""}
+          <p class="dx-fine">${v.tier ? `Typical price tier: ${escapeHtml(v.tier)}, a rough guide and not a quote. ` : ""}${checked ? `Checked ${escapeHtml(checked)} against the manufacturer's page.` : "Not yet re-checked against the manufacturer's page."}</p>
+        </section>`
+      : "";
+    dialogContent.innerHTML = `<div class="detail-content dx" data-product-id="${productIdAttribute}" data-kind="${category}">
       <div class="product-photo-gallery" id="product-photo-gallery" data-selected-index="0">
         <div class="detail-photo-wrap">
           <button class="photo-gallery-arrow previous" type="button" data-photo-step="-1" aria-label="Show previous product photo" disabled hidden>‹</button>
@@ -955,16 +977,28 @@ async function openProduct(productId, { fromHistory = false } = {}) {
         <div class="photo-gallery-thumbnails" id="photo-gallery-thumbnails" role="group" aria-label="Product photos" hidden></div>
         <button class="gallery-slideshow-toggle" id="gallery-slideshow-toggle" type="button" aria-pressed="false" aria-label="Play photo slideshow" disabled hidden>▶ Play</button>
         <p class="photo-gallery-status" id="photo-gallery-status" role="status"></p>
-        <div class="detail-quick">${quickFactsMarkup(product)}</div>
       </div>
-      <div class="detail-info-column">
-        ${verdictMarkup(product)}
-        ${photoCredit}
-        <h3 class="offers-heading" id="offers-heading">${offersHeading} <span class="offers-notice">${offersNotice}</span></h3>
-        <div class="offer-list store-gateway-list">${rows}</div>
-        ${offerNote}
+      <div class="detail-info-column dx-info">
+        <header class="dx-head">
+          <p class="dx-eyebrow">${brandName} · ${category}</p>
+          <h2 id="detail-name" class="dx-title">${productName}</h2>
+          ${product.summary ? `<p class="dx-sub">${escapeHtml(product.summary)}</p>` : ""}
+          ${headChips ? `<ul class="dx-chips">${headChips}</ul>` : ""}
+        </header>
+        <div class="dx-actions">
+          <button class="tm-primary dx-cta" type="button" data-scroll-offers>Where to buy <span aria-hidden="true">↓</span></button>
+          <button class="dx-act" type="button" data-dx-save="${productIdAttribute}" aria-pressed="${savedNow}" aria-label="Save ${productName} to your list">${HEART_ICON}<span class="label">${savedNow ? "Saved" : "Save"}</span></button>
+          <button class="dx-act" type="button" data-dx-compare="${productIdAttribute}" aria-pressed="${comparedNow}" aria-label="Add ${productName} to compare">${COMPARE_ICON}<span class="label">${comparedNow ? "Added" : "Compare"}</span></button>
+        </div>
+        ${verdictCard}
+        <section class="dx-offers" aria-labelledby="offers-heading">
+          <h3 class="offers-heading" id="offers-heading">Where to buy <span class="offers-notice">Opens each store's own search</span></h3>
+          <div class="offer-list store-gateway-list">${rows}</div>
+          <p class="gateway-disclosure">You pick the exact model and seller. Tech It More doesn't quote prices.</p>
+        </section>
         ${reviewMarkup(product)}
         ${alternativesMarkup(product)}
+        ${photoCredit}
         <button class="share-product" type="button" data-share-product="${product.id}">↗ Share this product</button>
       </div>
     </div>`;
@@ -1026,7 +1060,7 @@ document.addEventListener("error", event => {
   if (!(image instanceof HTMLImageElement)) return;
   if (image.matches(".photo-thumb img")) {
     image.closest(".photo-thumb-item").hidden = true;
-  } else if (image.matches(".product-photo, .tm-photo, #gallery-main-photo")) {
+  } else if (image.matches(".product-photo, .tm-photo, #gallery-main-photo, .tm-cmp-photo img")) {
     image.hidden = true;
     if (image.nextElementSibling instanceof HTMLElement) image.nextElementSibling.hidden = false;
   }
@@ -1038,7 +1072,7 @@ categoryList.addEventListener("click", event => {
   activeCategory = button.dataset.category;
   renderCategories();
   renderCatalog();
-  scrollToCatalog();
+  if (!window.matchMedia("(max-width: 899px)").matches) scrollToCatalog();
 });
 
 grid.addEventListener("click", event => {
@@ -1051,6 +1085,112 @@ grid.addEventListener("click", event => {
   } else if (button) {
     openProduct(button.dataset.productId);
   }
+});
+
+/* ---------- Filter drawer (small screens) ---------- */
+const filterSidebar = document.querySelector("#filter-sidebar");
+const filtersBackdrop = document.querySelector("#filters-backdrop");
+const filtersOpen = document.querySelector("#filters-open");
+function setFiltersOpen(open) {
+  filterSidebar.classList.toggle("open", open);
+  filtersBackdrop.hidden = !open;
+  filtersOpen.setAttribute("aria-expanded", String(open));
+  document.body.classList.toggle("tm-lock", open);
+  if (open) filterSidebar.querySelector("#filters-close").focus();
+  else if (document.activeElement && filterSidebar.contains(document.activeElement)) filtersOpen.focus();
+}
+filtersOpen.addEventListener("click", () => setFiltersOpen(true));
+filtersBackdrop.addEventListener("click", () => setFiltersOpen(false));
+document.querySelector("#filters-close").addEventListener("click", () => setFiltersOpen(false));
+document.querySelector("#filters-apply").addEventListener("click", () => { setFiltersOpen(false); scrollToCatalog(); });
+window.matchMedia("(min-width: 900px)").addEventListener("change", event => { if (event.matches) setFiltersOpen(false); });
+
+/* ---------- Compare tray and side-by-side view ---------- */
+const compareTray = document.querySelector("#compare-tray");
+const compareTrayList = document.querySelector("#compare-tray-list");
+const compareGo = document.querySelector("#compare-go");
+const compareModal = document.querySelector("#compare-modal");
+const compareContent = document.querySelector("#compare-content");
+function productById(id) { return products.find(item => item.id === id); }
+function syncCompareChecks() {
+  grid.querySelectorAll("[data-compare-id]").forEach(input => { input.checked = compareIds.includes(input.dataset.compareId); });
+}
+function renderCompareTray() {
+  const items = compareIds.map(productById).filter(Boolean);
+  compareTray.hidden = items.length === 0;
+  document.body.classList.toggle("has-tray", items.length > 0);
+  document.querySelector("#compare-count").textContent = String(items.length);
+  compareTrayList.innerHTML = items.map(item => `<li class="tm-tray-chip"><span>${escapeHtml(fullProductName(item))}</span><button type="button" data-compare-remove="${escapeHtml(item.id)}" aria-label="Remove ${escapeHtml(item.name)} from compare">×</button></li>`).join("");
+  compareGo.disabled = items.length < 2;
+  compareGo.textContent = items.length < 2 ? "Pick two to compare" : `Compare ${items.length}`;
+}
+function setCompared(id, on) {
+  const at = compareIds.indexOf(id);
+  if (on && at === -1) {
+    if (compareIds.length >= COMPARE_MAX) { showToast(`You can compare up to ${COMPARE_MAX} products at a time.`); syncCompareChecks(); return; }
+    compareIds.push(id);
+  } else if (!on && at !== -1) compareIds.splice(at, 1);
+  syncCompareChecks();
+  renderCompareTray();
+}
+function compareRows() {
+  const v = item => item.verdict || {};
+  return [
+    ["Category", item => item.category],
+    ["Price tier", item => v(item).tier || "Not rated"],
+    ["Wireless", item => (isWireless(item) ? "Yes" : "No, or not listed")],
+    ["Best for", item => v(item).bestFor || "Not listed"],
+    ["The catch", item => (v(item).downside ? `${v(item).downside}.` : "Not listed"), "tm-cmp-catch"],
+    ["Skip it if", item => (v(item).skipIf ? `${v(item).skipIf}.` : "Not listed")],
+    ["Key specs", item => specText(item) || "Not listed"]
+  ];
+}
+function renderCompare() {
+  const items = compareIds.map(productById).filter(Boolean);
+  const head = items.map(item => {
+    const brand = escapeHtml(brandLabel(item.brand));
+    const photo = item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="" loading="lazy" decoding="async">` : "";
+    return `<th scope="col"><span class="tm-cmp-photo">${photo}</span><span class="tm-brand">${brand}</span><span class="tm-cmp-name">${escapeHtml(item.name)}</span></th>`;
+  }).join("");
+  const body = compareRows().map(([label, get, cls]) => `<tr><th scope="row">${label}</th>${items.map(item => `<td${cls ? ` class="${cls}"` : ""}>${escapeHtml(get(item))}</td>`).join("")}</tr>`).join("");
+  const foot = items.map(item => `<td><button type="button" class="tm-btn" data-compare-open="${escapeHtml(item.id)}">Where to buy</button></td>`).join("");
+  compareContent.innerHTML = `<table class="tm-cmp-table"><caption class="sr-only">Comparison of ${items.length} products</caption><thead><tr><td></td>${head}</tr></thead><tbody>${body}<tr><th scope="row"><span class="sr-only">Actions</span></th>${foot}</tr></tbody></table>`;
+}
+function openCompare() {
+  if (compareIds.length < 2) return;
+  renderCompare();
+  compareModal.hidden = false;
+  compareModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("tm-lock");
+  document.querySelector("#compare-close").focus();
+}
+function closeCompare() {
+  if (compareModal.hidden) return;
+  compareModal.hidden = true;
+  compareModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("tm-lock");
+  compareGo.focus();
+}
+grid.addEventListener("change", event => {
+  const input = event.target.closest("[data-compare-id]");
+  if (input) setCompared(input.dataset.compareId, input.checked);
+});
+compareTrayList.addEventListener("click", event => {
+  const remove = event.target.closest("[data-compare-remove]");
+  if (remove) setCompared(remove.dataset.compareRemove, false);
+});
+document.querySelector("#compare-clear").addEventListener("click", () => { compareIds.length = 0; syncCompareChecks(); renderCompareTray(); closeCompare(); });
+compareGo.addEventListener("click", openCompare);
+document.querySelector("#compare-close").addEventListener("click", closeCompare);
+compareModal.addEventListener("click", event => {
+  if (event.target === compareModal) { closeCompare(); return; }
+  const open = event.target.closest("[data-compare-open]");
+  if (open) { const id = open.dataset.compareOpen; closeCompare(); openProduct(id); }
+});
+document.addEventListener("keydown", event => {
+  if (event.key !== "Escape") return;
+  if (!compareModal.hidden) { event.preventDefault(); closeCompare(); }
+  else if (filterSidebar.classList.contains("open")) { event.preventDefault(); setFiltersOpen(false); }
 });
 
 /* Typing stays smooth: the input state updates instantly, but the heavier grid and
@@ -1109,6 +1249,25 @@ dialogContent.addEventListener("click", event => {
     const currentIndex = Number(dialogContent.querySelector("#product-photo-gallery").dataset.selectedIndex);
     const nextIndex = (currentIndex + Number(photoStepButton.dataset.photoStep) + buttons.length) % buttons.length;
     selectProductGalleryPhoto(nextIndex);
+    return;
+  }
+  const dxSave = event.target.closest("[data-dx-save]");
+  if (dxSave) {
+    const id = dxSave.dataset.dxSave;
+    toggleWatchlist(id).then(() => {
+      const on = watchlist.has(id);
+      dxSave.setAttribute("aria-pressed", String(on));
+      dxSave.querySelector(".label").textContent = on ? "Saved" : "Save";
+    }).catch(error => showError("Could not update your saved list.", error));
+    return;
+  }
+  const dxCompare = event.target.closest("[data-dx-compare]");
+  if (dxCompare) {
+    const id = dxCompare.dataset.dxCompare;
+    setCompared(id, !compareIds.includes(id));
+    const on = compareIds.includes(id);
+    dxCompare.setAttribute("aria-pressed", String(on));
+    dxCompare.querySelector(".label").textContent = on ? "Added" : "Compare";
     return;
   }
   const shareButton = event.target.closest("[data-share-product]");
@@ -1488,13 +1647,14 @@ document.addEventListener("click", event => {
 // On phones the "Before you buy" box moves below the product list so the first screen shows products.
 (function placeSpotlight() {
   const box = document.querySelector("#spotlight");
-  const rail = document.querySelector("#category-list");
   const how = document.querySelector("#how-it-works");
-  if (!box || !rail || !how || !window.matchMedia) return;
+  if (!box || !how || !window.matchMedia) return;
+  const home = box.parentNode;
+  const homeNext = box.nextSibling;
   const query = window.matchMedia("(max-width: 760px)");
   const place = () => {
     if (query.matches) { how.parentNode.insertBefore(box, how); box.classList.add("tm-spot-moved"); }
-    else { rail.parentNode.insertBefore(box, rail); box.classList.remove("tm-spot-moved"); }
+    else { home.insertBefore(box, homeNext && homeNext.parentNode === home ? homeNext : null); box.classList.remove("tm-spot-moved"); }
   };
   place();
   if (query.addEventListener) query.addEventListener("change", place);

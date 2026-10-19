@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#f3f2fa" id="theme-color">
+    <meta name="theme-color" content="#fafaf7" id="theme-color">
     <meta name="description" content="Browse keyboards, mice, headsets, controllers, monitors and more, then open Amazon, Best Buy, Newegg and other US stores to compare. Independent, no accounts.">
     <link rel="canonical" href="https://tech-it-more-gaming-catalog.pages.dev/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -25,9 +25,9 @@
     <link rel="preconnect" href="https://gmedia.playstation.com">
     <link rel="preload" href="/fonts/lora-latin.woff" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="/fonts/carlito-regular.woff" as="font" type="font/woff" crossorigin>
-    <link rel="stylesheet" href="site.css?v=01d0b4d1">
+    <link rel="stylesheet" href="site.css?v=546170b3">
     <script src="products.js?v=95a56661" defer></script>
-    <script src="app.js?v=d8426fa1" defer></script>
+    <script src="app.js?v=26531c17" defer></script>
   </head>
   <body>
 <!--build:noscript-->
@@ -62,7 +62,6 @@
           <span class="tm-hint">Press <kbd>/</kbd> to search from anywhere</span>
         </div>
         <aside class="tm-spotlight" id="spotlight" aria-label="Before you buy"></aside>
-        <div class="tm-rail" id="category-list" role="group" aria-label="Browse by category"></div>
       </section>
 
       <section class="tm-catalog" id="catalog" aria-labelledby="catalog-title">
@@ -70,29 +69,51 @@
           <p id="shared-text">Shared list</p>
           <div><button class="tm-btn" id="shared-save" type="button">Save all to my list</button><button class="tm-btn" id="shared-exit" type="button">Browse all gear</button></div>
         </div>
-        <div class="tm-toolbar">
-          <div>
-            <h2 id="catalog-title" tabindex="-1">All gear</h2>
-            <p class="tm-results" id="results-count" aria-live="polite">52 products</p>
-          </div>
-          <div class="tm-filters">
-            <label class="tm-field"><span>Brand</span><select id="brand-select" aria-label="Filter by brand"><option>All brands</option></select></label>
-            <label class="tm-field"><span>Price tier</span><select id="tier-select" aria-label="Filter by typical price tier"><option value="All tiers">All tiers</option><option value="Budget">Budget</option><option value="Mid-range">Mid-range</option><option value="Premium">Premium</option></select></label>
-            <button class="tm-toggle" id="wireless-toggle" type="button" aria-pressed="false">Wireless only</button>
-            <label class="tm-field"><span>Sort</span><select id="sort-select" aria-label="Sort products">
-              <option value="popular">Featured</option>
-              <option value="name">Name A–Z</option>
-              <option value="brand">Brand A–Z</option>
-            </select></label>
-            <button class="tm-link" id="share-list" type="button" hidden>Copy link to saved list</button>
-            <button class="tm-link tm-danger" id="clear-saved" type="button" hidden>Clear saved list</button>
+        <div class="tm-layout">
+          <aside class="tm-sidebar" id="filter-sidebar" aria-label="Filters">
+            <div class="tm-side-head">
+              <h2 class="tm-side-title">Filters</h2>
+              <button class="tm-side-close" id="filters-close" type="button" aria-label="Close filters">×</button>
+            </div>
+            <div class="tm-side-group">
+              <h3>Category</h3>
+              <div class="tm-cats" id="category-list" role="group" aria-label="Browse by category"></div>
+            </div>
+            <div class="tm-side-group">
+              <h3>Refine</h3>
+              <label class="tm-side-field"><span>Brand</span><select id="brand-select" aria-label="Filter by brand"><option>All brands</option></select></label>
+              <label class="tm-side-field"><span>Price tier</span><select id="tier-select" aria-label="Filter by typical price tier"><option value="All tiers">All tiers</option><option value="Budget">Budget</option><option value="Mid-range">Mid-range</option><option value="Premium">Premium</option></select></label>
+              <button class="tm-toggle" id="wireless-toggle" type="button" aria-pressed="false">Wireless only</button>
+            </div>
+            <div class="tm-side-group">
+              <h3>Order</h3>
+              <label class="tm-side-field"><span>Sort</span><select id="sort-select" aria-label="Sort products">
+                <option value="popular">Featured</option>
+                <option value="name">Name A–Z</option>
+                <option value="brand">Brand A–Z</option>
+              </select></label>
+            </div>
+            <button class="tm-primary tm-side-apply" id="filters-apply" type="button">Show results</button>
+          </aside>
+          <div class="tm-results-col">
+            <div class="tm-toolbar">
+              <div>
+                <h2 id="catalog-title" tabindex="-1">All gear</h2>
+                <p class="tm-results" id="results-count" aria-live="polite">52 products</p>
+              </div>
+              <div class="tm-toolbar-actions">
+                <button class="tm-btn tm-filters-open" id="filters-open" type="button" aria-controls="filter-sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span class="label">Filters</span></button>
+                <button class="tm-link" id="share-list" type="button" hidden>Copy link to saved list</button>
+                <button class="tm-link tm-danger" id="clear-saved" type="button" hidden>Clear saved list</button>
+              </div>
+            </div>
+            <div class="tm-chips" id="active-filters" aria-label="Active filters"></div>
+            <section class="tm-recent" id="recent-row" aria-label="Recently viewed" hidden></section>
+            <div class="tm-list" id="product-grid"></div>
+            <div class="tm-empty" id="empty-state" hidden></div>
+            <button class="tm-more" id="load-more" type="button" hidden>Show more products</button>
           </div>
         </div>
-        <div class="tm-chips" id="active-filters" aria-label="Active filters"></div>
-        <section class="tm-recent" id="recent-row" aria-label="Recently viewed" hidden></section>
-        <div class="tm-grid" id="product-grid"></div>
-        <div class="tm-empty" id="empty-state" hidden></div>
-        <button class="tm-more" id="load-more" type="button" hidden>Show more products</button>
       </section>
 
       <section class="tm-how" id="how-it-works" aria-labelledby="how-title">
@@ -139,17 +160,11 @@
         <button type="button" id="export-button">Export my data</button>
       </nav>
     </div>
-    <div class="footer-socials" aria-label="Contact and social links">
-          <a class="social-button social-email" href="mailto:techitmore.contact@gmail.com?subject=Tech%20It%20More%20Gaming%20Catalog" aria-label="Send an email" title="Email">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5 12 13.5l8.5-6"/></svg>
-            </a>
-            <a class="social-button" href="https://discord.com/users/743614856128888862" target="_blank" rel="noopener noreferrer" aria-label="Open Discord" title="Discord">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.54 5.34a16.3 16.3 0 0 0-3.94-1.2l-.48.98a14.6 14.6 0 0 0-6.24 0l-.48-.98a16.3 16.3 0 0 0-3.94 1.2C2.1 8.38 1.42 11.35 1.7 14.27a16.1 16.1 0 0 0 4.86 2.43l1.18-1.62c-.65-.24-1.27-.54-1.85-.89l.45-.34c3.56 1.65 7.66 1.65 11.22 0l.45.34c-.58.35-1.2.65-1.85.89l1.18 1.62a16.1 16.1 0 0 0 4.86-2.43c.33-3.39-.58-6.34-2.66-8.93ZM8.5 13.85c-1.05 0-1.92-.97-1.92-2.16s.85-2.16 1.92-2.16 1.93.97 1.93 2.16-.86 2.16-1.93 2.16Zm7 0c-1.05 0-1.92-.97-1.92-2.16s.85-2.16 1.92-2.16 1.93.97 1.93 2.16-.86 2.16-1.93 2.16Z" /></svg>
-            </a>
-            <a class="social-button" href="https://github.com/FaresBoukraya" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub" title="GitHub">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.7-2.3 4.5-4.5 4.8.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z" /></svg>
-            </a>
-        </div>
+    <div class="footer-socials" aria-label="Contact and code">
+      <a class="social-button" href="mailto:techitmore.contact@gmail.com?subject=Tech%20It%20More" aria-label="Send an email" title="Send an email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5 12 13.5l8.5-6"/></svg></a>
+      
+      <a class="social-button" href="https://github.com/FaresBoukraya/tech-it-more-gaming-catalog" target="_blank" rel="noopener noreferrer" aria-label="Source code on GitHub" title="Source code on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.7-2.3 4.5-4.5 4.8.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z"/></svg></a>
+    </div>
     <div class="tm-legal"><p>© 2026 Tech It More. Independent and not affiliated with the brands or stores shown; names and photos belong to their owners. Photos load from manufacturers' servers; opening a product may also load extra photos from Wikimedia Commons. Store links open each retailer's own search page.</p></div>
   </div>
 </footer>
@@ -174,6 +189,22 @@
       </figure>
       <button class="photo-lightbox-arrow next" type="button" data-lightbox-step="1" aria-label="Show next photo">›</button>
       <button class="photo-lightbox-scroll" id="photo-lightbox-scroll" type="button" aria-label="Scroll down to see the full photo">↓ Scroll to see full photo</button>
+    </div>
+    <div class="tm-filters-backdrop" id="filters-backdrop" hidden></div>
+    <div class="tm-tray" id="compare-tray" role="region" aria-label="Compare tray" hidden>
+      <div class="tm-tray-inner">
+        <p class="tm-tray-label">Compare <span id="compare-count">0</span>/3</p>
+        <ul class="tm-tray-list" id="compare-tray-list"></ul>
+        <button class="tm-link" id="compare-clear" type="button">Clear</button>
+        <button class="tm-primary tm-tray-go" id="compare-go" type="button" disabled>Pick two to compare</button>
+      </div>
+    </div>
+    <div class="tm-cmp" id="compare-modal" role="dialog" aria-modal="true" aria-label="Compare products" aria-hidden="true" hidden>
+      <div class="tm-cmp-panel">
+        <button class="tm-cmp-close" id="compare-close" type="button" aria-label="Close comparison">×</button>
+        <h2 class="tm-cmp-title">Side by side</h2>
+        <div class="tm-cmp-scroll" id="compare-content"></div>
+      </div>
     </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
