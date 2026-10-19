@@ -1,0 +1,66 @@
+{
+  "note": "Store regions beyond the US. Each store is a plain search on that retailer's own site, same as the US list. 'stores' holds the search URL, the query parameter and a short hint; 'byGroup' picks which stores to show for each kind of product. Brand official stores are US-only and are not listed here.",
+  "order": ["US", "UK", "CA", "EU"],
+  "regions": {
+    "US": { "label": "United States", "short": "US" },
+    "UK": {
+      "label": "United Kingdom",
+      "short": "UK",
+      "stores": {
+        "Amazon UK": { "url": "https://www.amazon.co.uk/s", "param": "k", "hint": "Wide selection" },
+        "Currys": { "url": "https://www.currys.co.uk/search", "param": "q", "hint": "Click and collect" },
+        "Scan": { "url": "https://www.scan.co.uk/search", "param": "q", "hint": "PC specialist" },
+        "Overclockers UK": { "url": "https://www.overclockers.co.uk/search", "param": "sSearch", "hint": "PC specialist" },
+        "eBay UK": { "url": "https://www.ebay.co.uk/sch/i.html", "param": "_nkw", "hint": "Used & open-box" }
+      },
+      "byGroup": {
+        "console": ["Amazon UK", "Currys", "eBay UK"],
+        "peripheral": ["Amazon UK", "Currys", "Scan", "Overclockers UK"],
+        "pc": ["Amazon UK", "Scan", "Overclockers UK", "Currys"]
+      }
+    },
+    "CA": {
+      "label": "Canada",
+      "short": "CA",
+      "stores": {
+        "Amazon CA": { "url": "https://www.amazon.ca/s", "param": "k", "hint": "Wide selection" },
+        "Best Buy CA": { "url": "https://www.bestbuy.ca/en-ca/search", "param": "search", "hint": "Local pickup" },
+        "Newegg CA": { "url": "https://www.newegg.ca/p/pl", "param": "d", "hint": "PC specialist" },
+        "Memory Express": { "url": "https://www.memoryexpress.com/Search/Products", "param": "Search", "hint": "In-store pickup" },
+        "Walmart CA": { "url": "https://www.walmart.ca/search", "param": "q", "hint": "Everyday retailer" },
+        "eBay CA": { "url": "https://www.ebay.ca/sch/i.html", "param": "_nkw", "hint": "Used & open-box" }
+      },
+      "byGroup": {
+        "console": ["Amazon CA", "Best Buy CA", "Walmart CA", "eBay CA"],
+        "peripheral": ["Amazon CA", "Best Buy CA", "Newegg CA", "Walmart CA"],
+        "pc": ["Amazon CA", "Newegg CA", "Memory Express", "Best Buy CA"]
+      }
+    },
+    "EU": {
+      "label": "Europe",
+      "short": "EU",
+      "stores": {
+        "Amazon DE": { "url": "https://www.amazon.de/s", "param": "k", "hint": "Germany" },
+        "Amazon FR": { "url": "https://www.amazon.fr/s", "param": "k", "hint": "France" },
+        "Amazon ES": { "url": "https://www.amazon.es/s", "param": "k", "hint": "Spain" },
+        "Amazon IT": { "url": "https://www.amazon.it/s", "param": "k", "hint": "Italy" },
+        "MediaMarkt": { "url": "https://www.mediamarkt.de/de/search.html", "param": "query", "hint": "Germany, electronics" },
+        "Alternate": { "url": "https://www.alternate.de/listing.xhtml", "param": "q", "hint": "Germany, PC specialist" }
+      },
+      "byGroup": {
+        "console": ["Amazon DE", "Amazon FR", "Amazon ES", "Amazon IT", "MediaMarkt"],
+        "peripheral": ["Amazon DE", "Amazon FR", "Amazon ES", "Amazon IT", "MediaMarkt"],
+        "pc": ["Amazon DE", "Amazon FR", "Amazon ES", "Amazon IT", "Alternate"]
+      }
+    }
+  },
+  "groupOfCategory": {
+    "Consoles & handhelds": "console",
+    "Controllers": "console",
+    "Keyboards": "peripheral",
+    "Mice": "peripheral",
+    "Headsets": "peripheral",
+    "Streaming & audio": "peripheral",
+    "PC hardware": "pc"
+  }
+}

@@ -17,7 +17,7 @@ Static site. No backend. No dependencies.
 
 ## What it is
 
-Pick a product and you get its specs, a photo, and a verdict in three lines: **best for**, **the catch**, and **skip it if**. Each product also shows a rough price tier (Budget, Mid-range, Premium) and up to three alternatives. Then one tap opens ready-made searches at US retailers such as Amazon, Best Buy, Newegg, Micro Center, Walmart, Target, GameStop and eBay, or at the manufacturer's own store.
+Pick a product and you get its specs, a photo, and a verdict in three lines: **best for**, **the catch**, and **skip it if**. Each product also shows a rough price tier (Budget, Mid-range, Premium) and up to three alternatives. Then one tap opens ready-made searches at US retailers such as Amazon, Best Buy, Newegg, Micro Center, Walmart, Target, GameStop and eBay, or at the manufacturer's own store. Shopping from the UK, Canada or Europe? A region switch on each product swaps in local retailers.
 
 These are buying notes, not tested reviews. See [How we choose](https://tech-it-more-gaming-catalog.pages.dev/how-we-choose/) for exactly what goes into a verdict and what doesn't.
 
@@ -29,7 +29,9 @@ These are buying notes, not tested reviews. See [How we choose](https://tech-it-
 |---|---|
 | **Instant search** | Live suggestions as you type, with arrow-key and Enter support. Works by brand, model or product type ("razer mouse"). |
 | **Category tiles** | Color-coded tiles with product counts. One click filters the catalog. |
-| **Filters and sorting** | Brand menu (only brands in the current category), price tier, a "Wireless only" toggle, and sort options. |
+| **Quick filters** | One-tap price tier (Budget, Mid-range, Premium) and connection (Wireless, Wired) chips above the results, each with a live count. The same filters are in the side panel, along with a brand menu and sort options. |
+| **Spec highlights** | Each card shows the few numbers buyers compare first (weight, sensor, battery, polling rate, switch type, storage and so on), picked from the spec line. |
+| **Store regions** | Switch a product's store list between United States, United Kingdom, Canada and Europe. The choice is remembered in this browser. Static product pages list every region in a collapsed section. |
 | **Saved list** | Tap the heart on any product. It stays in your browser. |
 | **Shareable** | Filters live in the address bar. **Copy link to saved list** gives a friend your picks, with a button to save them all. |
 | **Recently viewed** | The last eight products you opened. |
@@ -69,7 +71,8 @@ data/
   products.json        THE catalog. The main file you edit
   backlog.json         entries not yet complete enough to publish
   categories.json      category labels, intros and buying tips
-  stores.json          retailer search URLs and which stores each brand/category uses
+  stores.json          US retailer search URLs and which stores each brand/category uses
+  regions.json         UK, Canada and Europe retailers and which ones each kind of product shows
   brands.json          display names for brands written in capitals
   site.json            contact email and optional Discord link
   missing-data.csv     GENERATED: what still needs a photo or specs
@@ -131,7 +134,9 @@ Rules that keep the catalog trustworthy:
 
 **Store links** come from `brandStores` in `data/stores.json`, falling back to `categoryStores`. To add a retailer, list it under `stores` with its search URL and query parameter. Cache busting is automatic: the build puts a content hash on the CSS and JS URLs.
 
-**Footer links:** `data/site.json` holds `contactEmail` (used for every mailto link, including "Suggest a product") and `discordUrl` (leave it empty to hide the Discord button).
+**Other regions:** `data/regions.json` lists each region's stores (search URL, query parameter, short hint) and `byGroup`, which picks the stores for consoles and controllers, peripherals, or PC hardware. Brand official stores stay US-only. The build checks that every store named exists.
+
+**Footer links:** `data/site.json` holds `contactEmail` and `discordUrl` (leave it empty to hide the Discord button). Every page gets the same simple "Email us" button, and it fills in the page name and address so messages arrive with context. `mail.js` is a small safety net: if clicking an email link opens no mail app, it copies the address and says so.
 
 ### Hosting product photos yourself
 

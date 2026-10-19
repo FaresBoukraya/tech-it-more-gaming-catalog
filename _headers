@@ -19,7 +19,7 @@
 /og-image.png
   Cache-Control: public, max-age=86400
 
-# These four files are always requested with ?v=<hash> (scripts/build.mjs rewrites the hash on every change),
+# These files are always requested with ?v=<hash> (scripts/build.mjs rewrites the hash on every change),
 # so a changed file gets a new URL and the old one can be cached for a year.
 /site.css
   Cache-Control: public, max-age=31536000, immutable
@@ -31,4 +31,7 @@
   Cache-Control: public, max-age=31536000, immutable
 
 /theme-init.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/mail.js
   Cache-Control: public, max-age=31536000, immutable

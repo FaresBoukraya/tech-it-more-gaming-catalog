@@ -10,6 +10,7 @@ const resultsCount = document.querySelector("#results-count");
 const emptyState = document.querySelector("#empty-state");
 const brandSelect = document.querySelector("#brand-select");
 const wirelessToggle = document.querySelector("#wireless-toggle");
+const quickFilters = document.querySelector("#quick-filters");
 const activeFiltersEl = document.querySelector("#active-filters");
 const recentRow = document.querySelector("#recent-row");
 const suggestionsBox = document.querySelector("#search-suggestions");
@@ -23,6 +24,8 @@ const sharedBanner = document.querySelector("#shared-banner");
 const backToTop = document.querySelector("#back-to-top");
 let activeBrand = "All brands";
 let wirelessOnly = false;
+let wiredOnly = false;
+let region = "US";
 let sharedIds = null;
 let recentIds = [];
 let suggestionItems = [];
@@ -110,6 +113,7 @@ async function exportLocalData() {
     notice: "Your saved list, recently viewed items and theme from this browser. Store links open retailer searches.",
     watchlist: [...watchlist],
     recent: recentIds,
+    region,
     theme: document.documentElement.dataset.theme
   };
   const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
@@ -188,6 +192,11 @@ const CATEGORY_WORDS = {
 function isWireless(product) {
   return /wireless|lightspeed|hyperspeed|bluetooth|2\.4\s?ghz/i.test(`${product.name} ${product.specs || ""}`);
 }
+/* "Wired" only means something for things you plug in or pair: peripherals, not consoles or PC parts. */
+const WIRED_CATEGORIES = ["Keyboards", "Mice", "Headsets", "Controllers", "Streaming & audio"];
+function isWired(product) {
+  return WIRED_CATEGORIES.includes(product.category) && !isWireless(product);
+}
 function specText(product) {
   const specs = String(product.specs || "").trim();
   return /not listed|check the/i.test(specs) ? "" : specs;
@@ -249,9 +258,14 @@ function scrollToCatalog() {
   const top = target.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top: Math.max(0, top), behavior: reducedMotion() ? "auto" : "smooth" });
 }
+/* Connection filter: "any", "wireless" or "wired" (only one at a time). */
+function setConnection(mode) {
+  wirelessOnly = mode === "wireless";
+  wiredOnly = mode === "wired";
+  wirelessToggle.setAttribute("aria-pressed", String(wirelessOnly));
+}
 function setWireless(value) {
-  wirelessOnly = value;
-  wirelessToggle.setAttribute("aria-pressed", String(value));
+  setConnection(value ? "wireless" : "any");
 }
 function updateSearchState() {
   searchWrap.classList.toggle("has-text", searchInput.value.length > 0);
@@ -270,6 +284,7 @@ function searchableProducts(allProducts, { ignoreTier = false, ignoreWireless = 
     if (activeCategory !== "All products" && product.category !== activeCategory) return false;
     if (activeBrand !== "All brands" && brandLabel(product.brand) !== activeBrand) return false;
     if (wirelessOnly && !ignoreWireless && !isWireless(product)) return false;
+    if (wiredOnly && !ignoreWireless && !isWired(product)) return false;
     if (!ignoreTier && activeTier !== "All tiers" && tierOf(product) !== activeTier) return false;
     if (onlySaved && !watchlist.has(product.id)) return false;
     return !terms.length || matchesTerms(product, terms);
@@ -303,7 +318,7 @@ function quickFactsMarkup(product) {
 function alternativesMarkup(product) {
   const picks = (product.alts || []).map(alt => ({ why: alt.why, other: products.find(item => item.id === alt.id) })).filter(alt => alt.other);
   if (!picks.length) return "";
-  return `<div class="tm-alts"><h3>If not this, consider</h3><ul>${picks.map(({ other, why }) => `<li><a href="/p/${escapeHtml(other.id)}/" data-open-product="${escapeHtml(other.id)}"><span class="tm-alt-text"><strong>${escapeHtml(other.name)}</strong><span class="tm-alt-why">${escapeHtml(why)}</span><small>${escapeHtml(brandLabel(other.brand))}${other.verdict && other.verdict.tier ? ` · ${escapeHtml(other.verdict.tier)}` : ""}</small></span><span class="tm-alt-go" aria-hidden="true">›</span></a></li>`).join("")}</ul></div>`;
+  return `<div class="tm-alts"><h3>If not this, consider</h3><ul>${picks.map(({ other, why }) => `<li><a href="p/${escapeHtml(other.id)}/index.html" data-open-product="${escapeHtml(other.id)}"><span class="tm-alt-text"><strong>${escapeHtml(other.name)}</strong><span class="tm-alt-why">${escapeHtml(why)}</span><small>${escapeHtml(brandLabel(other.brand))}${other.verdict && other.verdict.tier ? ` · ${escapeHtml(other.verdict.tier)}` : ""}</small></span><span class="tm-alt-go" aria-hidden="true">›</span></a></li>`).join("")}</ul></div>`;
 }
 const YT_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="m10 9 5 3-5 3z" fill="#fff"/></svg>';
 function reviewMarkup(product) {
@@ -316,9 +331,52 @@ function renderSpotlight() {
   const pick = pool[Math.floor(Math.random() * pool.length)];
   const name = escapeHtml(fullProductName(pick));
   const best = pick.verdict.bestFor ? `<p class="tm-spot-best">Best for: ${escapeHtml(pick.verdict.bestFor.charAt(0).toLowerCase() + pick.verdict.bestFor.slice(1))}.</p>` : "";
-  box.innerHTML = `<p class="tm-spot-label">Before you buy <span class="tm-spot-random">· a random pick each visit</span> <button type="button" class="tm-spot-again" data-spot-again>Another</button></p><p class="tm-spot-name">${name}</p><p class="tm-spot-catch"><span class="tm-spot-tag">The catch:</span> ${escapeHtml(pick.verdict.downside)}.</p>${best}<a class="tm-spot-link" href="/p/${escapeHtml(pick.id)}/">Read the full verdict<span class="sr-only"> for ${name}</span></a>`;
+  box.innerHTML = `<p class="tm-spot-label">Before you buy <span class="tm-spot-random">· a random pick each visit</span> <button type="button" class="tm-spot-again" data-spot-again>Another</button></p><p class="tm-spot-name">${name}</p><p class="tm-spot-catch"><span class="tm-spot-tag">The catch:</span> ${escapeHtml(pick.verdict.downside)}.</p>${best}<a class="tm-spot-link" href="p/${escapeHtml(pick.id)}/index.html">Read the full verdict<span class="sr-only"> for ${name}</span></a>`;
 }
 let activeTier = "All tiers";
+
+/* Standout specs for the card: the few numbers a buyer compares first, pulled from the spec line. */
+const HL = {
+  weight: s => (s.match(/\b(\d{2,3})\s?g\b/i) || [])[1] && `${s.match(/\b(\d{2,3})\s?g\b/i)[1]} g`,
+  sensor: s => { const d = s.match(/(\d+K|\d{1,2},\d{3})\s*DPI/i); if (d) return `${d[1]} DPI`; const k = s.match(/(\d+K)\s+sensor/i); return k ? `${k[1]} sensor` : ""; },
+  polling: s => { const m = s.match(/(\d[\d,.]*)\s?(kHz|Hz)\s+polling/i); return m ? `${m[1]} ${m[2]} polling` : ""; },
+  battery: s => { const m = s.match(/(\d{2,3})[-\s]hour/i); return m ? `${m[1]} h battery` : ""; },
+  refresh: s => { const m = s.match(/(\d{2,3})\s?Hz(?!\s*polling)/i); return m ? `${m[1]} Hz` : ""; },
+  storage: s => { const m = s.match(/(\d+\s?(?:TB|GB))\s+(NVMe|SSD)/i); return m ? `${m[1].replace(/\s/g, "")} ${m[2]}` : ""; },
+  layout: s => { const m = s.match(/(?:^|[^\w])(60%|65%|75%|Tenkeyless|Full-size)/i); return m ? m[1] : ""; },
+  switch: s => { const m = s.match(/\b(analog optical|optical-mechanical|hot-swappable|optical|mechanical)\b/i); return m ? `${m[1].charAt(0).toUpperCase()}${m[1].slice(1).toLowerCase()} switches` : ""; },
+  trigger: s => (/rapid trigger/i.test(s) ? "Rapid Trigger" : ""),
+  connect: s => /2\.4\s?ghz/i.test(s) && /bluetooth/i.test(s) ? "2.4 GHz + Bluetooth" : /2\.4\s?ghz/i.test(s) ? "2.4 GHz" : /bluetooth/i.test(s) ? "Bluetooth" : /lightspeed/i.test(s) ? "Lightspeed" : "",
+  audio: s => /dolby atmos/i.test(s) ? "Dolby Atmos" : /7\.1 surround/i.test(s) ? "7.1 surround" : /noise cancellation/i.test(s) ? "Noise cancelling" : "",
+  gpu: s => { const m = s.match(/(GeForce RTX \d{4}(?: Ti)?)/i); return m ? m[1] : ""; },
+  ram: s => { const m = s.match(/(\d+GB (?:LP)?DDR\w*|\d+GB RAM)/i); return m ? m[1] : ""; },
+  panel: s => { const m = s.match(/\b(OLED|IPS)\b/i); return m ? m[1].toUpperCase() : ""; }
+};
+const HL_ORDER = {
+  Mice: ["weight", "sensor", "polling", "battery", "connect"],
+  Keyboards: ["layout", "switch", "trigger", "connect"],
+  Headsets: ["battery", "connect", "audio"],
+  Controllers: ["connect", "battery"],
+  "Consoles & handhelds": ["storage", "refresh", "panel"],
+  "PC hardware": ["gpu", "ram", "storage", "refresh", "panel"],
+  "Streaming & audio": ["connect", "audio"]
+};
+function highlightsOf(product) {
+  const text = specText(product);
+  if (!text) return [];
+  const order = HL_ORDER[product.category] || Object.keys(HL);
+  const out = [];
+  for (const key of order) {
+    const value = HL[key](text);
+    if (value && !out.includes(value)) out.push(value);
+    if (out.length === 3) break;
+  }
+  return out;
+}
+function factsMarkup(product) {
+  const list = highlightsOf(product);
+  return list.length ? `<span class="tm-facts">${list.map(item => `<span>${escapeHtml(item)}</span>`).join("")}</span>` : "";
+}
 
 function cardMarkup(product) {
   const name = escapeHtml(product.name);
@@ -338,7 +396,7 @@ function cardMarkup(product) {
   return `<article class="tm-item" data-kind="${kind}">
     <button class="tm-open" type="button" data-product-id="${productId}" aria-label="${brand} ${name}: see where to buy">
       <span class="tm-tile">${media}</span>
-      <span class="tm-body"><span class="tm-brand">${brand} · ${kind}</span><span class="tm-name">${name}</span>${product.summary ? `<span class="tm-summary">${escapeHtml(product.summary)}</span>` : ""}<span class="tm-meta">${v.tier ? `<span class="tm-tier">${escapeHtml(v.tier)}</span>` : ""}${isWireless(product) ? '<span class="tm-pill">Wireless</span>' : ""}</span></span>
+      <span class="tm-body"><span class="tm-brand">${brand} · ${kind}</span><span class="tm-name">${name}</span>${product.summary ? `<span class="tm-summary">${escapeHtml(product.summary)}</span>` : ""}${factsMarkup(product)}<span class="tm-meta">${v.tier ? `<span class="tm-tier">${escapeHtml(v.tier)}</span>` : ""}${isWireless(product) ? '<span class="tm-pill">Wireless</span>' : ""}</span></span>
       ${note}
     </button>
     <div class="tm-item-tools">
@@ -675,11 +733,26 @@ function renderActiveFilters() {
   if (activeCategory !== "All products") chips.push(["category", activeCategory]);
   if (activeBrand !== "All brands") chips.push(["brand", activeBrand]);
   if (wirelessOnly) chips.push(["wireless", "Wireless only"]);
+  if (wiredOnly) chips.push(["wireless", "Wired only"]);
   if (activeTier !== "All tiers") chips.push(["tier", `Tier: ${activeTier}`]);
   if (savedOnly()) chips.push(["saved", "Saved only"]);
   const html = chips.map(([kind, label]) => `<button type="button" class="tm-chip" data-clear="${kind}" aria-label="Remove filter: ${escapeHtml(label)}">${escapeHtml(label)} <span aria-hidden="true">×</span></button>`);
   if (chips.length > 1) html.push(`<button type="button" class="tm-link" data-clear="all">Clear all</button>`);
   activeFiltersEl.innerHTML = html.join("");
+}
+
+function renderQuickFilters() {
+  const tierBase = searchableProducts(catalogProducts, { ignoreTier: true });
+  const tierCounts = { Budget: 0, "Mid-range": 0, Premium: 0 };
+  tierBase.forEach(product => { if (tierCounts[tierOf(product)] !== undefined) tierCounts[tierOf(product)]++; });
+  const connBase = searchableProducts(catalogProducts, { ignoreWireless: true });
+  const connCounts = { wireless: connBase.filter(isWireless).length, wired: connBase.filter(isWired).length };
+  const connNow = wirelessOnly ? "wireless" : wiredOnly ? "wired" : "any";
+  const btn = (attr, value, label, count, on) =>
+    `<button type="button" class="tm-qf" ${attr}="${value}" aria-pressed="${on}"${count === 0 && !on ? " disabled" : ""}>${label}<span class="tm-qf-n">${count}</span></button>`;
+  quickFilters.innerHTML =
+    `<div class="tm-qf-group" role="group" aria-label="Price tier"><span class="tm-qf-label">Price</span>${Object.keys(tierCounts).map(t => btn("data-qf-tier", t, t, tierCounts[t], activeTier === t)).join("")}</div>` +
+    `<div class="tm-qf-group" role="group" aria-label="Connection"><span class="tm-qf-label">Connection</span>${btn("data-qf-conn", "wireless", "Wireless", connCounts.wireless, connNow === "wireless")}${btn("data-qf-conn", "wired", "Wired", connCounts.wired, connNow === "wired")}</div>`;
 }
 
 function renderWirelessCount() {
@@ -716,7 +789,7 @@ function renderEmptyState(visibleCount) {
   emptyState.hidden = visibleCount !== 0;
   if (visibleCount !== 0) { emptyState.innerHTML = ""; return; }
   const query = searchInput.value.trim();
-  const otherFilters = activeCategory !== "All products" || activeBrand !== "All brands" || wirelessOnly || activeTier !== "All tiers" || savedOnly();
+  const otherFilters = activeCategory !== "All products" || activeBrand !== "All brands" || wirelessOnly || wiredOnly || activeTier !== "All tiers" || savedOnly();
   const button = (action, label, primary) => `<button type="button" class="${primary ? "tm-primary" : "tm-btn"} tm-empty-btn" data-empty-action="${escapeHtml(action)}">${escapeHtml(label)}</button>`;
   if (savedOnly() && !watchlist.size) {
     emptyState.innerHTML = `<p class="tm-empty-title">Nothing saved yet.</p><p>Tap the heart on any product to save it here.</p><div class="tm-empty-actions">${button("clear-saved-filter", "Browse all gear", true)}</div>`;
@@ -786,7 +859,7 @@ function clearFilter(kind) {
 }
 
 function renderRecent() {
-  const home = !searchInput.value.trim() && activeCategory === "All products" && activeBrand === "All brands" && activeTier === "All tiers" && !wirelessOnly && !savedOnly() && !sharedIds;
+  const home = !searchInput.value.trim() && activeCategory === "All products" && activeBrand === "All brands" && activeTier === "All tiers" && !wirelessOnly && !wiredOnly && !savedOnly() && !sharedIds;
   const items = recentIds.map(id => catalogProducts.find(product => product.id === id)).filter(Boolean);
   recentRow.hidden = !(home && items.length);
   if (recentRow.hidden) return;
@@ -807,6 +880,7 @@ function syncUrl() {
   if (activeCategory !== "All products") params.set("cat", activeCategory);
   if (activeBrand !== "All brands") params.set("brand", activeBrand);
   if (wirelessOnly) params.set("wireless", "1");
+  if (wiredOnly) params.set("wired", "1");
   if (activeTier !== "All tiers") params.set("tier", activeTier);
   if (sortSelect.value !== "popular") params.set("sort", sortSelect.value);
   if (sharedIds) params.set("list", sharedIds.join(","));
@@ -820,6 +894,7 @@ function readUrlState() {
   if (categories.includes(params.get("cat"))) activeCategory = params.get("cat");
   if (params.get("brand")) activeBrand = params.get("brand");
   if (params.get("wireless") === "1") setWireless(true);
+  else if (params.get("wired") === "1") setConnection("wired");
   if (["Budget", "Mid-range", "Premium"].includes(params.get("tier"))) setTier(params.get("tier"));
   if ([...sortSelect.options].some(option => option.value === params.get("sort"))) sortSelect.value = params.get("sort");
   if (params.get("list")) {
@@ -865,6 +940,7 @@ function renderCatalog(append = false) {
   if (!append) renderBrandSelect();
   if (!append) renderTierSelect();
   if (!append) renderWirelessCount();
+  if (!append) renderQuickFilters();
   const visible = searchableProducts(catalogProducts);
   const alreadyRendered = append ? grid.children.length : 0;
   if (!append) grid.innerHTML = "";
@@ -904,17 +980,60 @@ function renderCategories() {
   }).join("");
 }
 
+/* Store region: US stores come from stores.json; UK, Canada and Europe from data/regions.json. */
+const REGIONS = TIM.regions || { US: { label: "United States", short: "US" } };
+const regionCodes = Object.keys(REGIONS);
+function regionStores() { return (REGIONS[region] && REGIONS[region].stores) || {}; }
+function storeConfig(name) { return TIM.stores[name] || regionStores()[name]; }
+function storesForProduct(product) {
+  if (region === "US" || !REGIONS[region] || !REGIONS[region].byCategory) return product.retailerSearchStores || [];
+  return REGIONS[region].byCategory[product.category] || [];
+}
 const STORE_HINTS = {
   Amazon: "Wide selection", "Best Buy": "Local pickup", Newegg: "PC specialist", "Micro Center": "In-store pickup",
   Walmart: "Everyday retailer", Target: "Everyday retailer", GameStop: "Trade-ins", eBay: "Used & open-box"
 };
-const storeHint = name => STORE_HINTS[name] || "Official store";
+const storeHint = name => STORE_HINTS[name] || (regionStores()[name] && regionStores()[name].hint) || "Official store";
 function retailerSearchUrl(store, productName) {
-  const config = TIM.stores[store];
+  const config = storeConfig(store);
   if (!config) return "#";
   const url = new URL(config.url);
   url.searchParams.set(config.param || "q", productName);
   return url.href;
+}
+
+function offerRowsMarkup(product) {
+  return storesForProduct(product)
+    .slice().sort((a, b) => (STORE_HINTS[a] ? 1 : 0) - (STORE_HINTS[b] ? 1 : 0))
+    .filter((storeName, index, stores) => storeConfig(storeName) && stores.indexOf(storeName) === index)
+    .map(storeName => {
+      const store = escapeHtml(storeName);
+      return `<a class="store-gateway-link" href="${escapeHtml(retailerSearchUrl(storeName, fullProductName(product)))}" target="_blank" rel="noopener noreferrer">
+          <span class="store-icon" aria-hidden="true">${escapeHtml(storeName.charAt(0))}</span>
+          <span>${store}</span>
+          <span class="store-hint">${escapeHtml(storeHint(storeName))} ↗</span>
+        </a>`;
+    }).join("") || `<p class="gateway-disclosure">No product-specific retailer searches are listed for this item yet.</p>`;
+}
+function gatewayNote() {
+  return `You pick the exact model and seller. Tech It More doesn't quote prices.${region === "US" ? "" : " Official brand stores are US-only here, so regional retailers are shown."}`;
+}
+function regionSwitchMarkup() {
+  if (regionCodes.length < 2) return "";
+  return `<div class="tm-region" role="group" aria-label="Store region">${regionCodes.map(code => `<button type="button" data-region="${escapeHtml(code)}" aria-pressed="${code === region}" aria-label="${escapeHtml(REGIONS[code].label)}" title="${escapeHtml(REGIONS[code].label)}">${escapeHtml(REGIONS[code].short)}</button>`).join("")}</div>`;
+}
+function setRegion(code) {
+  if (!REGIONS[code] || code === region) return;
+  region = code;
+  Promise.resolve(saveSetting("region", code)).catch(() => {});
+  const id = dialogContent.querySelector(".detail-content")?.dataset.productId;
+  const product = catalogProducts.find(item => item.id === id);
+  if (!product) return;
+  const list = dialogContent.querySelector(".offer-list");
+  if (list) list.innerHTML = offerRowsMarkup(product);
+  const note = dialogContent.querySelector("#gateway-note");
+  if (note) note.textContent = gatewayNote();
+  dialogContent.querySelectorAll("[data-region]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.region === code)));
 }
 
 async function openProduct(productId, { fromHistory = false } = {}) {
@@ -939,17 +1058,7 @@ async function openProduct(productId, { fromHistory = false } = {}) {
     const productIdAttribute = escapeHtml(product.id);
     const artClass = product.art ? ` ${escapeHtml(product.art)}` : "";
     const photoCredit = `<p class="photo-credit"><span id="photo-credit-label">Product photo: </span><a id="photo-credit-link" href="${escapeHtml(product.imageSource || product.productSource || "https://commons.wikimedia.org/")}" target="_blank" rel="noopener noreferrer">${escapeHtml(product.imageCreator || (product.imageSource ? "manufacturer source" : "photo source"))} ↗</a>${product.productSource ? ` · <a href="${escapeHtml(product.productSource)}" target="_blank" rel="noopener noreferrer">product record ↗</a>` : ""}</p>`;
-    const rows = (product.retailerSearchStores || [])
-      .slice().sort((a, b) => (STORE_HINTS[a] ? 1 : 0) - (STORE_HINTS[b] ? 1 : 0))
-      .filter((storeName, index, stores) => TIM.stores[storeName] && stores.indexOf(storeName) === index)
-      .map(storeName => {
-        const store = escapeHtml(storeName);
-        return `<a class="store-gateway-link" href="${escapeHtml(retailerSearchUrl(storeName, fullProductName(product)))}" target="_blank" rel="noopener noreferrer">
-          <span class="store-icon" aria-hidden="true">${escapeHtml(storeName.charAt(0))}</span>
-          <span>${store}</span>
-          <span class="store-hint">${escapeHtml(storeHint(storeName))} ↗</span>
-        </a>`;
-      }).join("") || `<p class="gateway-disclosure">No product-specific retailer searches are listed for this item yet.</p>`;
+    const rows = offerRowsMarkup(product);
     const v = product.verdict || {};
     const checked = product.checked && checkedDate(product.checked);
     const brandName = escapeHtml(brandLabel(product.brand));
@@ -994,8 +1103,9 @@ async function openProduct(productId, { fromHistory = false } = {}) {
         ${verdictCard}
         <section class="dx-offers" aria-labelledby="offers-heading">
           <h3 class="offers-heading" id="offers-heading">Where to buy <span class="offers-notice">Opens each store's own search</span></h3>
+          ${regionSwitchMarkup()}
           <div class="offer-list store-gateway-list">${rows}</div>
-          <p class="gateway-disclosure">You pick the exact model and seller. Tech It More doesn't quote prices.</p>
+          <p class="gateway-disclosure" id="gateway-note">${gatewayNote()}</p>
         </section>
         ${reviewMarkup(product)}
         ${alternativesMarkup(product)}
@@ -1219,6 +1329,8 @@ exportButton.addEventListener("click", () => {
   exportLocalData().catch(error => showError("Could not export your data.", error));
 });
 dialogContent.addEventListener("click", event => {
+  const regionButton = event.target.closest("[data-region]");
+  if (regionButton) { setRegion(regionButton.dataset.region); return; }
   const altLink = event.target.closest("[data-open-product]");
   if (altLink && !(event.metaKey || event.ctrlKey || event.shiftKey || event.button)) {
     event.preventDefault();
@@ -1273,7 +1385,7 @@ dialogContent.addEventListener("click", event => {
   }
   const shareButton = event.target.closest("[data-share-product]");
   if (shareButton) {
-    const url = new URL(`/p/${encodeURIComponent(shareButton.dataset.shareProduct)}/`, window.location.origin);
+    const url = new URL(`p/${encodeURIComponent(shareButton.dataset.shareProduct)}/`, new URL(".", window.location.href));
     if (navigator.share) {
       navigator.share({ title: "Tech It More product", text: "See this product and find it at US retailers.", url: url.href })
         .catch(error => {
@@ -1412,6 +1524,8 @@ async function start() {
   watchlistCount.textContent = String(watchlist.size);
   applyTheme(await readSetting("theme") || (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
   recentIds = (await readSetting("recent") || []).filter(id => knownIds.has(id));
+  const savedRegion = await readSetting("region");
+  if (typeof savedRegion === "string" && REGIONS[savedRegion]) region = savedRegion;
   readUrlState();
   renderCategories();
   renderWatchlistPanel();
@@ -1498,6 +1612,19 @@ brandSelect.addEventListener("change", () => {
 });
 wirelessToggle.addEventListener("click", () => {
   setWireless(!wirelessOnly);
+  renderCatalog();
+});
+quickFilters.addEventListener("click", event => {
+  const tier = event.target.closest("[data-qf-tier]");
+  const conn = event.target.closest("[data-qf-conn]");
+  if (tier) {
+    const value = tier.dataset.qfTier;
+    setTier(activeTier === value ? "All tiers" : value);
+  } else if (conn) {
+    const value = conn.dataset.qfConn;
+    const current = wirelessOnly ? "wireless" : wiredOnly ? "wired" : "any";
+    setConnection(current === value ? "any" : value);
+  } else return;
   renderCatalog();
 });
 emptyState.addEventListener("click", event => {
