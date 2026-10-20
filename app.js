@@ -6,6 +6,8 @@ const categories = ["All products", ...[...new Set(products.map(product => produ
 const grid = document.querySelector("#product-grid");
 const searchInput = document.querySelector("#search-input");
 const categoryList = document.querySelector("#category-list");
+const categoryRail = document.querySelector("#category-rail");
+const filtersBadge = document.querySelector("#filters-badge");
 const resultsCount = document.querySelector("#results-count");
 const emptyState = document.querySelector("#empty-state");
 const brandSelect = document.querySelector("#brand-select");
@@ -249,13 +251,30 @@ function savedOnly() {
 function reducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
-function scrollToCatalog() {
-  // Scroll to the category row (not the product heading) so the tiles stay visible under the sticky header.
-  const target = document.querySelector("#category-list") || document.querySelector("#catalog");
+/* Phones: the brand row of the header slides away on scroll, the search row stays pinned. */
+function headerShift() {
   const header = document.querySelector(".tm-header");
-  const offset = (header ? header.offsetHeight : 0) + 12;
-  const top = target.getBoundingClientRect().top + window.scrollY - offset;
-  window.scrollTo({ top: Math.max(0, top), behavior: reducedMotion() ? "auto" : "smooth" });
+  if (!header || !window.matchMedia("(max-width: 760px)").matches) return 0;
+  return Math.max(0, Math.round(searchWrap.getBoundingClientRect().top - header.getBoundingClientRect().top - 6));
+}
+function headerPinnedHeight() {
+  const header = document.querySelector(".tm-header");
+  return header ? Math.max(0, header.offsetHeight - headerShift()) : 0;
+}
+function scrollToCatalog(instant = false) {
+  const compact = window.matchMedia("(max-width: 899px)").matches;
+  // Desktop: the category tiles. Phones and tablets: the results heading, so the count and chips stay in view
+  // (the category list lives in the closed filter sheet there, which used to send the page to the wrong place).
+  const target = compact ? document.querySelector(".tm-toolbar") : (document.querySelector("#category-list") || document.querySelector("#catalog"));
+  if (!target) return;
+  const top = target.getBoundingClientRect().top + window.scrollY - (headerPinnedHeight() + 12);
+  // The offset above assumes the brand row has slid away, so make that true before we land.
+  const header = document.querySelector(".tm-header");
+  if (header && window.matchMedia("(max-width: 760px)").matches && top > 24) {
+    header.style.setProperty("--tm-hdr-shift", headerShift() + "px");
+    header.classList.add("tm-header-hidden");
+  }
+  window.scrollTo({ top: Math.max(0, top), behavior: instant || reducedMotion() ? "auto" : "smooth" });
 }
 /* Connection filter: "any", "wireless" or "wired" (only one at a time). */
 function setConnection(mode) {
@@ -890,10 +909,31 @@ function closeSuggestions() {
   searchInput.removeAttribute("aria-activedescendant");
 }
 
+/* Phones: tapping an empty search box offers shortcuts, so finding gear takes taps instead of typing. */
+function renderQuickStart() {
+  if (!window.matchMedia("(max-width: 760px)").matches) return closeSuggestions();
+  const cats = categories.filter(category => category !== "All products");
+  const brandCounts = new Map();
+  catalogProducts.forEach(product => { const name = brandLabel(product.brand); brandCounts.set(name, (brandCounts.get(name) || 0) + 1); });
+  const topBrands = [...brandCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6).map(entry => entry[0]);
+  const recent = recentIds.map(id => catalogProducts.find(product => product.id === id)).filter(Boolean).slice(0, 3);
+  suggestionItems = [];
+  suggestionIndex = -1;
+  suggestionsBox.setAttribute("role", "group");
+  suggestionsBox.innerHTML =
+    `<p class="tm-suggest-head">Jump to a category</p><div class="tm-suggest-chips">${cats.map(category => `<button type="button" class="tm-sq" data-suggest-category="${escapeHtml(category)}"><span class="tm-sq-icon" aria-hidden="true">${categoryIcon(category)}</span>${escapeHtml(category === "Consoles & handhelds" ? "Consoles" : category)}</button>`).join("")}</div>` +
+    `<p class="tm-suggest-head">Popular brands</p><div class="tm-suggest-chips">${topBrands.map(name => `<button type="button" class="tm-sq" data-suggest-query="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join("")}</div>` +
+    (recent.length ? `<p class="tm-suggest-head">Recently viewed</p>${recent.map(product => `<button type="button" class="tm-suggest" data-kind="${escapeHtml(product.category)}" data-suggest-id="${escapeHtml(product.id)}"><span class="tm-suggest-icon">${categoryIcon(product.category)}</span><span><strong>${escapeHtml(product.name)}</strong><small>${escapeHtml(brandLabel(product.brand))} · ${escapeHtml(product.category)}</small></span></button>`).join("")}` : "");
+  suggestionsBox.hidden = false;
+  searchInput.setAttribute("aria-expanded", "true");
+}
+
 function renderSuggestions() {
   const text = searchInput.value.trim();
+  if (text.length === 0 && document.activeElement === searchInput) return renderQuickStart();
   if (text.length < 2) return closeSuggestions();
-  const matches = catalogProducts.filter(product => matchesTerms(product, text.toLocaleLowerCase().split(/\s+/)));
+  suggestionsBox.setAttribute("role", "listbox");
+  const matches = catalogProducts.filter(product => (activeCategory === "All products" || product.category === activeCategory) && (activeBrand === "All brands" || brandLabel(product.brand) === activeBrand) && matchesTerms(product, text.toLocaleLowerCase().split(/\s+/)));
   suggestionItems = matches.slice(0, 6);
   suggestionIndex = -1;
   if (!suggestionItems.length) return closeSuggestions();
@@ -942,6 +982,25 @@ function renderCatalog(append = false) {
     renderRecent();
     updateSharedUi();
     syncUrl();
+    updateSearchingState();
+  }
+}
+
+/* Filters button shows how many filters are on; on phones the hero steps aside once you start searching. */
+function activeFilterCount() {
+  return (activeCategory !== "All products" ? 1 : 0) + (activeBrand !== "All brands" ? 1 : 0) + (wirelessOnly || wiredOnly ? 1 : 0) + (activeTier !== "All tiers" ? 1 : 0) + (savedOnly() ? 1 : 0);
+}
+function updateSearchingState() {
+  if (filtersBadge) {
+    const count = (activeBrand !== "All brands" ? 1 : 0) + (sortSelect.value && sortSelect.value !== "popular" ? 1 : 0);
+    filtersBadge.hidden = count === 0;
+    filtersBadge.textContent = String(count);
+  }
+  const searching = Boolean(searchInput.value.trim()) || activeFilterCount() > 0 || Boolean(sharedIds);
+  const was = document.body.classList.contains("tm-searching");
+  document.body.classList.toggle("tm-searching", searching);
+  if (searching && !was && window.matchMedia("(max-width: 760px)").matches) {
+    window.requestAnimationFrame(() => scrollToCatalog(true));
   }
 }
 
@@ -953,6 +1012,23 @@ function renderCategories() {
     const shown = category === "Consoles & handhelds" ? "Consoles" : label;
     return `<button type="button" class="tm-cat${selected ? " selected" : ""}" data-kind="${label}" aria-pressed="${selected}" data-category="${label}"><span class="tm-cat-icon">${categoryIcon(category)}</span><span class="tm-cat-name">${shown}</span><span class="tm-cat-count">${count}</span></button>`;
   }).join("");
+  if (categoryRail) {
+    const keep = categoryRail.scrollLeft;
+    categoryRail.innerHTML = categories.map(category => {
+      const count = category === "All products" ? catalogProducts.length : catalogProducts.filter(product => product.category === category).length;
+      const selected = category === activeCategory;
+      const label = escapeHtml(category);
+      const shown = category === "All products" ? "All" : category === "Consoles & handhelds" ? "Consoles" : label;
+      return `<button type="button" class="tm-rc${selected ? " selected" : ""}" aria-pressed="${selected}" data-category="${label}">${shown}<span class="tm-rc-n">${count}</span></button>`;
+    }).join("");
+    categoryRail.scrollLeft = keep;
+    const selectedChip = categoryRail.querySelector(".selected");
+    if (selectedChip) {
+      const left = selectedChip.offsetLeft, right = left + selectedChip.offsetWidth;
+      if (left < categoryRail.scrollLeft + 12) categoryRail.scrollLeft = Math.max(0, left - 12);
+      else if (right > categoryRail.scrollLeft + categoryRail.clientWidth - 12) categoryRail.scrollLeft = right - categoryRail.clientWidth + 12;
+    }
+  }
 }
 
 /* Store region: US stores come from stores.json; UK, Canada and Europe from data/regions.json. */
@@ -1159,6 +1235,15 @@ categoryList.addEventListener("click", event => {
   renderCategories();
   renderCatalog();
   if (!window.matchMedia("(max-width: 899px)").matches) scrollToCatalog();
+});
+
+if (categoryRail) categoryRail.addEventListener("click", event => {
+  const button = event.target.closest("[data-category]");
+  if (!button) return;
+  const chosen = button.dataset.category;
+  activeCategory = chosen === activeCategory ? "All products" : chosen;
+  renderCategories();
+  renderCatalog();
 });
 
 grid.addEventListener("click", event => {
@@ -1549,7 +1634,9 @@ searchInput.addEventListener("keydown", event => {
       openProduct(productId);
     } else {
       closeSuggestions();
-      scrollToCatalog();
+      const phone = window.matchMedia("(max-width: 899px)").matches;
+      if (phone) searchInput.blur();
+      window.setTimeout(scrollToCatalog, phone ? 80 : 0);
     }
   } else if (event.key === "Escape") {
     if (!suggestionsBox.hidden) {
@@ -1564,10 +1651,24 @@ searchInput.addEventListener("keydown", event => {
 });
 searchInput.addEventListener("blur", () => window.setTimeout(closeSuggestions, 120));
 searchInput.addEventListener("focus", () => {
-  if (searchInput.value.trim().length >= 2) renderSuggestions();
+  if (searchInput.value.trim().length >= 2 || searchInput.value.trim().length === 0) renderSuggestions();
 });
 suggestionsBox.addEventListener("mousedown", event => event.preventDefault());
 suggestionsBox.addEventListener("click", event => {
+  const queryChip = event.target.closest("[data-suggest-query]");
+  const categoryChip = event.target.closest("[data-suggest-category]");
+  if (queryChip) {
+    searchInput.value = queryChip.dataset.suggestQuery;
+    updateSearchState(); closeSuggestions(); searchInput.blur(); renderCatalog();
+    window.setTimeout(scrollToCatalog, 80);
+    return;
+  }
+  if (categoryChip) {
+    activeCategory = categoryChip.dataset.suggestCategory;
+    closeSuggestions(); searchInput.blur(); renderCategories(); renderCatalog();
+    window.setTimeout(scrollToCatalog, 80);
+    return;
+  }
   const item = event.target.closest("[data-suggest-id]");
   if (!item) return;
   closeSuggestions();
@@ -1745,22 +1846,45 @@ document.addEventListener("click", event => {
   if (query.addEventListener) query.addEventListener("change", place);
 })();
 
-// Mobile: tuck the sticky header away while scrolling down, bring it back on scroll up.
+// Mobile: the brand row slides away while scrolling down and returns on scroll up; the search row stays pinned.
 (() => {
   const header = document.querySelector(".tm-header");
   if (!header) return;
   const phone = window.matchMedia("(max-width: 760px)");
   let lastY = window.scrollY;
   let ticking = false;
+  const measure = () => header.style.setProperty("--tm-hdr-shift", headerShift() + "px");
   const update = () => {
     ticking = false;
     const y = Math.max(0, window.scrollY);
     const dy = y - lastY;
     const typing = header.contains(document.activeElement) && document.activeElement.tagName === "INPUT";
-    if (!phone.matches || y < 80 || typing || dy < -6) header.classList.remove("tm-header-hidden");
-    else if (dy > 8) header.classList.add("tm-header-hidden");
+    if (!phone.matches || y < 24 || typing || dy < -6) header.classList.remove("tm-header-hidden");
+    else if (dy > 8) { measure(); header.classList.add("tm-header-hidden"); }
     if (Math.abs(dy) > 6) lastY = y;
   };
   window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  measure();
   header.addEventListener("focusin", () => header.classList.remove("tm-header-hidden"));
+})();
+
+// Mobile: keep the suggestion list inside the part of the screen the keyboard leaves free.
+(() => {
+  const vv = window.visualViewport;
+  if (!vv) return;
+  const set = () => document.documentElement.style.setProperty("--tm-vvh", Math.round(vv.height) + "px");
+  vv.addEventListener("resize", set);
+  set();
+})();
+
+// Mobile: load the next page of results as you near the end of the list.
+(() => {
+  if (!("IntersectionObserver" in window)) return;
+  const phone = window.matchMedia("(max-width: 760px)");
+  const observer = new IntersectionObserver(entries => {
+    if (phone.matches && !loadMoreButton.hidden && entries.some(entry => entry.isIntersecting)) renderCatalog(true);
+  }, { rootMargin: "900px 0px" });
+  observer.observe(loadMoreButton);
 })();

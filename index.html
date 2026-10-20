@@ -25,9 +25,9 @@
     <link rel="preconnect" href="https://gmedia.playstation.com">
     <link rel="preload" href="fonts/lora-latin.woff" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="fonts/carlito-regular.woff" as="font" type="font/woff" crossorigin>
-    <link rel="stylesheet" href="site.css?v=d989edd5">
+    <link rel="stylesheet" href="site.css?v=65e658f2">
     <script src="products.js?v=cb66205d" defer></script>
-    <script src="app.js?v=43d4142e" defer></script>
+    <script src="app.js?v=8002c2ba" defer></script>
     <script src="mail.js?v=047f1937" defer></script>
   </head>
   <body>
@@ -41,7 +41,7 @@
         <div class="tm-search" id="search-wrap" role="search">
           <div class="tm-search-field">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg>
-            <input id="search-input" type="search" placeholder="Search gear, brands or models" autocomplete="off" spellcheck="false" aria-label="Search gaming gear" role="combobox" aria-expanded="false" aria-controls="search-suggestions" aria-autocomplete="list">
+            <input id="search-input" type="search" placeholder="Search gear, brands or models" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="search" inputmode="search" spellcheck="false" aria-label="Search gaming gear" role="combobox" aria-expanded="false" aria-controls="search-suggestions" aria-autocomplete="list">
             <button class="tm-search-clear" id="search-clear" type="button" aria-label="Clear search">×</button>
             <kbd>Ctrl K</kbd>
           </div>
@@ -76,7 +76,7 @@
               <h2 class="tm-side-title">Filters</h2>
               <button class="tm-side-close" id="filters-close" type="button" aria-label="Close filters">×</button>
             </div>
-            <div class="tm-side-group">
+            <div class="tm-side-group tm-side-cats">
               <h3>Category</h3>
               <div class="tm-cats" id="category-list" role="group" aria-label="Browse by category"></div>
             </div>
@@ -102,11 +102,12 @@
                 <p class="tm-results" id="results-count" aria-live="polite">52 products</p>
               </div>
               <div class="tm-toolbar-actions">
-                <button class="tm-btn tm-filters-open" id="filters-open" type="button" aria-controls="filter-sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span class="label">Filters</span></button>
+                <button class="tm-btn tm-filters-open" id="filters-open" type="button" aria-controls="filter-sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span class="label">Filters</span><span class="tm-filter-badge" id="filters-badge" hidden></span></button>
                 <button class="tm-link" id="share-list" type="button" hidden>Copy link to saved list</button>
                 <button class="tm-link tm-danger" id="clear-saved" type="button" hidden>Clear saved list</button>
               </div>
             </div>
+            <div class="tm-catrail" id="category-rail" role="group" aria-label="Browse by category"></div>
             <div class="tm-quick" id="quick-filters" role="group" aria-label="Quick filters"></div>
             <div class="tm-chips" id="active-filters" aria-label="Active filters"></div>
             <section class="tm-recent" id="recent-row" aria-label="Recently viewed" hidden></section>

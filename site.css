@@ -1791,3 +1791,118 @@ body { overflow-x: clip; overscroll-behavior-y: none; }
 [data-theme="dark"] .tm-mail-menu-list a:first-child { background: #9aa4ff; border-color: #9aa4ff; color: #0b1230; }
 .tm-mail-menu-list a:hover, .tm-mail-menu-list button:hover, .tm-mail-menu-close:hover { filter: brightness(1.08); }
 .tm-mail-menu a:focus-visible, .tm-mail-menu button:focus-visible { outline: 3px solid var(--tm-signal); outline-offset: 2px; }
+
+/* ======================================================================
+   Phone search experience (Oct 20, 2026)
+   Goal: find gear in a few taps. The search row stays pinned, categories are one tap away,
+   cards are short enough to scan 4+ per screen, and the hero steps aside once you search.
+   ====================================================================== */
+html { -webkit-tap-highlight-color: transparent; }
+
+/* Category rail: phones and tablets (the sidebar shows categories from 900px up) */
+.tm-catrail { display: none; }
+@media (max-width: 899px) {
+  .tm-catrail {
+    position: relative; display: flex; gap: 8px; margin: 12px -12px 0; padding: 2px 12px 4px; overflow-x: auto;
+    scrollbar-width: none; scroll-snap-type: x proximity; scroll-padding-inline: 12px; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+  }
+  .tm-catrail::-webkit-scrollbar { display: none; }
+  .tm-rc {
+    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 14px;
+    border: 1px solid var(--tm-line-strong); border-radius: 999px; background: var(--tm-paper); color: var(--tm-ink);
+    font: 650 14px/1 var(--sans, system-ui, sans-serif); white-space: nowrap; cursor: pointer; scroll-snap-align: start;
+    transition: background .15s, border-color .15s, transform .12s;
+  }
+  .tm-rc:active { transform: scale(.96); }
+  .tm-rc-n { color: var(--tm-faint); font-size: 12.5px; font-weight: 600; }
+  .tm-rc.selected { border-color: var(--tm-accent); background: var(--tm-accent); color: var(--tm-accent-ink, #fff); }
+  .tm-rc.selected .tm-rc-n { color: inherit; opacity: .8; }
+  [data-theme="dark"] .tm-rc.selected { color: #0b1230; }
+  /* The sheet no longer repeats the categories: they are in the rail above the results */
+  .tm-sidebar .tm-side-cats { display: none; }
+}
+
+@media (max-width: 760px) {
+  /* Search row stays pinned; only the brand row slides away */
+  .tm-header.tm-header-hidden { transform: translateY(calc(-1 * var(--tm-hdr-shift, 0px))); }
+  .tm-search-field { min-height: 46px; }
+
+  /* Hero steps aside as soon as there is a query or a filter */
+  body.tm-searching .tm-hero { display: none; }
+  body.tm-searching .tm-catalog { padding-top: 10px; }
+
+  /* Toolbar: heading + count on the left, Filters pill on the right */
+  .tm-toolbar { flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+  .tm-toolbar > div:first-child { flex: 1 1 140px; width: auto; min-width: 0; }
+  .tm-toolbar-actions { flex: 0 1 auto; width: auto; margin-left: auto; justify-content: flex-end; }
+  .tm-toolbar-actions > * { flex: 0 0 auto; }
+  .tm-filters-open { padding: 0 14px; }
+  .tm-filter-badge {
+    display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px;
+    background: var(--tm-accent); color: var(--tm-accent-ink, #fff); font-size: 12px; font-weight: 700; line-height: 1;
+  }
+  [data-theme="dark"] .tm-filter-badge { color: #0b1230; }
+  .tm-filter-badge[hidden] { display: none; }
+
+  /* Quick filters: one scrolling row, group labels dropped, edge fade as a scroll hint */
+  .tm-quick { margin-top: 10px; gap: 8px; -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); }
+  .tm-qf-label { display: none; }
+  .tm-qf-group { gap: 8px; }
+  .tm-qf-group + .tm-qf-group { padding-left: 8px; border-left: 1px solid var(--tm-line-strong); }
+  .tm-chips { margin-top: 8px; }
+
+  /* Suggestions stay inside what the keyboard leaves free */
+  .tm-suggestions { max-height: calc(var(--tm-vvh, 100dvh) - 130px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  .tm-suggest-head { margin: 10px 10px 6px; color: var(--tm-faint); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .tm-suggest-head:first-child { margin-top: 6px; }
+  .tm-suggest-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 6px 4px; }
+  .tm-sq {
+    display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 14px; border: 1px solid var(--tm-line-strong);
+    border-radius: 999px; background: var(--tm-canvas); color: var(--tm-ink); font: 650 14px/1 var(--sans, system-ui, sans-serif); cursor: pointer;
+  }
+  .tm-sq:active { background: var(--tm-accent-wash); }
+  .tm-sq-icon { width: 18px; height: 18px; color: var(--tm-accent); }
+  .tm-sq-icon svg { width: 100%; height: 100%; }
+
+  .tm-list { margin-top: 10px; }
+  /* The rail and the search box already show these two, so their removable chips would only repeat them */
+  .tm-chips [data-clear="category"], .tm-chips [data-clear="query"] { display: none; }
+  .tm-chips:not(:has(> :not([data-clear="category"], [data-clear="query"]))) { display: none; }
+  /* Fewer dead ends at the bottom of the list */
+  .tm-more { width: 100%; }
+}
+
+/* Result cards on phones: short enough to scan, with heart + compare in a slim right-hand column */
+@media (max-width: 699px) {
+  .tm-item {
+    display: grid; grid-template-columns: minmax(0, 1fr) 46px; align-items: start; gap: 0 2px; padding: 10px 0 8px;
+    content-visibility: auto; contain-intrinsic-size: auto 190px;
+  }
+  .tm-item:active { background: var(--tm-accent-wash); }
+  .tm-item .tm-open { grid-column: 1; grid-row: 1; grid-template-columns: 76px minmax(0, 1fr); gap: 8px 12px; align-items: start; }
+  .tm-item .tm-tile { height: 76px; }
+  .tm-item .tm-brand { font-size: 12px; }
+  .tm-item .tm-name { margin-top: 1px; font-size: 15.5px; line-height: 1.28; }
+  .tm-item .tm-summary { display: none; }
+  .tm-item .tm-meta { margin-top: 6px; }
+  /* The catch becomes a two-line teaser; the full verdict is one tap away.
+     The clamp sits on the inner text (padding on the clamped box lets a third line peek through). */
+  .tm-item .tm-note { display: block; margin: 2px 0 0; padding: 6px 10px; }
+  .tm-item .tm-note-label { display: none; }
+  .tm-item .tm-note-text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 14px; line-height: 1.35; }
+  .tm-item .tm-note-text::before {
+    content: "The catch"; margin-right: 6px; color: var(--tm-note-label); font: 700 10.5px/1 var(--sans, system-ui, sans-serif);
+    font-style: normal; letter-spacing: .09em; text-transform: uppercase;
+  }
+  .tm-item-tools { grid-column: 2; grid-row: 1; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2px; margin: 0; }
+  .tm-item .tm-heart { width: 44px; height: 44px; border-color: transparent; background: transparent; }
+  .tm-item .tm-heart.saved { border-color: transparent; }
+  .tm-item .tm-compare-check {
+    flex-direction: column; gap: 3px; width: 46px; min-height: 0; padding: 7px 0 5px; border: 0; border-radius: 10px; background: none;
+    font-size: 10.5px; font-weight: 650; line-height: 1;
+  }
+  .tm-item .tm-compare-check input { width: 20px; height: 20px; }
+  .tm-item .tm-compare-check:has(input:checked) { background: var(--tm-accent-wash); }
+}
+@media (hover: none) { .tm-item:hover { background: none; } }

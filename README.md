@@ -27,6 +27,7 @@ These are buying notes, not tested reviews. See [How we choose](https://tech-it-
 
 | | |
 |---|---|
+| **Phone-friendly search** | On phones the search bar stays pinned while you scroll. Tapping an empty search box offers category and brand shortcuts, a category rail sits above the results, and cards are compact (heart and compare in a slim column, the catch as a two-line teaser). The hero steps aside once you search or pick a category. |
 | **Instant search** | Live suggestions as you type, with arrow-key and Enter support. Works by brand, model or product type ("razer mouse"). |
 | **Category tiles** | Color-coded tiles with product counts. One click filters the catalog. |
 | **Quick filters** | One-tap price tier (Budget, Mid-range, Premium) and connection (Wireless, Wired) chips above the results, each with a live count. The same filters are in the side panel, along with a brand menu and sort options. |
