@@ -1906,3 +1906,61 @@ html { -webkit-tap-highlight-color: transparent; }
   .tm-item .tm-compare-check:has(input:checked) { background: var(--tm-accent-wash); }
 }
 @media (hover: none) { .tm-item:hover { background: none; } }
+
+/* ======================================================================
+   Phone-only touch pass (max-width 760px): every tap target reaches 44 x 44px,
+   filters stay in the slide-up sheet, and 320-390px screens never squeeze or scroll sideways.
+   Nothing here applies on tablets or desktop.
+   ====================================================================== */
+@media (max-width: 760px) {
+  /* Close buttons: 44px hit area */
+  .dialog-close, .product-dialog .dialog-close, .tm-cmp-close, .tm-side-close, .tm-mail-menu-close,
+  .photo-lightbox-close, .photo-lightbox-arrow { width: 44px; height: 44px; }
+  .photo-lightbox-scroll { min-height: 44px; }
+  .tm-search-clear { width: 44px; height: 44px; }
+
+  /* Buttons, pills and chips */
+  .tm-btn, .tm-primary, .tm-toggle, .tm-rc, .tm-qf, .tm-chip, .tm-spot-again,
+  .share-product, .tm-review, .detail-title-wrap .tm-where, .gallery-slideshow-toggle { min-height: 44px; }
+  .tm-region button { min-height: 44px; min-width: 48px; }
+  .tm-link { min-height: 44px; padding: 10px 6px; }
+  .tm-more { min-height: 48px; }
+
+  /* Compare tray: the little x on each chip, plus Clear / Compare */
+  .tm-tray-chip { padding: 0 2px 0 12px; }
+  .tm-tray-chip button { width: 44px; height: 44px; margin: -6px 0; }
+  .tm-tray-go, #compare-clear { min-height: 44px; }
+
+  /* Filter sheet: bigger fields, rows and toggles */
+  .tm-side-field select, .tm-sidebar .tm-toggle { height: 44px; font-size: 16px; } /* 16px also stops iOS zooming on focus */
+  .tm-sidebar .tm-cat { min-height: 46px; }
+  .tm-side-apply { min-height: 48px; }
+
+  /* Result rows: heart and compare checkbox */
+  .tm-item .tm-heart { width: 44px; height: 44px; }
+  .tm-item .tm-compare-check { min-height: 44px; justify-content: center; }
+  .tm-item .tm-compare-check input { width: 22px; height: 22px; }
+
+  /* Product sheet: photo thumbnails and store links */
+  .photo-thumb-item { flex-basis: 64px; height: 48px; }
+  .store-gateway-link { min-height: 52px; }
+
+  /* FAQ rows and footer links */
+  .tm-faq summary { min-height: 48px; }
+  .tm-footer nav a, .tm-footer nav button, .tm-footer-cats a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* 320-390px: nothing squeezes and nothing scrolls sideways */
+@media (max-width: 390px) {
+  html, body { overflow-x: clip; }
+  .tm-grid { grid-template-columns: minmax(0, 1fr); }
+  .tm-toolbar-actions { flex-wrap: wrap; row-gap: 6px; }
+  .tm-item .tm-open { grid-template-columns: 68px minmax(0, 1fr); gap: 8px 10px; }
+  .tm-item .tm-tile { height: 68px; }
+  .tm-item .tm-name, .tm-item .tm-brand { overflow-wrap: anywhere; }
+  .tm-tray-chip { max-width: 100%; }
+  .tm-cmp-panel, .product-dialog .dialog-panel { max-width: 100vw; }
+  .store-gateway-link { padding-inline: 12px; }
+  .tm-mail-addr { font-size: 13px; }
+}
+@media (max-width: 760px) { .brand { min-height: 44px; } }
