@@ -1964,3 +1964,36 @@ html { -webkit-tap-highlight-color: transparent; }
   .tm-mail-addr { font-size: 13px; }
 }
 @media (max-width: 760px) { .brand { min-height: 44px; } }
+
+/* ======================================================================
+   Phone readability + shorter hero (max-width 760px only)
+   ====================================================================== */
+@media (max-width: 760px) {
+  :root { --tm-faint: #5a687c; }                       /* was #6c7a8e: 4.4:1 on white, now about 5.6:1 */
+  [data-theme="dark"] { --tm-faint: #a4abd6; }         /* was #8f96c4: lifts small grey text on navy */
+
+  /* No text under 12px */
+  .tm-side-group h3, .tm-note-label, .product-brand, .photo-credit, .photo-gallery-status,
+  .gateway-disclosure, .store-gateway-link .store-hint, .store-gateway-link > span:last-child, .tm-pill { font-size: 12px; }
+  .tm-item .tm-compare-check { font-size: 12px; }
+  .tm-item .tm-note-text::before { font-size: 12px; }
+  .tm-item .tm-note-text { font-size: 15px; line-height: 1.38; }
+  .tm-cmp-table td.tm-cmp-catch { font-size: 15.5px; }
+
+  /* Hero: products start higher, trust line kept but trimmed to two lines */
+  .tm-hero h1 { font-size: clamp(25px, 7.2vw, 29px); line-height: 1.12; }
+  .tm-lead { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; font-size: 15px; }
+  .tm-trust { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .tm-hero-actions { margin-top: 10px; }
+}
+@media (max-width: 699px) {
+  /* Wider right-hand column so the 12px "Compare" label fits */
+  .tm-item { grid-template-columns: minmax(0, 1fr) 54px; }
+  .tm-item .tm-compare-check { width: 54px; }
+}
+
+/* 320-390px: long spec lines wrap instead of running under the compare checkbox */
+@media (max-width: 699px) {
+  .tm-item .tm-open > div, .tm-item .tm-facts { min-width: 0; }
+  .tm-item .tm-facts > span { white-space: normal; }
+}
