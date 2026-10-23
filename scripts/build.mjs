@@ -283,7 +283,14 @@ ${app ? '        <button type="button" id="export-button">Export my data</button
   </div>
 </footer>
 `;
-const foot = ctx => `</main>\n${footerHtml(false, ctx)}</body>\n</html>\n`;
+const navIcon = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+/* Phone bottom bar for the static pages. */
+const bottomNav = here => `<nav class="tm-bottomnav" aria-label="Main">`
+  + `<a href="/"${here === 'browse' ? ' class="is-here" aria-current="page"' : ''}>${navIcon('<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>')}<span>Browse</span></a>`
+  + `<a href="/#search">${navIcon('<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>')}<span>Search</span></a>`
+  + `<a href="/how-we-choose/"${here === 'guides' ? ' class="is-here" aria-current="page"' : ''}>${navIcon('<path d="M5 4h10a3 3 0 013 3v13H8a3 3 0 01-3-3V4z"/>')}<span>Guides</span></a>`
+  + `<a href="/#how-it-works">${navIcon('<circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8h.01"/>')}<span>About</span></a></nav>\n`;
+const foot = ctx => `</main>\n${footerHtml(false, ctx)}${bottomNav(ctx.here)}</body>\n</html>\n`;
 
 const breadcrumbLd = items => ({
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
@@ -364,7 +371,7 @@ ${related.length ? `<section class="tm-section">
   <h2>More ${esc(cat.label.toLowerCase())}</h2>
   <ul class="tm-related">${related.map(o => `<li><a href="${productUrl(o)}"><strong>${esc(o.name)}</strong><span>${esc(brandLabel(o.brand))}</span></a></li>`).join('')}</ul>
 </section>
-` : ''}` + foot({ subject: `Tech It More: ${name}`, body: `About this page: ${SITE}${productUrl(p)}\n\n` });
+` : ''}` + foot({ here: 'browse', subject: `Tech It More: ${name}`, body: `About this page: ${SITE}${productUrl(p)}\n\n` });
 }
 
 function categoryPage(cat) {
@@ -397,7 +404,7 @@ function categoryPage(cat) {
   <h2>Other categories</h2>
   <ul class="tm-related">${categories.filter(c => c !== cat).map(c => `<li><a href="${categoryUrl(c)}"><strong>${esc(c.label)}</strong><span>${countBy(c.label)} products</span></a></li>`).join('')}</ul>
 </section>
-` + foot({ subject: `Tech It More: ${cat.label}`, body: `About this page: ${SITE}${categoryUrl(cat)}\n\n` });
+` + foot({ here: 'browse', subject: `Tech It More: ${cat.label}`, body: `About this page: ${SITE}${categoryUrl(cat)}\n\n` });
 }
 
 function howPage() {
@@ -443,7 +450,7 @@ function howPage() {
   <h2>Spotted a mistake?</h2>
   <p><a href="${mail}">Email us a correction</a> with the product name and what is wrong, and we will fix it.</p>
 </section>
-` + foot({ subject: 'Tech It More: How we choose', body: `About this page: ${SITE}/how-we-choose/\n\n` });
+` + foot({ here: 'guides', subject: 'Tech It More: How we choose', body: `About this page: ${SITE}/how-we-choose/\n\n` });
 }
 put('how-we-choose/index.html', howPage());
 for (const p of products) put(`p/${p.id}/index.html`, productPage(p));

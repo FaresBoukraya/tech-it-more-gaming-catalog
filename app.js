@@ -1292,6 +1292,7 @@ function renderCompareTray() {
   document.body.classList.toggle("has-tray", items.length > 0);
   document.querySelector("#compare-count").textContent = String(items.length);
   compareTrayList.innerHTML = items.map(item => `<li class="tm-tray-chip"><span>${escapeHtml(fullProductName(item))}</span><button type="button" data-compare-remove="${escapeHtml(item.id)}" aria-label="Remove ${escapeHtml(item.name)} from compare">×</button></li>`).join("");
+  document.querySelectorAll("[data-compare-badge]").forEach(b => { b.textContent = String(items.length); b.hidden = items.length === 0; });
   compareGo.disabled = items.length < 2;
   compareGo.textContent = items.length < 2 ? "Pick two to compare" : `Compare ${items.length}`;
 }
@@ -1888,3 +1889,23 @@ document.addEventListener("click", event => {
   }, { rootMargin: "900px 0px" });
   observer.observe(loadMoreButton);
 })();
+
+
+/* Phone bottom bar: Browse, Search, Saved, Compare, Guides. */
+function focusSearch() {
+  window.scrollTo(0, 0);
+  searchInput.focus({ preventScroll: true });
+}
+document.querySelectorAll("[data-nav-search]").forEach(button => button.addEventListener("click", focusSearch));
+document.querySelectorAll("[data-nav-saved]").forEach(button => button.addEventListener("click", () => document.querySelector("#watchlist-filter").click()));
+document.querySelectorAll("[data-nav-compare]").forEach(button => {
+  button.addEventListener("click", () => {
+    if (compareIds.length >= 2) openCompare();
+    else showToast("Tick Compare on two products first.");
+  });
+});
+document.querySelectorAll("[data-nav-browse]").forEach(link => {
+  link.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" }));
+});
+if (window.location.hash === "#search") { history.replaceState(null, "", window.location.pathname + window.location.search); focusSearch(); }
+renderCompareTray();
