@@ -709,7 +709,7 @@ function stopGallerySlideshow() {
 }
 
 function renderWatchlistPanel() {
-  watchlistCount.textContent = String(watchlist.size);
+  watchlistCount.textContent = String(watchlist.size); document.querySelectorAll("[data-saved-badge]").forEach(b => { b.textContent = String(watchlist.size); b.hidden = watchlist.size === 0; });
   updateShareButton();
 }
 
@@ -1582,7 +1582,7 @@ async function start() {
   catalogProducts = products.map(product => ({ ...product, retailerSearchStores: product.stores || [] }));
   const knownIds = new Set(catalogProducts.map(product => product.id));
   watchlist = new Set((await readSetting("watchlist") || []).filter(id => knownIds.has(id)));
-  watchlistCount.textContent = String(watchlist.size);
+  watchlistCount.textContent = String(watchlist.size); document.querySelectorAll("[data-saved-badge]").forEach(b => { b.textContent = String(watchlist.size); b.hidden = watchlist.size === 0; });
   applyTheme(await readSetting("theme") || (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
   recentIds = (await readSetting("recent") || []).filter(id => knownIds.has(id));
   const savedRegion = await readSetting("region");
@@ -1892,10 +1892,15 @@ document.addEventListener("click", event => {
 
 
 /* Phone bottom bar: Browse, Search, Saved, Compare, Guides. */
+/* On phones the search bar stays out of the way until Search is tapped, then closes again if left empty. */
 function focusSearch() {
+  document.body.classList.add("tm-search-open");
   window.scrollTo(0, 0);
   searchInput.focus({ preventScroll: true });
 }
+searchInput.addEventListener("blur", () => window.setTimeout(() => {
+  if (!searchInput.value.trim()) document.body.classList.remove("tm-search-open");
+}, 250));
 document.querySelectorAll("[data-nav-search]").forEach(button => button.addEventListener("click", focusSearch));
 document.querySelectorAll("[data-nav-saved]").forEach(button => button.addEventListener("click", () => document.querySelector("#watchlist-filter").click()));
 document.querySelectorAll("[data-nav-compare]").forEach(button => {
@@ -1909,3 +1914,5 @@ document.querySelectorAll("[data-nav-browse]").forEach(link => {
 });
 if (window.location.hash === "#search") { history.replaceState(null, "", window.location.pathname + window.location.search); focusSearch(); }
 renderCompareTray();
+
+renderWatchlistPanel();
