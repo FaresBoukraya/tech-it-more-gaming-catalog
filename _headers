@@ -6,6 +6,7 @@
   Cross-Origin-Opener-Policy: same-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
   Strict-Transport-Security: max-age=31536000
+  Speculation-Rules: "/speculation-rules.json"
 
 /assets/*
   Cache-Control: public, max-age=604800
@@ -35,3 +36,11 @@
 
 /mail.js
   Cache-Control: public, max-age=31536000, immutable
+
+/speculation-rules.json
+  Content-Type: application/speculationrules+json
+  Cache-Control: public, max-age=3600
+
+/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /

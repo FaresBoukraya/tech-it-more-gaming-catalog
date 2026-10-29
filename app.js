@@ -56,7 +56,7 @@ let gallerySlideshowPlaying = false;
 let gallerySlideInterval = 4500;
 let handlingProductHistory = false;
 let productDialogRequest = 0;
-const catalogPageSize = 36;
+const catalogPageSize = window.matchMedia("(max-width: 759px)").matches ? 16 : 36; /* phones start with fewer rows; "Show more" adds the rest */
 const COMPARE_MAX = 3;
 const compareIds = [];
 
@@ -87,17 +87,7 @@ function saveSetting(key, value) {
   return Promise.resolve();
 }
 
-async function toggleWatchlist(productId) {
-  const next = new Set(watchlist);
-  if (next.has(productId)) next.delete(productId);
-  else next.add(productId);
-  await saveSetting("watchlist", [...next]);
-  watchlist = next;
-  renderWatchlistPanel();
-  if (savedOnly()) {
-    renderCatalog();
-    return;
-  }
+function paintSaved(productId) {
   const saved = watchlist.has(productId);
   grid.querySelectorAll("[data-watch-id]").forEach(button => {
     if (button.dataset.watchId !== productId) return;
@@ -106,6 +96,30 @@ async function toggleWatchlist(productId) {
     button.setAttribute("aria-pressed", String(saved));
     button.setAttribute("aria-label", `${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list`);
   });
+}
+
+/* Optimistic: the heart and the count change at once; saving happens behind it and rolls back if it fails. */
+async function toggleWatchlist(productId) {
+  const previous = watchlist;
+  const next = new Set(watchlist);
+  const removing = next.has(productId);
+  if (removing) next.delete(productId);
+  else next.add(productId);
+  watchlist = next;
+  renderWatchlistPanel();
+  if (savedOnly()) renderCatalog();
+  else paintSaved(productId);
+  try {
+    await saveSetting("watchlist", [...next]);
+  } catch (error) {
+    watchlist = previous;
+    renderWatchlistPanel();
+    if (savedOnly()) renderCatalog();
+    else paintSaved(productId);
+    showToast("Could not save that. Your list is unchanged.");
+    return;
+  }
+  if (removing) showUndoToast("Removed from your saved list.", () => toggleWatchlist(productId));
 }
 
 async function exportLocalData() {
@@ -412,7 +426,7 @@ function cardMarkup(product) {
     : "";
   return `<article class="tm-item" data-kind="${kind}">
     <button class="tm-open" type="button" data-product-id="${productId}" aria-label="${brand} ${name}: see where to buy">
-      <span class="tm-tile">${media}</span>
+      <span class="tm-tile${product.imageUrl ? " tm-loading" : ""}"${product.blurhash ? ` data-blurhash="${escapeHtml(product.blurhash)}"` : ""}>${media}</span>
       <span class="tm-body"><span class="tm-brand">${brand} · ${kind}</span><span class="tm-name">${name}</span>${product.summary ? `<span class="tm-summary">${escapeHtml(product.summary)}</span>` : ""}${factsMarkup(product)}<span class="tm-meta">${v.tier ? `<span class="tm-tier">${escapeHtml(v.tier)}</span>` : ""}${isWireless(product) ? '<span class="tm-pill">Wireless</span>' : ""}</span></span>
       ${note}
     </button>
@@ -466,9 +480,7 @@ function getAdditionalProductPhotos(product) {
     }).toString();
     let commonsPhotos = [];
     try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Wikimedia Commons returned HTTP ${response.status}.`);
-      const payload = await response.json();
+      const payload = await swrJson(url, "Wikimedia Commons");
       const pages = payload && typeof payload === "object" && payload.query && payload.query.pages
         ? Object.values(payload.query.pages)
         : [];
@@ -1005,8 +1017,10 @@ function updateSearchingState() {
 }
 
 function renderCategories() {
+  const categoryCounts = new Map();
+  catalogProducts.forEach(product => categoryCounts.set(product.category, (categoryCounts.get(product.category) || 0) + 1));
   categoryList.innerHTML = categories.map(category => {
-    const count = category === "All products" ? catalogProducts.length : catalogProducts.filter(product => product.category === category).length;
+    const count = category === "All products" ? catalogProducts.length : (categoryCounts.get(category) || 0);
     const selected = category === activeCategory;
     const label = escapeHtml(category);
     const shown = category === "Consoles & handhelds" ? "Consoles" : label;
@@ -1015,7 +1029,7 @@ function renderCategories() {
   if (categoryRail) {
     const keep = categoryRail.scrollLeft;
     categoryRail.innerHTML = categories.map(category => {
-      const count = category === "All products" ? catalogProducts.length : catalogProducts.filter(product => product.category === category).length;
+      const count = category === "All products" ? catalogProducts.length : (categoryCounts.get(category) || 0);
       const selected = category === activeCategory;
       const label = escapeHtml(category);
       const shown = category === "All products" ? "All" : category === "Consoles & handhelds" ? "Consoles" : label;
@@ -1206,6 +1220,7 @@ function showError(message, error) {
 }
 
 function showToast(message) {
+  toast.classList.remove("has-action");
   toast.textContent = message;
   toast.classList.add("visible");
   window.clearTimeout(toastTimer);
@@ -1916,3 +1931,279 @@ if (window.location.hash === "#search") { history.replaceState(null, "", window.
 renderCompareTray();
 
 renderWatchlistPanel();
+
+/* ======================================================================
+   v12 interaction polish. Each block stands alone; delete one to remove that behavior.
+   ====================================================================== */
+function reducedMotionNow() { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
+
+/* Undo toast: the action stays on screen long enough to use. */
+function showUndoToast(message, undo) {
+  toast.replaceChildren();
+  const text = document.createElement("span");
+  text.textContent = message;
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "toast-undo";
+  button.textContent = "Undo";
+  button.addEventListener("click", () => { toast.classList.remove("visible", "has-action"); undo(); });
+  toast.append(text, button);
+  toast.classList.add("visible", "has-action");
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => toast.classList.remove("visible", "has-action"), 7000);
+}
+compareClearHook();
+function compareClearHook() {
+  document.querySelector("#compare-clear").addEventListener("click", () => {
+    const before = [...compareIds];
+    if (before.length) window.setTimeout(() => showUndoToast("Comparison cleared.", () => before.forEach(id => setCompared(id, true))), 0);
+  }, true);
+  clearSavedButton.addEventListener("click", () => {
+    if (!clearSavedButton.classList.contains("confirming")) return;
+    const before = [...watchlist];
+    window.setTimeout(() => showUndoToast("Saved list cleared.", async () => {
+      watchlist = new Set(before);
+      await saveSetting("watchlist", before);
+      renderWatchlistPanel();
+      renderCatalog();
+    }), 0);
+  }, true);
+}
+
+/* Stale-while-revalidate: show the last answer at once, refresh it quietly when it is old. */
+async function swrJson(url, label) {
+  const key = `swr:${url}`;
+  const cached = storageGet(key);
+  const refresh = async () => {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`${label} returned HTTP ${response.status}.`);
+    const data = await response.json();
+    storageSet(key, { t: Date.now(), data });
+    return data;
+  };
+  if (cached && cached.data) {
+    if (Date.now() - cached.t > 60 * 60 * 1000) refresh().catch(() => {});
+    return cached.data;
+  }
+  return refresh();
+}
+
+/* Photos fade in when ready; an optional BlurHash (product.blurhash) shows behind them meanwhile. */
+const BLUR83 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%*+,-.:;=?@[]^_{|}~";
+function blurDecode(hash, w, h) {
+  const n83 = (from, to) => { let v = 0; for (let i = from; i < to; i++) v = v * 83 + BLUR83.indexOf(hash[i]); return v; };
+  const toLin = v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const toSrgb = v => { v = Math.max(0, Math.min(1, v)); return v <= 0.0031308 ? Math.round(v * 12.92 * 255 + 0.5) : Math.round((1.055 * v ** (1 / 2.4) - 0.055) * 255 + 0.5); };
+  const sq = v => Math.sign(v) * v * v;
+  const flag = n83(0, 1), ny = Math.floor(flag / 9) + 1, nx = (flag % 9) + 1;
+  const maxAC = (n83(1, 2) + 1) / 166;
+  const colors = [];
+  for (let i = 0; i < nx * ny; i++) {
+    if (i === 0) { const v = n83(2, 6); colors.push([toLin(v >> 16), toLin((v >> 8) & 255), toLin(v & 255)]); }
+    else { const v = n83(4 + i * 2, 6 + i * 2); colors.push([sq((Math.floor(v / 361) - 9) / 9) * maxAC, sq((Math.floor(v / 19) % 19 - 9) / 9) * maxAC, sq((v % 19 - 9) / 9) * maxAC]); }
+  }
+  const px = new Uint8ClampedArray(w * h * 4);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    let r = 0, g = 0, b = 0;
+    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+      const basis = Math.cos(Math.PI * x * i / w) * Math.cos(Math.PI * y * j / h), c = colors[i + j * nx];
+      r += c[0] * basis; g += c[1] * basis; b += c[2] * basis;
+    }
+    const o = 4 * (x + y * w);
+    px[o] = toSrgb(r); px[o + 1] = toSrgb(g); px[o + 2] = toSrgb(b); px[o + 3] = 255;
+  }
+  return px;
+}
+function paintBlurs(root) {
+  root.querySelectorAll(".tm-tile[data-blurhash]:not([data-blur-done])").forEach(tile => {
+    tile.dataset.blurDone = "1";
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = 32; canvas.height = 32; canvas.className = "tm-blur"; canvas.setAttribute("aria-hidden", "true");
+      canvas.getContext("2d").putImageData(new ImageData(blurDecode(tile.dataset.blurhash, 32, 32), 32, 32), 0, 0);
+      tile.prepend(canvas);
+    } catch (error) { /* a bad hash just means no placeholder */ }
+  });
+}
+(function photosFadeIn() {
+  const mark = img => { img.classList.add("is-loaded"); img.closest(".tm-tile")?.classList.remove("tm-loading"); };
+  document.addEventListener("error", event => { if (event.target instanceof HTMLImageElement) event.target.closest(".tm-tile")?.classList.remove("tm-loading"); }, true);
+  const sweep = () => { grid.querySelectorAll("img.tm-photo:not(.is-loaded)").forEach(img => { if (img.complete && img.naturalWidth) mark(img); }); paintBlurs(grid); };
+  document.addEventListener("load", event => { if (event.target instanceof HTMLImageElement && event.target.classList.contains("tm-photo")) mark(event.target); }, true);
+  new MutationObserver(sweep).observe(grid, { childList: true, subtree: true });
+  window.setTimeout(() => grid.querySelectorAll("img.tm-photo").forEach(mark), 8000);
+  sweep();
+})();
+
+/* Command menu: Ctrl or Cmd + K. Products, categories and actions in one box. */
+const cmdk = (function () {
+  const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+  const keyLabel = isMac ? "⌘K" : "Ctrl K";
+  searchInput.closest(".tm-search")?.querySelectorAll("kbd").forEach(k => { k.textContent = keyLabel; });
+  const root = document.createElement("div");
+  root.className = "tm-cmdk"; root.id = "cmdk"; root.hidden = true;
+  root.setAttribute("role", "dialog"); root.setAttribute("aria-modal", "true"); root.setAttribute("aria-label", "Command menu");
+  root.innerHTML = '<div class="tm-cmdk-backdrop" data-cmdk-close></div><div class="tm-cmdk-panel"><div class="tm-grab" data-sheet-handle></div>'
+    + '<input class="tm-cmdk-input" id="cmdk-input" type="search" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list" placeholder="Search products, jump to a category, run a command" autocomplete="off" spellcheck="false" enterkeyhint="go">'
+    + '<ul class="tm-cmdk-list" id="cmdk-list" role="listbox"></ul>'
+    + '<div class="tm-cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div></div>';
+  document.body.append(root);
+  const input = root.querySelector("#cmdk-input"), list = root.querySelector("#cmdk-list");
+  let rows = [], index = 0, lastFocus = null;
+  const isDark = () => document.documentElement.dataset.theme === "dark";
+  function build(query) {
+    const q = query.trim().toLowerCase();
+    const has = text => !q || text.toLowerCase().includes(q);
+    const actions = [
+      { label: "Surprise me", run: () => document.querySelector("#surprise-button").click() },
+      { label: "Show saved products", run: () => document.querySelector("#watchlist-filter").click() },
+      { label: compareIds.length >= 2 ? `Compare ${compareIds.length} selected products` : "Compare products", hint: "C", run: () => (compareIds.length >= 2 ? openCompare() : showToast("Tick Compare on two products first.")) },
+      { label: isDark() ? "Switch to light mode" : "Switch to dark mode", hint: "T", run: () => themeToggle.click() },
+      { label: "Open filters", run: () => filtersOpen.click() },
+      { label: "How we choose", run: () => { window.location.href = "how-we-choose/index.html"; } }
+    ].filter(item => has(item.label)).map(item => ({ ...item, group: "Actions" }));
+    const cats = categories.filter(name => name !== "All products" && has(`browse ${name}`)).map(name => ({
+      group: "Browse", label: `Browse ${name}`,
+      run: () => { document.querySelector(`.tm-rc[data-category="${CSS.escape(name)}"], [data-category="${CSS.escape(name)}"]`)?.click(); scrollToCatalog(); }
+    }));
+    const filterRow = q ? [{ group: "Search", label: `Filter the list for \u201c${query.trim()}\u201d`, run: () => { searchInput.value = query.trim(); searchInput.dispatchEvent(new Event("input", { bubbles: true })); scrollToCatalog(); } }] : [];
+    const terms = q.split(/\s+/).filter(Boolean);
+    const found = q ? products.filter(p => terms.every(t => `${p.brand} ${p.name} ${p.category}`.toLowerCase().includes(t))).slice(0, 8).map(p => ({
+      group: "Products", label: p.name, sub: `${p.brand} · ${p.category}`, run: () => openProduct(p.id)
+    })) : [];
+    return [...found, ...filterRow, ...cats.slice(0, q ? 4 : 8), ...actions];
+  }
+  function render() {
+    rows = build(input.value); index = Math.min(index, Math.max(0, rows.length - 1));
+    let group = ""; let html = "";
+    rows.forEach((row, i) => {
+      if (row.group !== group) { group = row.group; html += `<li role="presentation" class="tm-cmdk-group">${group}</li>`; }
+      html += `<li role="option" id="cmdk-opt-${i}" data-i="${i}" aria-selected="${i === index}"><span class="tm-cmdk-main"><span>${escapeHtml(row.label)}</span>${row.sub ? `<small>${escapeHtml(row.sub)}</small>` : ""}</span>${row.hint ? `<kbd>${row.hint}</kbd>` : ""}</li>`;
+    });
+    list.innerHTML = html || '<li role="presentation" class="tm-cmdk-empty">Nothing matches that.</li>';
+    input.setAttribute("aria-activedescendant", rows.length ? `cmdk-opt-${index}` : "");
+  }
+  function select(i) {
+    index = (i + rows.length) % Math.max(1, rows.length);
+    list.querySelectorAll("[role=option]").forEach(li => li.setAttribute("aria-selected", String(+li.dataset.i === index)));
+    input.setAttribute("aria-activedescendant", `cmdk-opt-${index}`);
+    list.querySelector(`#cmdk-opt-${index}`)?.scrollIntoView({ block: "nearest" });
+  }
+  function open() {
+    if (!root.hidden) return;
+    lastFocus = document.activeElement; input.value = ""; index = 0; render();
+    root.hidden = false; document.body.classList.add("tm-lock"); input.focus();
+  }
+  function close(restore = true) {
+    if (root.hidden) return;
+    root.hidden = true;
+    if (filterSidebar.classList.contains("open") === false && compareModal.hidden && dialog.hidden) document.body.classList.remove("tm-lock");
+    if (restore && lastFocus instanceof HTMLElement && lastFocus.isConnected) lastFocus.focus();
+  }
+  function run(i) { const row = rows[i]; if (!row) return; close(false); window.setTimeout(row.run, 0); }
+  input.addEventListener("input", () => { index = 0; render(); });
+  input.addEventListener("keydown", event => {
+    if (event.key === "ArrowDown") { event.preventDefault(); select(index + 1); }
+    else if (event.key === "ArrowUp") { event.preventDefault(); select(index - 1); }
+    else if (event.key === "Enter") { event.preventDefault(); run(index); }
+    else if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); close(); }
+    else if (event.key === "Tab") event.preventDefault();
+  });
+  list.addEventListener("click", event => { const li = event.target.closest("[role=option]"); if (li) run(+li.dataset.i); });
+  list.addEventListener("pointermove", event => { const li = event.target.closest("[role=option]"); if (li && +li.dataset.i !== index) select(+li.dataset.i); });
+  root.addEventListener("click", event => { if (event.target.closest("[data-cmdk-close]")) close(); });
+  document.addEventListener("keydown", event => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "") || document.activeElement?.isContentEditable;
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault(); event.stopImmediatePropagation(); if (root.hidden) open(); else close(); return;
+    }
+    if (typing || event.metaKey || event.ctrlKey || event.altKey || !root.hidden || !dialog.hidden || !compareModal.hidden) return;
+    if (event.key === "t") { event.preventDefault(); themeToggle.click(); }
+    else if (event.key === "c") { event.preventDefault(); if (compareIds.length >= 2) openCompare(); else showToast("Tick Compare on two products first."); }
+  }, true);
+  themeToggle.title = "Switch theme (T)";
+  compareGo.title = "Compare (C)";
+  return { open, close, isOpen: () => !root.hidden, panel: root.querySelector(".tm-cmdk-panel"), backdrop: root.querySelector(".tm-cmdk-backdrop"), handle: root.querySelector(".tm-grab") };
+})();
+
+/* Swipe to dismiss: drag a sheet by its handle. It follows the finger, can be caught mid-flight, and springs back if let go early. */
+(function swipeSheets() {
+  const phone = window.matchMedia("(max-width: 759px)");
+  const currentY = el => { const m = getComputedStyle(el).transform; return m && m !== "none" ? new DOMMatrix(m).m42 : 0; };
+  function enable(panel, handle, backdrop, close) {
+    let anim = null, startY = 0, base = 0, lastY = 0, lastT = 0, velocity = 0, dragging = false, cleanup = 0;
+    const ms = n => (reducedMotionNow() ? 0 : n);
+    const reset = () => { panel.style.transform = ""; if (backdrop) backdrop.style.opacity = ""; };
+    function catchAnim() {
+      window.clearTimeout(cleanup);
+      if (!anim) return;
+      try { anim.commitStyles(); } catch (error) { /* older browsers: the drag simply restarts from where it ended */ }
+      anim.cancel(); anim = null;
+    }
+    handle.addEventListener("pointerdown", event => {
+      if (!phone.matches || (event.pointerType === "mouse" && event.button !== 0)) return;
+      catchAnim();
+      base = currentY(panel); startY = lastY = event.clientY; lastT = event.timeStamp; velocity = 0; dragging = true;
+      handle.setPointerCapture(event.pointerId);
+    });
+    handle.addEventListener("pointermove", event => {
+      if (!dragging) return;
+      const dy = Math.max(0, base + event.clientY - startY);
+      panel.style.transform = `translateY(${dy}px)`;
+      if (backdrop) backdrop.style.opacity = String(Math.max(.25, 1 - dy / Math.max(1, panel.offsetHeight)));
+      const dt = event.timeStamp - lastT;
+      if (dt > 0) velocity = (event.clientY - lastY) / dt;
+      lastY = event.clientY; lastT = event.timeStamp;
+    });
+    const release = () => {
+      if (!dragging) return;
+      dragging = false;
+      const dy = currentY(panel);
+      if (dy > 110 || velocity > .6) {
+        anim = panel.animate([{ transform: `translateY(${dy}px)` }, { transform: `translateY(${panel.offsetHeight + 40}px)` }], { duration: ms(180), easing: "ease-in", fill: "forwards" });
+        anim.onfinish = () => { close(); cleanup = window.setTimeout(() => { if (anim) anim.cancel(); anim = null; reset(); }, 400); };
+      } else {
+        anim = panel.animate([{ transform: `translateY(${dy}px)` }, { transform: "translateY(0)" }], { duration: ms(240), easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" });
+        anim.onfinish = () => { if (anim) anim.cancel(); anim = null; reset(); };
+      }
+    };
+    handle.addEventListener("pointerup", release);
+    handle.addEventListener("pointercancel", release);
+  }
+  const grab = () => { const el = document.createElement("div"); el.className = "tm-grab"; el.setAttribute("data-sheet-handle", ""); return el; };
+  const dialogPanel = dialog.querySelector(".dialog-panel"); const dialogGrab = grab(); dialogPanel.prepend(dialogGrab);
+  const comparePanel = compareModal.querySelector(".tm-cmp-panel"); const compareGrab = grab(); comparePanel.prepend(compareGrab);
+  const filtersGrab = grab(); filterSidebar.prepend(filtersGrab);
+  enable(dialogPanel, dialogGrab, dialogBackdrop, closeDialog);
+  enable(comparePanel, compareGrab, null, closeCompare);
+  enable(filterSidebar, filtersGrab, filtersBackdrop, () => setFiltersOpen(false));
+  enable(cmdk.panel, cmdk.handle, cmdk.backdrop, () => cmdk.close());
+})();
+
+/* Back button closes the open sheet instead of leaving the page (Android back gesture included). */
+(function sheetHistory() {
+  const sheets = {
+    filters: { node: filterSidebar, attr: "class", isOpen: () => filterSidebar.classList.contains("open"), close: () => setFiltersOpen(false) },
+    compare: { node: compareModal, attr: "hidden", isOpen: () => !compareModal.hidden, close: () => closeCompare() },
+    palette: { node: document.querySelector("#cmdk"), attr: "hidden", isOpen: () => cmdk.isOpen(), close: () => cmdk.close(false) }
+  };
+  let popping = false;
+  const inHistory = name => !!(history.state && history.state.sheet === name);
+  function sync(name) {
+    const sheet = sheets[name], open = sheet.isOpen();
+    if (popping) return;
+    if (open && !inHistory(name)) history.pushState({ ...(history.state || {}), sheet: name }, "");
+    else if (!open && inHistory(name)) history.back();
+  }
+  Object.keys(sheets).forEach(name => new MutationObserver(() => sync(name)).observe(sheets[name].node, { attributes: true, attributeFilter: [sheets[name].attr] }));
+  window.addEventListener("popstate", () => {
+    popping = true;
+    Object.keys(sheets).forEach(name => { if (sheets[name].isOpen() && !inHistory(name)) sheets[name].close(); });
+    popping = false;
+  });
+})();
+
+/* Offline and repeat visits: the service worker is generated by scripts/build.mjs. */
+if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {
+  window.addEventListener("load", () => { navigator.serviceWorker.register("/sw.js").catch(() => {}); });
+}

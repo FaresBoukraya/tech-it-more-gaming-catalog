@@ -2043,3 +2043,99 @@ html { -webkit-tap-highlight-color: transparent; }
   .tm-cmp-table tbody td.tm-cmp-catch { padding: 8px; border-radius: 8px; font-size: 14px; }
   .tm-cmp-table tbody td .tm-btn { width: 100%; min-height: 44px; padding: 0 6px; font-size: 13px; }
 }
+
+/* ======================================================================
+   v12: interaction polish (skeletons, command menu, sheets, hit slop, type, corners,
+   page transitions). Uses the site's own colors. Delete this block to undo.
+   ====================================================================== */
+
+/* skeleton rows and photo loading */
+@keyframes tm-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+.tm-skel, .tm-tile.tm-loading { --sk-a: color-mix(in srgb, var(--ink, #1a1a1a) 7%, transparent); --sk-b: color-mix(in srgb, var(--ink, #1a1a1a) 13%, transparent); }
+.tm-skel { display: grid; grid-template-columns: 72px 1fr; gap: 14px; align-items: center; padding: 14px 8px; border-bottom: 1px solid var(--line, #e3e6ec); }
+.tm-skel-tile, .tm-skel-line { display: block; border-radius: 10px; background: linear-gradient(90deg, var(--sk-a) 25%, var(--sk-b) 50%, var(--sk-a) 75%) 0 0 / 200% 100%; animation: tm-shimmer 1.4s linear infinite; }
+.tm-skel-tile { width: 72px; height: 72px; }
+.tm-skel-body { display: grid; gap: 9px; }
+.tm-skel-line { height: 12px; width: 100%; border-radius: 6px; }
+.tm-skel-line.w80 { width: 80%; }
+.tm-skel-line.w50 { width: 50%; }
+.tm-tile { position: relative; }
+.tm-tile.tm-loading { overflow: hidden; background: var(--sk-a); }
+.tm-tile.tm-loading::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, var(--sk-b), transparent); transform: translateX(-100%); animation: tm-sweep 1.4s ease-in-out infinite; pointer-events: none; }
+@keyframes tm-sweep { to { transform: translateX(100%); } }
+.tm-photo { opacity: 0; transition: opacity .28s ease; }
+.tm-photo.is-loaded { opacity: 1; }
+.tm-blur { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: reduce) {
+  .tm-skel-tile, .tm-skel-line, .tm-tile.tm-loading::after { animation: none; }
+  .tm-photo { transition: none; }
+}
+
+/* undo toast */
+.toast.has-action { display: flex; align-items: center; gap: 14px; pointer-events: auto; }
+.toast-undo { min-height: 36px; margin: -6px -8px -6px 0; padding: 0 12px; border: 0; border-radius: 8px; background: none; color: var(--tm-accent, #4b4fd6); font: 700 14px var(--sans, inherit); cursor: pointer; }
+
+/* command menu */
+.tm-cmdk { position: fixed; inset: 0; z-index: 12; display: flex; justify-content: center; align-items: flex-start; padding: 12vh 12px 0; }
+.tm-cmdk[hidden] { display: none; }
+.tm-cmdk-backdrop { position: absolute; inset: 0; background: rgba(15, 18, 28, .42); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.tm-cmdk-panel { position: relative; width: min(620px, 100%); max-height: min(560px, 76dvh); display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line, #e3e6ec); border-radius: 16px; background: var(--paper, #fff); color: var(--ink, #1a1a1a); box-shadow: 0 24px 60px rgba(0, 0, 0, .28); }
+.tm-cmdk-input { flex: none; width: 100%; height: 56px; padding: 0 20px; border: 0; border-bottom: 1px solid var(--line, #e3e6ec); background: transparent; color: inherit; font: 500 17px var(--sans, inherit); outline: 0; -webkit-appearance: none; appearance: none; }
+.tm-cmdk-input::-webkit-search-cancel-button { display: none; }
+.tm-cmdk-list { flex: 1; margin: 0; padding: 6px; overflow-y: auto; list-style: none; overscroll-behavior: contain; }
+.tm-cmdk-group { padding: 10px 12px 4px; color: var(--muted, #667); font: 700 11px var(--sans, inherit); letter-spacing: .08em; text-transform: uppercase; }
+.tm-cmdk-list [role="option"] { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 6px 12px; border-radius: 10px; cursor: pointer; }
+.tm-cmdk-list [role="option"][aria-selected="true"] { background: color-mix(in srgb, var(--tm-accent, #4b4fd6) 13%, transparent); }
+.tm-cmdk-main { display: grid; min-width: 0; }
+.tm-cmdk-main small { color: var(--muted, #667); font-size: 12px; }
+.tm-cmdk-empty { padding: 18px 12px; color: var(--muted, #667); }
+.tm-cmdk-foot { flex: none; display: flex; gap: 16px; padding: 10px 16px; border-top: 1px solid var(--line, #e3e6ec); color: var(--muted, #667); font-size: 12px; }
+.tm-cmdk-foot kbd { margin-right: 3px; }
+kbd { padding: 2px 6px; border: 1px solid var(--line, #d6dae2); border-radius: 6px; background: transparent; color: var(--muted, #667); font: 600 11px var(--sans, inherit); }
+@media (max-width: 759px) {
+  .tm-cmdk { align-items: flex-end; padding: 0; }
+  .tm-cmdk-panel { width: 100%; max-height: 82dvh; border-radius: 18px 18px 0 0; padding-bottom: env(safe-area-inset-bottom); }
+  .tm-cmdk-foot { display: none; }
+}
+
+/* sheet handles (phones only) */
+.tm-grab { display: none; }
+@media (max-width: 759px) {
+  .tm-grab { position: relative; display: block; flex: none; width: 100%; height: 26px; touch-action: none; cursor: grab; }
+  .tm-grab::before { content: ""; position: absolute; top: 10px; left: 50%; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: var(--muted, #667); opacity: .4; }
+  .tm-grab::after { content: ""; position: absolute; inset: -6px 0; }
+}
+
+/* hit slop: genuinely small controls (the close buttons, the chip remove) get an invisible bigger target.
+   The heart and the Compare control are already 44px or more, and sit close together, so they are left alone. */
+[data-compare-remove] { position: relative; }
+[data-compare-remove]::after, .dialog-close::after, .tm-cmp-close::after, .tm-side-close::after { content: ""; position: absolute; inset: -8px; }
+
+/* type: steady numbers, balanced headlines, tidy paragraph endings */
+.count, [class*="-count"], .tm-rc-n, .tm-badge, .toast, kbd, .tm-cmp-table td, .tm-meta, .tm-tray-label, .tm-skel { font-variant-numeric: tabular-nums; }
+h1, h2, h3, .tm-name, .dx-title, .detail-title-wrap h2, .tm-cmp-title { text-wrap: balance; }
+p, .tm-summary, .tm-note-text, .detail-subtitle, .tm-lead { text-wrap: pretty; }
+
+/* continuous (squircle) corners where the browser supports them */
+@supports (corner-shape: squircle) {
+  .tm-tile, .tm-note, .dialog-panel, .tm-cmp-panel, .tm-sidebar, .tm-spotlight, .tm-cmdk-panel, .toast, .detail-photo-wrap, .tm-search-field, .tm-skel-tile { corner-shape: squircle; }
+}
+
+/* page transitions between pages; the header and bottom bar stay put */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .18s; animation-timing-function: ease-out; }
+.tm-header { view-transition-name: tm-header; }
+.tm-bottomnav { view-transition-name: tm-bottomnav; }
+::view-transition-group(tm-header), ::view-transition-group(tm-bottomnav) { animation-duration: 0s; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
+/* safe areas: notches and rounded corners in landscape too */
+.tm-bottomnav { padding-left: max(8px, env(safe-area-inset-left)); padding-right: max(8px, env(safe-area-inset-right)); }
+@media (max-width: 759px) {
+  .toast { bottom: calc(76px + env(safe-area-inset-bottom)); }
+  .tm-sidebar { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+}
+
+/* Small fixes: the stray line under the compare title. */
+.tm-cmp-table thead td:first-child { border-bottom: 0; }
+.skip-link:not(:focus):not(:focus-visible) { box-shadow: none; }

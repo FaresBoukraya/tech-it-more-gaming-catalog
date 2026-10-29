@@ -1,0 +1,10 @@
+{
+  "prerender": [
+    { "where": { "href_matches": "/p/*" }, "eagerness": "moderate" },
+    { "where": { "href_matches": "/c/*" }, "eagerness": "moderate" },
+    { "where": { "href_matches": "/how-we-choose/*" }, "eagerness": "moderate" }
+  ],
+  "prefetch": [
+    { "where": { "href_matches": "/*" }, "eagerness": "conservative" }
+  ]
+}
