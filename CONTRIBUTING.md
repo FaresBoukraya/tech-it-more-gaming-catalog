@@ -1,6 +1,6 @@
 # Contributing to Tech It More
 
-Thanks for wanting to help! Tech It More is a small static site (plain HTML, CSS and JavaScript), so contributing is simple.
+Thanks for helping! This is a small static site (plain HTML, CSS and JavaScript), so contributing is simple.
 
 ## Ways to help
 
@@ -9,51 +9,52 @@ Thanks for wanting to help! Tech It More is a small static site (plain HTML, CSS
 - Improve design, accessibility or speed
 - Fix typos or improve the docs
 
-For anything big, please open an issue first so we can agree on the idea before you spend time on it.
+For anything big, open an issue first so we can agree on the idea before you spend time on it.
 
 ## Run it locally
 
-There is no install. You need Node 18+ to rebuild the generated files:
+You need Node 18+ to rebuild the generated files. There is nothing to install.
 
 ```bash
 npm run build
 python3 -m http.server 8000
 ```
 
-Then open http://localhost:8000.
+Open http://localhost:8000. Use a server rather than opening the file directly, so the service worker and fonts behave as they do online.
 
 ## Adding or editing products
 
-Products live in `data/products.json`. The README has a full example; here are the rules.
+Products live in `data/products.json`. The [README](README.md) has a full example. The rules:
 
-**Every published product needs:**
+**Every published product needs**
 
 - `id`, `brand`, `name`, `category`, `specs`, `imageUrl`
 - `summary`: 9 words or fewer, shown on the card
-- `verdict.bestFor`, `verdict.downside`, `verdict.skipIf` (finishes "Skip it if ..."), and `verdict.tier` (Budget, Mid-range or Premium)
+- `verdict.bestFor`, `verdict.downside`, `verdict.skipIf` (finishes "Skip it if ...") and `verdict.tier` (Budget, Mid-range or Premium)
 - `alts`: up to three `{ "id": "...", "why": "..." }` in the same category, each with a short reason
 - `imageSource` (and `imageCreator` where a license needs credit) for every photo
 
-**And always:**
+**Always**
 
-- **No prices, currency, sales or stock information.**
-- **Only popular gear less than 10 years old.**
-- **Don't guess specs.** If the source doesn't list them, leave them out.
-- **`category` must match a label in `data/categories.json`.**
-- **`checked`** (`YYYY-MM-DD`) is optional. Set it only after comparing the entry with the manufacturer's page.
-- **Photo hosts** must be listed in `img-src` in `_headers`. `npm run build` fails if one isn't.
-- **Not complete yet?** Put it in `data/backlog.json`. Only finished entries go in `products.json`.
+- No prices, currency, sales or stock information.
+- Only popular gear less than 10 years old.
+- Don't guess specs. If the source doesn't list them, leave them out.
+- `category` must match a label in `data/categories.json`.
+- `checked` (`YYYY-MM-DD`) is optional. Set it only after comparing with the manufacturer's page.
+- Photo hosts must be listed in `img-src` in `_headers`. `npm run build` fails if one isn't.
+- Not complete yet? Put it in `data/backlog.json`.
 
-## After changing files
+## Before you open a pull request
 
-Run `npm run build` and commit the generated files together with your change. `npm run check` tells you if anything is stale.
+1. Fork the repository and create a branch.
+2. Make your change.
+3. Run `npm run build`, then `npm run check`, and commit the generated files with your change.
+4. Test on a phone-sized screen and on desktop, in light and dark themes. On a phone, check the bottom bar, the filters sheet, a product sheet and Compare.
+5. Open a pull request and fill in the template.
 
-## Submitting a pull request
+## Don't edit generated files
 
-1. Fork the repository and create a branch for your change.
-2. Make your change and test it on mobile and desktop, in light and dark themes.
-3. Run `npm run build` and `npm run check`.
-4. Open a pull request and fill in the template.
+`products.js`, `sw.js`, `sitemap.xml`, `p/` and `c/` are produced by `scripts/build.mjs`. Change the data or the script, then rebuild.
 
 ## Security
 
@@ -61,4 +62,4 @@ Never commit API keys, passwords or personal data. To report a security problem,
 
 ## Code of conduct
 
-By taking part, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+By taking part, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
