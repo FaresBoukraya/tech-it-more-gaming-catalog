@@ -32,6 +32,8 @@ const storesData = readJson('data/stores.json');
 const brandNames = readJson('data/brands.json');
 const rawProducts = readJson('data/products.json');
 const siteData = readJson('data/site.json'); /* discordUrl: leave empty to hide the Discord button; contactEmail is used for all mailto links */
+/* metaDomainVerification: the content value from Meta Business Suite (Brand safety > Domains, meta-tag method). Leave empty to emit nothing. */
+const verifyTags = siteData.metaDomainVerification ? `<meta name="facebook-domain-verification" content="${String(siteData.metaDomainVerification).replace(/[^A-Za-z0-9_-]/g, '')}">\n` : '';
 const MAIL = siteData.contactEmail || 'techitmore.contact@gmail.com';
 const regionsData = readJson('data/regions.json'); /* UK, Canada and Europe store lists; the US list stays in stores.json */
 const backlog = readJson('data/backlog.json'); /* thin entries: never published until they have specs, a photo and a verdict */
@@ -268,7 +270,9 @@ function head({ title, description, path: pagePath, robots, extraLd = [] }) {
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(url)}">
 ${robots ? `<meta name="robots" content="${robots}">\n` : ''}<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta property="og:type" content="website">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+${verifyTags}<meta property="og:type" content="website">
 <meta property="og:site_name" content="${SITE_NAME}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
@@ -525,6 +529,7 @@ const block = (name, inner) => {
   indexHtml = indexHtml.replace(re, (_, a, b) => `${a}\n${inner}\n${b}`);
 };
 block('footer', footerHtml(true));
+block('verify', verifyTags.trim());
 block('noscript', `    <noscript><div class="tm-noscript"><p><strong>Search and filters need JavaScript.</strong> You can still browse by category:</p><ul>${categories.map(c => `<li><a href="${categoryUrl(c)}">${esc(c.label)}</a></li>`).join('')}</ul></div></noscript>`);
 indexHtml = indexHtml
   .replace(/(id="hero-count">)\d+(<)/, `$1${products.length}$2`)
