@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" fill="none">
+  <defs>
+    <linearGradient id="mark" x1="58" y1="66" x2="90" y2="100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7167EE"/>
+      <stop offset="1" stop-color="#F06A59"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="154" y1="273" x2="1051" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#202842"/>
+      <stop offset="1" stop-color="#4644B8"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1440" height="960" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="12"/>
+      <feGaussianBlur stdDeviation="16"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.08 0 0 0 0 0.11 0 0 0 0 0.22 0 0 0 0.13 0"/>
+      <feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+  </defs>
+  <rect width="1440" height="960" fill="#EEEFF7"/>
+  <circle cx="1300" cy="210" r="205" fill="#E4E5FB"/>
+  <circle cx="1326" cy="190" r="122" fill="#F8E8E3"/>
+  <text x="80" y="54" fill="#667085" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2.4">DESIGN PREVIEW · LANGUAGE SELECTOR</text>
+  <text x="80" y="94" fill="#10182A" font-family="Segoe UI,Arial,sans-serif" font-size="27" font-weight="700">A more considered way to switch languages</text>
+  <text x="80" y="119" fill="#667085" font-family="Segoe UI,Arial,sans-serif" font-size="14">Concept only — the website has not been changed.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="151" width="1312" height="621" rx="22" fill="#F8F8FC"/>
+    <path d="M86 151h1268a22 22 0 0 1 22 22v82H64v-82a22 22 0 0 1 22-22Z" fill="#FFFFFF"/>
+    <path d="M64 255h1312" stroke="#E8EAF1"/>
+
+    <rect x="92" y="177" width="39" height="39" rx="12" fill="url(#mark)"/>
+    <text x="105" y="207" fill="#FFFFFF" font-family="Segoe UI,Arial,sans-serif" font-size="27" font-weight="800">t</text>
+    <text x="143" y="192" fill="#172238" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="800">tech<tspan fill="#6763D9">it</tspan><tspan fill="#8A91A0" font-weight="500">more</tspan></text>
+    <text x="143" y="208" fill="#9098A8" font-family="Segoe UI,Arial,sans-serif" font-size="9" font-weight="700" letter-spacing="1.7">GAMING GEAR, CONSIDERED</text>
+
+    <rect x="337" y="173" width="542" height="48" rx="13" fill="#F7F8FC" stroke="#E4E7EF"/>
+    <circle cx="362" cy="196" r="7" stroke="#8A91A0" stroke-width="1.8"/>
+    <path d="m367 201 5 5" stroke="#8A91A0" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="385" y="201" fill="#8992A3" font-family="Segoe UI,Arial,sans-serif" font-size="14">Search gear, brands or models</text>
+    <rect x="824" y="185" width="39" height="24" rx="6" fill="#FFFFFF" stroke="#E2E5EC"/>
+    <text x="832" y="201" fill="#758092" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="600">Ctrl K</text>
+
+    <rect x="922" y="174" width="157" height="46" rx="14" fill="#FFFFFF" stroke="#D8DCE7"/>
+    <path d="M943 184c-6 0-10 5-10 11 0 7 10 14 10 14s10-7 10-14c0-6-4-11-10-11Z" stroke="#58627A" stroke-width="1.6"/>
+    <circle cx="943" cy="195" r="3" stroke="#58627A" stroke-width="1.5"/>
+    <text x="963" y="202" fill="#253149" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="650">Saved</text>
+    <rect x="1031" y="185" width="30" height="23" rx="11.5" fill="#F0F1F8"/>
+    <text x="1041" y="201" fill="#687187" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700">0</text>
+
+    <rect x="1092" y="171" width="174" height="51" rx="16" fill="#FFFFFF" stroke="#AAA8F0" stroke-width="1.5"/>
+    <rect x="1097" y="176" width="164" height="41" rx="12" fill="#F3F2FF"/>
+    <circle cx="1119" cy="196" r="11" fill="#E3E1FC"/>
+    <path d="M1119 188.5a7.5 7.5 0 1 0 7.5 7.5 7.5 7.5 0 0 0-7.5-7.5Zm0 0v7.5l4.8 4.8" stroke="#514CC2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1139" y="193" fill="#667085" font-family="Segoe UI,Arial,sans-serif" font-size="9" font-weight="700" letter-spacing="1.1">LANGUAGE</text>
+    <text x="1139" y="207" fill="#292B5E" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700">English</text>
+    <path d="m1239 193 5 5 5-5" stroke="#625DCB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="1278" y="176" width="42" height="42" rx="14" fill="#FFFFFF" stroke="#E0E3EB"/>
+    <path d="M1300 187v2m0 14v2m-11-9h2m18 0h2m-17-7 1.5 1.5m11 11 1.5 1.5m0-14-1.5 1.5m-11 11L1295 204" stroke="#59647A" stroke-width="1.7" stroke-linecap="round"/>
+    <circle cx="1300" cy="198" r="5" stroke="#59647A" stroke-width="1.7"/>
+
+    <rect x="1043" y="232" width="267" height="258" rx="18" fill="#FFFFFF" stroke="#E4E6EE"/>
+    <text x="1067" y="263" fill="#202A40" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">Choose your language</text>
+    <text x="1067" y="283" fill="#8991A1" font-family="Segoe UI,Arial,sans-serif" font-size="11">Your choice is saved on this device.</text>
+    <path d="M1067 298h219" stroke="#EEF0F4"/>
+    <rect x="1055" y="307" width="243" height="43" rx="11" fill="#F1F0FF"/>
+    <circle cx="1078" cy="329" r="12" fill="#E2E0FF"/>
+    <path d="m1072.5 329 3.5 3.5 7-7" stroke="#504BC1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1100" y="333" fill="#292B5E" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700">English</text>
+    <text x="1276" y="333" fill="#7771D5" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" text-anchor="end">CURRENT</text>
+    <text x="1100" y="379" fill="#39445A" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="550">Français</text>
+    <text x="1100" y="422" fill="#39445A" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="550">العربية</text>
+    <text x="1100" y="465" fill="#39445A" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="550">Español</text>
+    <path d="M1067 393h219M1067 436h219" stroke="#F0F1F5"/>
+
+    <text x="101" y="327" fill="#7771D5" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="2">A BETTER WAY TO FIND YOUR NEXT UPGRADE</text>
+    <text x="98" y="383" fill="url(#hero)" font-family="Georgia,serif" font-size="48" font-weight="700">Find gaming gear</text>
+    <text x="98" y="437" fill="url(#hero)" font-family="Georgia,serif" font-size="48" font-weight="700">worth buying.</text>
+    <text x="101" y="474" fill="#656F83" font-family="Segoe UI,Arial,sans-serif" font-size="15">Good gear, clear trade-offs, and the right store to check.</text>
+    <rect x="101" y="508" width="572" height="1" fill="#E4E6EE"/>
+
+    <rect x="101" y="535" width="274" height="108" rx="15" fill="#FFFFFF" stroke="#E7E8F0"/>
+    <circle cx="128" cy="562" r="12" fill="#EEEAFE"/>
+    <path d="m128 553 7 3v5c0 4-3 7-7 9-4-2-7-5-7-9v-5l7-3Z" stroke="#605BCB" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="m125 562 2 2 4-4" stroke="#605BCB" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="150" y="560" fill="#58647A" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700">INDEPENDENT BY DESIGN</text>
+    <text x="122" y="593" fill="#364258" font-family="Segoe UI,Arial,sans-serif" font-size="12">No accounts, no quoted prices, no guesswork.</text>
+    <text x="122" y="616" fill="#7B8494" font-family="Segoe UI,Arial,sans-serif" font-size="11">Retailers show current prices and stock.</text>
+
+    <text x="101" y="693" fill="#202A40" font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="700">Find your next upgrade</text>
+    <text x="1310" y="693" fill="#7771D5" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="700" text-anchor="end" letter-spacing="1">52 PICKS · 7 CATEGORIES</text>
+
+    <rect x="101" y="714" width="269" height="43" rx="12" fill="#FFFFFF" stroke="#E7E8F0"/>
+    <rect x="111" y="722" width="27" height="27" rx="8" fill="#EFEFFD"/>
+    <path d="M119 730h11m-11 4h11m-11 4h7" stroke="#605BCB" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="149" y="741" fill="#354057" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="650">Keyboards</text>
+    <text x="346" y="741" fill="#8A91A0" font-family="Segoe UI,Arial,sans-serif" font-size="11" text-anchor="end">11</text>
+    <rect x="382" y="714" width="269" height="43" rx="12" fill="#FFFFFF" stroke="#E7E8F0"/>
+    <rect x="392" y="722" width="27" height="27" rx="8" fill="#FFF0ED"/>
+    <circle cx="405.5" cy="735.5" r="6" stroke="#D66B58" stroke-width="1.5"/>
+    <path d="M405.5 729.5v12m-6-6h12" stroke="#D66B58" stroke-width="1.3"/>
+    <text x="430" y="741" fill="#354057" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="650">Mice</text>
+    <text x="627" y="741" fill="#8A91A0" font-family="Segoe UI,Arial,sans-serif" font-size="11" text-anchor="end">8</text>
+    <rect x="663" y="714" width="269" height="43" rx="12" fill="#FFFFFF" stroke="#E7E8F0"/>
+    <rect x="673" y="722" width="27" height="27" rx="8" fill="#EAF4F0"/>
+    <path d="M681 733c0-3 2-5 5-5s5 2 5 5v6h-10v-6Zm5-5v-2m-2 2h4" stroke="#4F967E" stroke-width="1.4" stroke-linecap="round"/>
+    <text x="711" y="741" fill="#354057" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="650">Headsets</text>
+    <text x="908" y="741" fill="#8A91A0" font-family="Segoe UI,Arial,sans-serif" font-size="11" text-anchor="end">9</text>
+  </g>
+
+  <g>
+    <rect x="104" y="812" width="1232" height="104" rx="18" fill="#FFFFFF" stroke="#E6E8EF"/>
+    <text x="132" y="842" fill="#7771D5" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="1.8">MOBILE DETAIL</text>
+    <text x="132" y="870" fill="#222C42" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Compact, still polished</text>
+    <text x="132" y="891" fill="#697386" font-family="Segoe UI,Arial,sans-serif" font-size="12">Keep the globe, selected language, comfortable tap target and clear focus state.</text>
+    <rect x="1036" y="835" width="265" height="55" rx="18" fill="#FFFFFF" stroke="#B6B3F5" stroke-width="1.5"/>
+    <rect x="1042" y="841" width="253" height="43" rx="13" fill="#F5F4FF"/>
+    <circle cx="1067" cy="862" r="12" fill="#E5E3FC"/>
+    <path d="M1067 854a8 8 0 1 0 8 8 8 8 0 0 0-8-8Zm0 0v8l5 5" stroke="#514CC2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1090" y="858" fill="#7C8494" font-family="Segoe UI,Arial,sans-serif" font-size="9" font-weight="700" letter-spacing="1">LANGUAGE</text>
+    <text x="1090" y="875" fill="#292B5E" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700">Français</text>
+    <path d="m1270 858 5 5 5-5" stroke="#625DCB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

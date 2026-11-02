@@ -1,0 +1,229 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1260" viewBox="0 0 1600 1260" fill="none">
+  <rect width="1600" height="1260" fill="#F3F2FA"/>
+  <text x="54" y="46" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.8">REFINED RESPONSIVE PREVIEW · PREVIEW ONLY</text>
+  <text x="54" y="82" fill="#0F1A2B" font-family="Arial,sans-serif" font-size="29" font-weight="750">Same Tech It More style, easier to browse</text>
+  <text x="54" y="109" fill="#667085" font-family="Arial,sans-serif" font-size="14">Small layout refinements only: familiar colors, typography, buttons, and cards stay the same.</text>
+
+  <!-- Compact phone: 320–359 CSS px, including a closed foldable cover display. -->
+  <text x="55" y="151" fill="#303259" font-family="Arial,sans-serif" font-size="13" font-weight="700">COMPACT PHONE · 320–359 px</text>
+  <text x="55" y="170" fill="#758092" font-family="Arial,sans-serif" font-size="11">Small phones + foldable cover screens</text>
+  <rect x="54" y="190" width="298" height="716" rx="35" fill="#151923"/>
+  <rect x="62" y="198" width="282" height="700" rx="29" fill="#F3F2FA"/>
+  <rect x="160" y="204" width="86" height="12" rx="6" fill="#D9D9E7"/>
+  <text x="79" y="230" fill="#697386" font-family="Arial,sans-serif" font-size="9" font-weight="600">9:41</text>
+  <path d="M296 222h12m4 0h8m4-4v8h12v-8m3 0h3v8h-3" stroke="#667085" stroke-width="1.3" stroke-linecap="round"/>
+  <rect x="75" y="241" width="29" height="29" rx="9" fill="#7167EE"/>
+  <text x="84" y="263" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="21" font-weight="800">t</text>
+  <text x="113" y="260" fill="#202A3A" font-family="Arial,sans-serif" font-size="15" font-weight="800">tech<tspan fill="#6763D9">it</tspan><tspan fill="#8A91A0" font-weight="500">more</tspan></text>
+  <rect x="247" y="238" width="39" height="37" rx="11" fill="#FFFFFF" stroke="#D8DEE7"/>
+  <text x="259" y="261" fill="#4B586B" font-family="Arial,sans-serif" font-size="12" font-weight="700">EN</text>
+  <path d="m274 253 4 4 4-4" stroke="#758092" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="293" y="238" width="38" height="37" rx="11" fill="#FFFFFF" stroke="#D8DEE7"/>
+  <circle cx="312" cy="256" r="5" stroke="#4B586B" stroke-width="1.4"/>
+  <path d="M312 246v2m0 16v2m-10-10h2m16 0h2" stroke="#4B586B" stroke-width="1.2" stroke-linecap="round"/>
+  <rect x="75" y="281" width="256" height="43" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <circle cx="94" cy="300" r="5" stroke="#758092" stroke-width="1.4"/>
+  <path d="m98 304 4 4" stroke="#758092" stroke-width="1.3" stroke-linecap="round"/>
+  <text x="111" y="304" fill="#758092" font-family="Arial,sans-serif" font-size="10">Search gear, brands or models</text>
+  <text x="76" y="358" fill="#0F1A2B" font-family="Arial,sans-serif" font-size="23" font-weight="800" letter-spacing="-.7">Find gaming gear</text>
+  <text x="76" y="384" fill="#0F1A2B" font-family="Arial,sans-serif" font-size="23" font-weight="800" letter-spacing="-.7">worth buying.</text>
+  <text x="77" y="407" fill="#4B586B" font-family="Arial,sans-serif" font-size="10">52 products · clear, honest buying notes.</text>
+  <rect x="76" y="423" width="130" height="38" rx="11" fill="#4B4FD6"/>
+  <path d="M90 434h15v15H90z" stroke="#FFFFFF" stroke-width="1.3" rx="3"/>
+  <circle cx="95" cy="439" r="1" fill="#FFFFFF"/><circle cx="100" cy="444" r="1" fill="#FFFFFF"/>
+  <text x="112" y="447" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="10" font-weight="700">Surprise me</text>
+  <text x="76" y="487" fill="#1D2939" font-family="Arial,sans-serif" font-size="12" font-weight="700">Browse categories</text>
+  <rect x="76" y="498" width="76" height="34" rx="17" fill="#4B4FD6"/>
+  <text x="91" y="520" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="10" font-weight="650">All · 52</text>
+  <rect x="159" y="498" width="91" height="34" rx="17" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="173" y="520" fill="#344054" font-family="Arial,sans-serif" font-size="10">Keyboards</text>
+  <rect x="257" y="498" width="65" height="34" rx="17" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="271" y="520" fill="#344054" font-family="Arial,sans-serif" font-size="10">Mice</text>
+  <text x="76" y="565" fill="#1D2939" font-family="Arial,sans-serif" font-size="15" font-weight="700">All gear</text>
+  <text x="137" y="565" fill="#758092" font-family="Arial,sans-serif" font-size="10">52 products</text>
+  <rect x="243" y="544" width="79" height="34" rx="11" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <path d="M255 554h17m-14 6h11m-8 6h5" stroke="#4B586B" stroke-width="1.2" stroke-linecap="round"/>
+  <text x="277" y="566" fill="#344054" font-family="Arial,sans-serif" font-size="10" font-weight="600">Filters</text>
+  <rect x="76" y="589" width="246" height="112" rx="13" fill="#FFFFFF" stroke="#E0E3EB"/>
+  <rect x="86" y="600" width="66" height="66" rx="9" fill="#F0EFF8"/>
+  <path d="M103 619h32v24h-32zM108 624h3m5 0h3m5 0h3m-16 7h3m5 0h3m5 0h3m-18 6h22" stroke="#827EB4" stroke-width="1.2" stroke-linecap="round"/>
+  <text x="161" y="609" fill="#758092" font-family="Arial,sans-serif" font-size="9">RAZER · KEYBOARDS</text>
+  <text x="161" y="630" fill="#1D2939" font-family="Arial,sans-serif" font-size="11" font-weight="700">BlackWidow V4</text>
+  <text x="161" y="646" fill="#4B586B" font-family="Arial,sans-serif" font-size="9">Full-size mechanical board</text>
+  <rect x="161" y="653" width="72" height="18" rx="9" fill="#E8E9FB"/>
+  <text x="169" y="665" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="8" font-weight="700">MID-RANGE</text>
+  <path d="M87 679h223" stroke="#F2D5CD"/>
+  <text x="88" y="693" fill="#9A392B" font-family="Arial,sans-serif" font-size="9" font-weight="600">THE CATCH · Software required for full features.</text>
+  <path d="M308 600c-5 0-9 4-9 9 0 7 9 13 9 13s9-6 9-13c0-5-4-9-9-9Z" stroke="#758092" stroke-width="1.2"/>
+  <path d="M300 642h16m-13-3v6m4-6v6m4-6v6" stroke="#758092" stroke-width="1.1" stroke-linecap="round"/>
+  <rect x="63" y="814" width="280" height="84" rx="0" fill="#FFFFFF"/>
+  <path d="M63 814h280" stroke="#D8DEE7"/>
+  <rect x="76" y="822" width="47" height="42" rx="12" fill="#F1F0FF"/>
+  <path d="M91 834h17v17H91zM95 838h4v4h-4zm7 0h3v4h-3zm-7 7h4v3h-4zm7 0h3v3h-3z" stroke="#4B4FD6" stroke-width="1"/>
+  <text x="100" y="876" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="8" font-weight="700" text-anchor="middle">BROWSE</text>
+  <circle cx="158" cy="842" r="8" stroke="#758092" stroke-width="1.5"/><path d="m164 848 5 5" stroke="#758092" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="159" y="876" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">SEARCH</text>
+  <path d="M216 835c-5-4-11-1-11 5 0 6 11 13 11 13s11-7 11-13c0-6-6-9-11-5Z" stroke="#758092" stroke-width="1.4"/>
+  <text x="216" y="876" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">SAVED</text>
+  <path d="M268 835v17m13-17v17m-17-12 4-5 4 5m5 7 4 5 4-5" stroke="#758092" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="275" y="876" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">COMPARE</text>
+  <text x="320" y="848" fill="#758092" font-family="Arial,sans-serif" font-size="18">›</text>
+  <text x="320" y="876" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">GUIDES</text>
+
+  <!-- Standard and large phone: full labels and a little more context. -->
+  <text x="400" y="151" fill="#303259" font-family="Arial,sans-serif" font-size="13" font-weight="700">STANDARD / LARGE PHONE · 360–759 px</text>
+  <text x="400" y="170" fill="#758092" font-family="Arial,sans-serif" font-size="11">One-hand controls, a clear browse path</text>
+  <rect x="400" y="190" width="365" height="716" rx="38" fill="#151923"/>
+  <rect x="409" y="199" width="347" height="698" rx="31" fill="#F3F2FA"/>
+  <rect x="533" y="205" width="99" height="12" rx="6" fill="#D9D9E7"/>
+  <text x="428" y="230" fill="#697386" font-family="Arial,sans-serif" font-size="9" font-weight="600">9:41</text>
+  <path d="M698 222h12m4 0h8m4-4v8h12v-8m3 0h3v8h-3" stroke="#667085" stroke-width="1.3" stroke-linecap="round"/>
+  <rect x="429" y="241" width="31" height="31" rx="9" fill="#7167EE"/>
+  <text x="438" y="265" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="22" font-weight="800">t</text>
+  <text x="469" y="262" fill="#202A3A" font-family="Arial,sans-serif" font-size="16" font-weight="800">tech<tspan fill="#6763D9">it</tspan><tspan fill="#8A91A0" font-weight="500">more</tspan></text>
+  <rect x="612" y="239" width="57" height="39" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="626" y="263" fill="#344054" font-family="Arial,sans-serif" font-size="11" font-weight="700">EN</text>
+  <path d="m649 255 4 4 4-4" stroke="#758092" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="678" y="239" width="40" height="39" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <circle cx="698" cy="258" r="5" stroke="#4B586B" stroke-width="1.4"/>
+  <path d="M698 248v2m0 16v2m-10-10h2m16 0h2" stroke="#4B586B" stroke-width="1.2" stroke-linecap="round"/>
+  <rect x="726" y="239" width="19" height="39" rx="10" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <path d="M733 252c-4 0-6 3-6 6 0 4 6 8 6 8s6-4 6-8c0-3-2-6-6-6Z" stroke="#758092" stroke-width="1"/>
+  <rect x="429" y="285" width="316" height="44" rx="13" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <circle cx="449" cy="304" r="6" stroke="#758092" stroke-width="1.5"/>
+  <path d="m454 309 4 4" stroke="#758092" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="469" y="308" fill="#758092" font-family="Arial,sans-serif" font-size="11">Search gear, brands or models</text>
+  <text x="430" y="365" fill="#0F1A2B" font-family="Arial,sans-serif" font-size="27" font-weight="800" letter-spacing="-.9">Find gaming gear worth</text>
+  <text x="430" y="395" fill="#0F1A2B" font-family="Arial,sans-serif" font-size="27" font-weight="800" letter-spacing="-.9">buying.</text>
+  <text x="431" y="420" fill="#4B586B" font-family="Arial,sans-serif" font-size="11">Browse 52 products · honest buying notes.</text>
+  <rect x="430" y="436" width="139" height="40" rx="12" fill="#4B4FD6"/>
+  <path d="M445 448h15v15h-15z" stroke="#FFFFFF" stroke-width="1.3"/>
+  <circle cx="450" cy="453" r="1" fill="#FFFFFF"/><circle cx="455" cy="458" r="1" fill="#FFFFFF"/>
+  <text x="468" y="461" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="11" font-weight="700">Surprise me</text>
+  <text x="430" y="507" fill="#1D2939" font-family="Arial,sans-serif" font-size="13" font-weight="700">Browse categories</text>
+  <text x="743" y="507" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="10" font-weight="650" text-anchor="end">SEE ALL</text>
+  <rect x="430" y="519" width="76" height="35" rx="18" fill="#4B4FD6"/>
+  <text x="446" y="541" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="10" font-weight="650">All · 52</text>
+  <rect x="513" y="519" width="103" height="35" rx="18" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="530" y="541" fill="#344054" font-family="Arial,sans-serif" font-size="10">Controllers</text>
+  <rect x="623" y="519" width="104" height="35" rx="18" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="640" y="541" fill="#344054" font-family="Arial,sans-serif" font-size="10">Keyboards</text>
+  <text x="430" y="587" fill="#1D2939" font-family="Arial,sans-serif" font-size="16" font-weight="700">All gear</text>
+  <text x="492" y="587" fill="#758092" font-family="Arial,sans-serif" font-size="11">52 products</text>
+  <rect x="657" y="568" width="88" height="37" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <path d="M670 579h17m-14 6h11m-8 6h5" stroke="#4B586B" stroke-width="1.3" stroke-linecap="round"/>
+  <text x="693" y="592" fill="#344054" font-family="Arial,sans-serif" font-size="11" font-weight="600">Filters</text>
+  <rect x="430" y="615" width="315" height="112" rx="13" fill="#FFFFFF" stroke="#E0E3EB"/>
+  <rect x="441" y="626" width="68" height="68" rx="9" fill="#F0EFF8"/>
+  <path d="M459 645h32v24h-32zM464 650h3m5 0h3m5 0h3m-16 7h3m5 0h3m5 0h3m-18 6h22" stroke="#827EB4" stroke-width="1.2" stroke-linecap="round"/>
+  <text x="518" y="636" fill="#758092" font-family="Arial,sans-serif" font-size="9">RAZER · KEYBOARDS</text>
+  <text x="518" y="657" fill="#1D2939" font-family="Arial,sans-serif" font-size="12" font-weight="700">BlackWidow V4</text>
+  <text x="518" y="674" fill="#4B586B" font-family="Arial,sans-serif" font-size="10">Full-size mechanical board</text>
+  <rect x="518" y="683" width="77" height="18" rx="9" fill="#E8E9FB"/>
+  <text x="526" y="695" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="8" font-weight="700">MID-RANGE</text>
+  <path d="M442 705h291" stroke="#F2D5CD"/>
+  <text x="443" y="719" fill="#9A392B" font-family="Arial,sans-serif" font-size="9" font-weight="600">THE CATCH · Needs software for full features.</text>
+  <path d="M728 625c-5 0-9 4-9 9 0 7 9 13 9 13s9-6 9-13c0-5-4-9-9-9Z" stroke="#758092" stroke-width="1.2"/>
+  <path d="M721 666h15m-12-3v6m4-6v6m4-6v6" stroke="#758092" stroke-width="1.1" stroke-linecap="round"/>
+  <rect x="410" y="814" width="345" height="83" fill="#FFFFFF"/>
+  <path d="M410 814h345" stroke="#D8DEE7"/>
+  <rect x="431" y="822" width="47" height="42" rx="12" fill="#F1F0FF"/>
+  <path d="M446 834h17v17h-17zM450 838h4v4h-4zm7 0h3v4h-3zm-7 7h4v3h-4zm7 0h3v3h-3z" stroke="#4B4FD6" stroke-width="1"/>
+  <text x="455" y="876" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="8" font-weight="700" text-anchor="middle">BROWSE</text>
+  <circle cx="517" cy="842" r="8" stroke="#758092" stroke-width="1.5"/><path d="m523 848 5 5" stroke="#758092" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="518" y="876" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">SEARCH</text>
+  <path d="M585 835c-5-4-11-1-11 5 0 6 11 13 11 13s11-7 11-13c0-6-6-9-11-5Z" stroke="#758092" stroke-width="1.4"/>
+  <text x="585" y="876" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">SAVED</text>
+  <path d="M650 835v17m13-17v17m-17-12 4-5 4 5m5 7 4 5 4-5" stroke="#758092" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="657" y="876" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">COMPARE</text>
+  <path d="M718 835h14v18h-14z" stroke="#758092" stroke-width="1.3"/>
+  <text x="725" y="876" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">GUIDES</text>
+
+  <!-- Tablet / unfolded foldable inner display: use width, not device-specific checks. -->
+  <text x="812" y="151" fill="#303259" font-family="Arial,sans-serif" font-size="13" font-weight="700">TABLET / UNFOLDED · 760 px AND UP</text>
+  <text x="812" y="170" fill="#758092" font-family="Arial,sans-serif" font-size="11">Foldable inner display adapts by available width</text>
+  <rect x="811" y="190" width="736" height="585" rx="30" fill="#151923"/>
+  <rect x="821" y="200" width="716" height="565" rx="22" fill="#F3F2FA"/>
+  <rect x="1110" y="205" width="136" height="8" rx="4" fill="#D9D9E7"/>
+  <rect x="843" y="229" width="34" height="34" rx="10" fill="#7167EE"/>
+  <text x="853" y="254" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="24" font-weight="800">t</text>
+  <text x="886" y="252" fill="#202A3A" font-family="Arial,sans-serif" font-size="17" font-weight="800">tech<tspan fill="#6763D9">it</tspan><tspan fill="#8A91A0" font-weight="500">more</tspan></text>
+  <rect x="1083" y="226" width="304" height="42" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <circle cx="1104" cy="245" r="6" stroke="#758092" stroke-width="1.5"/>
+  <path d="m1109 250 4 4" stroke="#758092" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="1124" y="249" fill="#758092" font-family="Arial,sans-serif" font-size="11">Search gear, brands or models</text>
+  <rect x="1396" y="226" width="64" height="42" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="1410" y="251" fill="#344054" font-family="Arial,sans-serif" font-size="11" font-weight="700">EN</text>
+  <path d="m1442 244 4 4 4-4" stroke="#758092" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1468" y="226" width="42" height="42" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <circle cx="1489" cy="247" r="5" stroke="#4B586B" stroke-width="1.4"/>
+  <text x="844" y="316" fill="#0F1A2B" font-family="Arial,sans-serif" font-size="32" font-weight="800" letter-spacing="-.8">Find gaming gear worth buying.</text>
+  <text x="846" y="344" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Compare clear verdicts, then check trusted retailer searches.</text>
+  <rect x="844" y="363" width="139" height="40" rx="12" fill="#4B4FD6"/>
+  <text x="866" y="388" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="11" font-weight="700">Surprise me</text>
+  <text x="844" y="440" fill="#1D2939" font-family="Arial,sans-serif" font-size="13" font-weight="700">Browse categories</text>
+  <rect x="844" y="451" width="76" height="34" rx="17" fill="#4B4FD6"/>
+  <text x="861" y="473" fill="#FFFFFF" font-family="Arial,sans-serif" font-size="10" font-weight="650">All · 52</text>
+  <rect x="927" y="451" width="102" height="34" rx="17" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="944" y="473" fill="#344054" font-family="Arial,sans-serif" font-size="10">Controllers</text>
+  <rect x="1036" y="451" width="104" height="34" rx="17" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="1053" y="473" fill="#344054" font-family="Arial,sans-serif" font-size="10">Keyboards</text>
+  <rect x="1147" y="451" width="82" height="34" rx="17" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="1165" y="473" fill="#344054" font-family="Arial,sans-serif" font-size="10">Mice</text>
+  <rect x="1236" y="451" width="116" height="34" rx="17" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="1253" y="473" fill="#344054" font-family="Arial,sans-serif" font-size="10">Headsets</text>
+  <rect x="1359" y="451" width="147" height="34" rx="17" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="1376" y="473" fill="#344054" font-family="Arial,sans-serif" font-size="10">PC hardware</text>
+  <text x="844" y="518" fill="#1D2939" font-family="Arial,sans-serif" font-size="15" font-weight="700">All gear</text>
+  <text x="905" y="518" fill="#758092" font-family="Arial,sans-serif" font-size="10">52 products</text>
+  <rect x="1403" y="497" width="104" height="36" rx="11" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <path d="M1416 507h17m-14 6h11m-8 6h5" stroke="#4B586B" stroke-width="1.2" stroke-linecap="round"/>
+  <text x="1438" y="520" fill="#344054" font-family="Arial,sans-serif" font-size="10" font-weight="600">Filters</text>
+  <rect x="844" y="545" width="318" height="178" rx="14" fill="#FFFFFF" stroke="#E0E3EB"/>
+  <rect x="855" y="557" width="83" height="83" rx="10" fill="#F0EFF8"/>
+  <path d="M874 580h45v36h-45zM880 586h4m7 0h4m7 0h4m-19 9h4m7 0h4m7 0h4m-22 8h29" stroke="#827EB4" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="948" y="570" fill="#758092" font-family="Arial,sans-serif" font-size="9">RAZER · KEYBOARDS</text>
+  <text x="948" y="593" fill="#1D2939" font-family="Arial,sans-serif" font-size="13" font-weight="700">BlackWidow V4</text>
+  <text x="948" y="612" fill="#4B586B" font-family="Arial,sans-serif" font-size="10">Full-size mechanical board</text>
+  <rect x="948" y="622" width="77" height="18" rx="9" fill="#E8E9FB"/>
+  <text x="956" y="634" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="8" font-weight="700">MID-RANGE</text>
+  <path d="M856 653h294" stroke="#F2D5CD"/>
+  <text x="858" y="670" fill="#9A392B" font-family="Arial,sans-serif" font-size="9" font-weight="600">THE CATCH · Needs software for full features.</text>
+  <rect x="1173" y="545" width="318" height="178" rx="14" fill="#FFFFFF" stroke="#E0E3EB"/>
+  <rect x="1184" y="557" width="83" height="83" rx="10" fill="#F0EFF8"/>
+  <path d="M1225 566c-11 0-18 8-18 20 0 18 18 35 18 35s18-17 18-35c0-12-7-20-18-20Z" stroke="#827EB4" stroke-width="1.5"/>
+  <path d="M1225 575v12m-7 0h14m-12 6h10" stroke="#827EB4" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="1277" y="570" fill="#758092" font-family="Arial,sans-serif" font-size="9">LOGITECH · MICE</text>
+  <text x="1277" y="593" fill="#1D2939" font-family="Arial,sans-serif" font-size="13" font-weight="700">PRO X Superlight 2</text>
+  <text x="1277" y="612" fill="#4B586B" font-family="Arial,sans-serif" font-size="10">Lightweight wireless mouse</text>
+  <rect x="1277" y="622" width="64" height="18" rx="9" fill="#E8E9FB"/>
+  <text x="1285" y="634" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="8" font-weight="700">PREMIUM</text>
+  <path d="M1185 653h294" stroke="#F2D5CD"/>
+  <text x="1187" y="670" fill="#9A392B" font-family="Arial,sans-serif" font-size="9" font-weight="600">THE CATCH · Check size and grip preference.</text>
+
+  <!-- Responsive behavior spec / design notes. -->
+  <rect x="54" y="934" width="1492" height="276" rx="18" fill="#FFFFFF" stroke="#E0E3EB"/>
+  <text x="80" y="973" fill="#1D2939" font-family="Arial,sans-serif" font-size="18" font-weight="700">Responsive rules behind the preview</text>
+  <text x="80" y="1005" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1">320–359 PX</text>
+  <text x="80" y="1028" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Compact controls and shorter copy.</text>
+  <text x="80" y="1048" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">No squeezed labels or horizontal page scroll.</text>
+  <text x="80" y="1080" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1">360–759 PX</text>
+  <text x="80" y="1103" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Full-width search, readable hero, one-column cards.</text>
+  <text x="80" y="1123" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Persistent bottom navigation, safe-area aware.</text>
+  <path d="M565 995v190" stroke="#E8EBEF"/>
+  <text x="594" y="1005" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1">760 PX AND UP</text>
+  <text x="594" y="1028" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Unfolded foldables + tablets use the extra room.</text>
+  <text x="594" y="1048" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Two-column product cards; wider category rail.</text>
+  <text x="594" y="1068" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">No device-model detection: layout follows viewport width.</text>
+  <text x="594" y="1100" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1">LANDSCAPE / SHORT VIEWPORTS</text>
+  <text x="594" y="1123" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Keep search and content reachable; avoid tall hero sections.</text>
+  <text x="594" y="1143" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Bottom navigation accounts for home-indicator safe areas.</text>
+  <path d="M1070 995v190" stroke="#E8EBEF"/>
+  <text x="1098" y="1005" fill="#4B4FD6" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="1">MOBILE USABILITY</text>
+  <text x="1098" y="1028" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Keep the familiar layout; tighten spacing where useful.</text>
+  <text x="1098" y="1048" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Clear category, filter, saved, and compare states.</text>
+  <text x="1098" y="1068" fill="#4B586B" font-family="Arial,sans-serif" font-size="12">Reduced-motion setting remains respected.</text>
+  <rect x="1098" y="1093" width="414" height="66" rx="12" fill="#F4F5FB"/>
+  <text x="1116" y="1118" fill="#303259" font-family="Arial,sans-serif" font-size="12" font-weight="700">No visual redesign</text>
+  <text x="1116" y="1140" fill="#6C7A8E" font-family="Arial,sans-serif" font-size="11">Lavender · indigo · coral · existing type, buttons, and cards</text>
+</svg>

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" fill="none">
+  <rect width="1280" height="760" fill="#F3F2FA"/>
+  <text x="40" y="35" fill="#747E90" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="1.8">PREVIEW ONLY · ORIGINAL TECH IT MORE DESIGN</text>
+
+  <rect x="0" y="58" width="1280" height="72" fill="#FFFFFF"/>
+  <path d="M0 129.5h1280" stroke="#E8EBEF"/>
+
+  <rect x="30" y="78" width="30" height="30" rx="9" fill="#7167EE"/>
+  <text x="39" y="101" fill="#FFFFFF" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="800">t</text>
+  <text x="69" y="99" fill="#202A3A" font-family="Segoe UI,Arial,sans-serif" font-size="19" font-weight="800" letter-spacing="-0.8">tech<tspan fill="#6763D9">it</tspan><tspan fill="#8A91A0" font-weight="500">more</tspan></text>
+
+  <rect x="266" y="73" width="496" height="42" rx="12" fill="#FFFFFF" stroke="#D8DEE7"/>
+  <circle cx="287" cy="93" r="6.5" stroke="#758092" stroke-width="1.7"/>
+  <path d="m292 98 4.5 4.5" stroke="#758092" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="310" y="98" fill="#758092" font-family="Segoe UI,Arial,sans-serif" font-size="14">Search gear, brands or models</text>
+  <rect x="718" y="82" width="34" height="23" rx="6" fill="#F3F2FA" stroke="#D8DEE7"/>
+  <text x="724" y="98" fill="#758092" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="600">Ctrl K</text>
+
+  <rect x="790" y="73" width="132" height="42" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <path d="M807 89c0-5 4-9 9-9s9 4 9 9c0 6-9 14-9 14s-9-8-9-14Z" stroke="#4B586B" stroke-width="1.5"/>
+  <circle cx="816" cy="89" r="2.6" stroke="#4B586B" stroke-width="1.4"/>
+  <text x="836" y="99" fill="#1D2939" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600">Saved</text>
+  <rect x="883" y="84" width="26" height="20" rx="10" fill="#F4F5FB"/>
+  <text x="892" y="98" fill="#5F6B7C" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="650">0</text>
+
+  <rect x="934" y="70" width="148" height="48" rx="14" fill="#FFFFFF" stroke="#9D99ED" stroke-width="1.5"/>
+  <rect x="938" y="74" width="140" height="40" rx="11" fill="#F1F0FF"/>
+  <circle cx="956" cy="94" r="10" fill="#E4E2FC"/>
+  <path d="M951 94h10M956 89c-2 2-2 8 0 10m0-10c2 2 2 8 0 10" stroke="#504BC1" stroke-width="1.15" stroke-linecap="round"/>
+  <text x="974" y="99" fill="#303259" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="650">English</text>
+  <path d="m1054 91 4 4 4-4" stroke="#625DCB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="1092" y="73" width="42" height="42" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <path d="M1113 82v2m0 15v2m-11-9h2m18 0h2m-17-8 1.5 1.5m11 11 1.5 1.5m0-13-1.5 1.5m-11 11L1107 97" stroke="#4B586B" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="1113" cy="92" r="5" stroke="#4B586B" stroke-width="1.5"/>
+
+  <rect x="1177" y="73" width="73" height="42" rx="12" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="1191" y="98" fill="#1D2939" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="600">EN</text>
+  <path d="m1222 90 4 4 4-4" stroke="#758092" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="934" y="126" width="214" height="190" rx="14" fill="#FFFFFF" stroke="#D8DEE7"/>
+  <text x="950" y="149" fill="#758092" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="1">LANGUAGE</text>
+  <path d="M950 160h182" stroke="#E8EBEF"/>
+  <rect x="941" y="168" width="200" height="34" rx="9" fill="#F1F0FF"/>
+  <circle cx="958" cy="185" r="8" fill="#E4E2FC"/>
+  <path d="m954 185 2.5 2.5 5-5" stroke="#504BC1" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="974" y="189" fill="#303259" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="650">English</text>
+  <text x="1127" y="189" fill="#7771D5" font-family="Segoe UI,Arial,sans-serif" font-size="9" font-weight="700" text-anchor="end">EN</text>
+  <text x="974" y="225" fill="#344054" font-family="Segoe UI,Arial,sans-serif" font-size="12">Français</text>
+  <text x="1127" y="225" fill="#8992A3" font-family="Segoe UI,Arial,sans-serif" font-size="10" text-anchor="end">FR</text>
+  <path d="M950 238h182" stroke="#F0F1F5"/>
+  <text x="974" y="260" fill="#344054" font-family="Segoe UI,Arial,sans-serif" font-size="12">العربية</text>
+  <text x="1127" y="260" fill="#8992A3" font-family="Segoe UI,Arial,sans-serif" font-size="10" text-anchor="end">AR</text>
+  <path d="M950 273h182" stroke="#F0F1F5"/>
+  <text x="974" y="295" fill="#344054" font-family="Segoe UI,Arial,sans-serif" font-size="12">Español</text>
+  <text x="1127" y="295" fill="#8992A3" font-family="Segoe UI,Arial,sans-serif" font-size="10" text-anchor="end">ES</text>
+
+  <text x="56" y="226" fill="#0F1A2B" font-family="Segoe UI,Arial,sans-serif" font-size="44" font-weight="800" letter-spacing="-1.6">Find gaming gear worth buying.</text>
+  <text x="58" y="264" fill="#0F1A2B" font-family="Segoe UI,Arial,sans-serif" font-size="17">Browse 52 gaming products, then open any one to find it at Amazon, Best Buy,</text>
+  <text x="58" y="290" fill="#0F1A2B" font-family="Segoe UI,Arial,sans-serif" font-size="17">Newegg and other retailers in the US, UK, Canada and Europe.</text>
+  <path d="m59 321 8-4 8 4v7c0 6-4 10-8 12-5-2-8-6-8-12v-7Z" stroke="#4B4FD6" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="m64 331 2 2 4-5" stroke="#4B4FD6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="86" y="329" fill="#6C7A8E" font-family="Segoe UI,Arial,sans-serif" font-size="13">We're independent and sell nothing. Store links open each retailer's own search, where</text>
+  <text x="86" y="348" fill="#6C7A8E" font-family="Segoe UI,Arial,sans-serif" font-size="13">you see its current price and stock.</text>
+
+  <rect x="58" y="377" width="155" height="46" rx="12" fill="#4B4FD6"/>
+  <rect x="75" y="390" width="19" height="19" rx="5" stroke="#FFFFFF" stroke-width="1.5"/>
+  <circle cx="81" cy="396" r="1.2" fill="#FFFFFF"/>
+  <circle cx="88" cy="403" r="1.2" fill="#FFFFFF"/>
+  <circle cx="88" cy="396" r="1.2" fill="#FFFFFF"/>
+  <circle cx="81" cy="403" r="1.2" fill="#FFFFFF"/>
+  <text x="104" y="405" fill="#FFFFFF" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700">Surprise me</text>
+  <text x="232" y="405" fill="#758092" font-family="Segoe UI,Arial,sans-serif" font-size="12">Press</text>
+  <rect x="268" y="388" width="24" height="25" rx="6" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <text x="277" y="405" fill="#4B586B" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="700">/</text>
+  <text x="300" y="405" fill="#758092" font-family="Segoe UI,Arial,sans-serif" font-size="12">to search from anywhere</text>
+
+  <rect x="58" y="454" width="1164" height="131" rx="16" fill="#FFFFFF" stroke="#E0E3EB"/>
+  <text x="84" y="488" fill="#1D2939" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">Browse by category</text>
+  <text x="84" y="514" fill="#758092" font-family="Segoe UI,Arial,sans-serif" font-size="12">Keep the familiar layout; the language control follows the same border, radius and spacing.</text>
+  <rect x="84" y="536" width="177" height="34" rx="10" fill="#F4F5FB"/>
+  <text x="101" y="558" fill="#4B586B" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="600">Consoles &amp; handhelds</text>
+  <rect x="273" y="536" width="130" height="34" rx="10" fill="#F4F5FB"/>
+  <text x="292" y="558" fill="#4B586B" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="600">Controllers</text>
+  <rect x="415" y="536" width="123" height="34" rx="10" fill="#F4F5FB"/>
+  <text x="434" y="558" fill="#4B586B" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="600">Keyboards</text>
+  <rect x="550" y="536" width="91" height="34" rx="10" fill="#F4F5FB"/>
+  <text x="570" y="558" fill="#4B586B" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="600">Mice</text>
+  <rect x="653" y="536" width="112" height="34" rx="10" fill="#F4F5FB"/>
+  <text x="673" y="558" fill="#4B586B" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="600">Headsets</text>
+
+  <rect x="58" y="615" width="1164" height="96" rx="16" fill="#FFFFFF" stroke="#E0E3EB"/>
+  <text x="84" y="649" fill="#1D2939" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="700">Small refinements only</text>
+  <text x="84" y="673" fill="#6C7A8E" font-family="Segoe UI,Arial,sans-serif" font-size="12">Same header and controls. A globe, a subtle violet selected state, clearer spacing, and a tidy language menu.</text>
+  <text x="84" y="693" fill="#6C7A8E" font-family="Segoe UI,Arial,sans-serif" font-size="12">On narrow screens, keep a compact “EN” control rather than squeezing the full language name.</text>
+  <rect x="1043" y="637" width="154" height="48" rx="13" fill="#FFFFFF" stroke="#C3CCD9"/>
+  <circle cx="1065" cy="660" r="9" fill="#F1F0FF"/>
+  <path d="M1060 660h10m-5-5c-2 2-2 8 0 10m0-10c2 2 2 8 0 10" stroke="#4B4FD6" stroke-width="1.1" stroke-linecap="round"/>
+  <text x="1083" y="665" fill="#1D2939" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="600">English</text>
+  <path d="m1175 657 4 4 4-4" stroke="#758092" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

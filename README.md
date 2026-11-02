@@ -30,17 +30,18 @@ Open a product to see its specs, a photo and a three-line verdict: **best for**,
 - **Saved list:** tap the heart. It stays in your browser, can be shared by link, and every removal can be undone.
 - **Compare:** tick up to three products and see them side by side.
 - **Store regions:** United States, United Kingdom, Canada and Europe. The choice is remembered.
+- **Languages:** English, French, Arabic and Spanish for shared interface text and labels. Product-specific descriptions are currently in English.
 - **Recently viewed** and **Surprise me**.
 
 **On a phone**
 - A bottom bar with **Browse, Search, Saved, Compare and Guides**. Compare shows a live count.
-- The search bar opens when you tap Search and closes again when left empty.
+- Search stays visible below the header controls; the bottom-bar Search action scrolls to it and focuses it.
 - Sheets (product, filters, compare) can be dragged down to close, and the Back gesture closes them instead of leaving the page.
 - The comparison fits the screen with no sideways scrolling.
 
 **Speed and reliability**
 - Skeleton rows while the list loads, photos that fade in, and saving that responds instantly.
-- Repeat visits load from a saved copy and refresh quietly in the background. Visited pages also work offline (service worker, HTTPS only).
+- Repeat visits load from a saved copy and refresh quietly in the background. Visited pages also work offline; an unvisited page shows an offline notice (service worker, HTTPS only).
 - The next page is prepared as you reach for it (Speculation Rules) and pages cross-fade in browsers that support it.
 - Phones start with 16 products and add more on request. Desktop starts with 36.
 
@@ -96,14 +97,15 @@ scripts/
   fetch-images.mjs     optional photo downloader
 
 index.html             the app page (some blocks inside are generated)
-site.css, app.js       styles and behavior
+site.css, app.js        styles and catalog behavior
+language.js            local shared-interface translations and language preference
 theme-init.js          applies the saved theme before first paint
 mail.js                the "Email us" buttons
 how-we-choose/         methodology page
 products.js            GENERATED: the data the app loads
 p/<id>/index.html      GENERATED: one page per product
 c/<slug>/index.html    GENERATED: one buying guide per category
-sitemap.xml, sw.js     GENERATED
+sitemap.xml, sw.js, offline.html   GENERATED
 
 speculation-rules.json   which pages the browser may prepare in advance
 _headers, _redirects, robots.txt   hosting config (security headers, old-URL redirects, crawlers)

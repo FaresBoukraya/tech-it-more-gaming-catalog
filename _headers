@@ -31,6 +31,9 @@
 /products.js
   Cache-Control: public, max-age=31536000, immutable
 
+/language.js
+  Cache-Control: public, max-age=31536000, immutable
+
 /theme-init.js
   Cache-Control: public, max-age=31536000, immutable
 

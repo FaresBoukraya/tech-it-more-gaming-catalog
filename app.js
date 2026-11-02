@@ -445,7 +445,7 @@ function getAdditionalProductPhotos(product) {
     if (/corsair/i.test(product.brand) && product.imageUrl) {
       const corsairImage = product.imageUrl.match(/^(.*_)(\d{2})(\.[a-z0-9]+)(\?.*)?$/i);
       if (corsairImage) {
-        const candidates = Array.from({ length: 9 }, (_, index) => {
+        const candidates = Array.from({ length: 4 }, (_, index) => {
           const number = String(index + 2).padStart(2, "0");
           return {
             title: `${product.name} photo ${number}`,
@@ -1907,7 +1907,7 @@ document.addEventListener("click", event => {
 
 
 /* Phone bottom bar: Browse, Search, Saved, Compare, Guides. */
-/* On phones the search bar stays out of the way until Search is tapped, then closes again if left empty. */
+/* Search stays visible in the header; the bottom-bar action scrolls to it and focuses it. */
 function focusSearch() {
   document.body.classList.add("tm-search-open");
   window.scrollTo(0, 0);

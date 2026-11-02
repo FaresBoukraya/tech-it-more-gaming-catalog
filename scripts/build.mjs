@@ -181,6 +181,7 @@ const assetHash = {
   'site.css': sha(readText('site.css')),
   'app.js': sha(readText('app.js')),
   'products.js': sha(productsJs),
+  'language.js': sha(readText('language.js')),
   'theme-init.js': sha(readText('theme-init.js')),
   'mail.js': sha(readText('mail.js'))
 };
@@ -190,7 +191,7 @@ const asset = name => `/${name}?v=${assetHash[name]}`;
    Navigations use stale-while-revalidate (show the saved page now, refresh it quietly);
    fonts, tiles and versioned files are cache-first. The cache name changes whenever any
    shipped file changes, so a new deploy replaces the old cache. */
-const swShell = ['/', asset('site.css'), asset('app.js'), asset('products.js'), asset('theme-init.js'), asset('mail.js'),
+const swShell = ['/', '/offline.html', asset('site.css'), asset('app.js'), asset('products.js'), asset('language.js'), asset('theme-init.js'), asset('mail.js'),
   '/fonts/lora-latin.woff', '/fonts/carlito-regular.woff', '/fonts/carlito-bold.woff', '/favicon.svg'];
 const swBody = [
   'var SHELL = ' + JSON.stringify(swShell) + ';',
@@ -216,7 +217,7 @@ const swBody = [
   '    return cache.match(key).then(function (hit) {',
   '      var network = fetch(request).then(function (response) { return keep(cache, key, response); });',
   '      if (hit) { network.catch(function () {}); return hit; }',
-  '      return network.catch(function () { return cache.match("/"); });',
+  '      return network.catch(function () { return cache.match("/offline.html"); });',
   '    });',
   '  });',
   '}',
@@ -286,6 +287,7 @@ ${verifyTags}<meta property="og:type" content="website">
 <link rel="preload" href="/fonts/carlito-regular.woff" as="font" type="font/woff" crossorigin>
 <script src="${asset('theme-init.js')}"></script>
 <link rel="stylesheet" href="${asset('site.css')}">
+<script src="${asset('language.js')}" defer></script>
 <script src="${asset('mail.js')}" defer></script>
 ${extraLd.map(ld => `<script type="application/ld+json">${jsonLd(ld)}</script>`).join('\n')}
 </head>
@@ -295,6 +297,7 @@ ${extraLd.map(ld => `<script type="application/ld+json">${jsonLd(ld)}</script>`)
   <div class="tm-header-inner">
     <a class="brand" href="/" aria-label="Tech It More home"><span class="brand-mark" aria-hidden="true">t</span><span>tech<span class="brand-it">it</span><span class="brand-light">more</span></span></a>
     <nav class="tm-topnav" aria-label="Main"><a href="/">Search all gear</a>${categories.map(c => `<a href="${categoryUrl(c)}">${esc(c.label)}</a>`).join('')}</nav>
+    <label class="tm-language"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option><option value="es">Español</option></select></label>
   </div>
 </header>
 <main class="tm-main tm-page" id="main">
@@ -303,7 +306,7 @@ ${extraLd.map(ld => `<script type="application/ld+json">${jsonLd(ld)}</script>`)
 const social = (href, label, path, ext, cls = '') => `<a class="social-button${cls ? ' ' + cls : ''}" href="${href}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''} aria-label="${label}" title="${label}"><svg viewBox="0 0 24 24" aria-hidden="true">${path}</svg></a>`;
 /* One simple email button on every page. `ctx` adds the page to the subject and body so a message arrives with context. */
 const mailHref = (subject, body = '') => `mailto:${MAIL}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ''}`;
-const emailButton = ctx => `<div class="tm-mail"><a class="tm-email-btn" href="${esc(mailHref(ctx.subject, ctx.body))}" aria-label="Email Tech It More"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.8 7.8 12 13.6l8.2-5.8"/></svg><span>Email us</span></a><span class="tm-mail-addr">${esc(MAIL)}</span></div>`;
+const emailButton = ctx => `<div class="tm-mail"><a class="tm-email-btn" href="${esc(mailHref(ctx.subject, ctx.body))}" aria-label="Email Tech It More"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.8 7.8 12 13.6l8.2-5.8"/></svg><span>Email us</span></a></div>`;
 const footerHtml = (app, ctx = { subject: 'Tech It More' }) => `<footer class="tm-footer">
   <div class="tm-footer-inner">
     <div class="tm-footer-grid">
@@ -504,6 +507,28 @@ function howPage() {
 put('how-we-choose/index.html', howPage());
 for (const p of products) put(`p/${p.id}/index.html`, productPage(p));
 for (const c of categories) put(`c/${c.slug}/index.html`, categoryPage(c));
+put('offline.html', `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>You're offline | ${SITE_NAME}</title>
+<link rel="stylesheet" href="${asset('site.css')}">
+<script src="${asset('language.js')}" defer></script>
+</head>
+<body class="tm-static">
+<header class="tm-header"><div class="tm-header-inner">
+  <label class="tm-language"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option><option value="es">Español</option></select></label>
+</div></header>
+<main class="tm-main tm-page">
+  <h1>You're offline</h1>
+  <p class="tm-lead-text">This page is not available offline yet. Reconnect to the internet and try again.</p>
+  <p><a href="/">Return to Tech It More</a></p>
+</main>
+</body>
+</html>
+`);
 
 /* sitemap: home, category guides, and product pages that have real details */
 const urls = ['/', '/how-we-choose/', ...categories.map(categoryUrl), ...products.filter(indexable).map(productUrl)];

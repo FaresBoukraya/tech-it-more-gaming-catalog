@@ -500,6 +500,9 @@ main.tm-main { width: min(1240px, calc(100% - 40px)); margin: 0 auto; }
 .tm-suggest-foot { margin: 4px 10px 2px; color: var(--tm-faint); font-size: 12px; }
 
 .tm-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.tm-language select { min-height: 38px; max-width: 104px; padding: 0 8px; border: 1px solid var(--tm-line); border-radius: 9px; color: var(--tm-ink); background: var(--tm-paper); }
+.tm-language select:focus-visible { outline: 3px solid var(--tm-accent); outline-offset: 2px; }
+[dir="rtl"] .brand { direction: ltr; }
 .tm-btn {
   display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px;
   border: 1px solid var(--tm-line-strong); border-radius: 12px; background: var(--tm-paper); color: var(--tm-ink);
@@ -2014,12 +2017,11 @@ html { -webkit-tap-highlight-color: transparent; }
   body.has-tray .tm-top { bottom: calc(144px + env(safe-area-inset-bottom)); }
 }
 
-/* Phones: search and Saved live in the bottom bar, so the top stays clear; tidier Compare. */
+/* Keep search visible on phones; the bottom bar remains a quick way to focus it. */
 @media (max-width: 759px) {
-  .tm-search { display: none; }
-  body.tm-search-open .tm-search, .tm-search.has-text { display: block; }
   #watchlist-filter { display: none; }
   body:not(.tm-static):not(.tm-search-open) .tm-header { position: static; }
+  body.tm-search-open .tm-bottomnav [data-nav-search] { color: var(--tm-accent); }
   .tm-bottomnav [data-saved-badge].tm-badge { position: absolute; top: 4px; left: calc(50% + 8px); }
 
   /* tray: one tidy row */
