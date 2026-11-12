@@ -1030,3 +1030,9 @@ a.tm-compare-pill { display: inline-flex; align-items: center; gap: 8px; }
   .tm-mail-menu-list { gap: 6px; }
   .tm-mail-menu-list a, .tm-mail-menu-list button { min-height: 42px; }
 }
+
+/* Phone product view: the Buy / Compare / Save bar is pinned to the bottom, so it must sit above the tab bar, not under it */
+@media (max-width: 760px) {
+  .dx-actions { bottom: calc(var(--tab-h) + env(safe-area-inset-bottom)); padding-bottom: 12px; }
+  .dialog-panel { padding-bottom: calc(var(--tab-h) + 96px); }
+}
