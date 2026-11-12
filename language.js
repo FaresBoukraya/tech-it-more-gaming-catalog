@@ -141,6 +141,21 @@
     }
   };
 
+  /* Strings added for the v2 design (kept apart so the original lists stay untouched). */
+  const v2 = { fr: {"Price tier and data check":"Gamme de prix et vérification des données","Independent gaming gear catalog": "Catalogue indépendant de matériel gaming", "Gear worth": "Du matériel qui", "buying.": "vaut le coup.", "Specs, a plain verdict and where to buy, for": "Caractéristiques, un verdict clair et où acheter, pour", "products. We sell nothing and quote no prices: every store link opens that retailer's own search.": "produits. Nous ne vendons rien et n'affichons aucun prix : chaque lien ouvre la recherche du marchand.", "Products": "Produits", "Categories": "Catégories", "Shared list": "Liste partagée", "Save all to my list": "Tout ajouter à ma liste", "Browse all gear": "Voir tout le matériel", "Type": "Type", "Brand": "Marque", "Connection": "Connexion", "Wireless": "Sans fil", "Wired": "Filaire", "Price tier": "Gamme de prix", "All": "Tout", "Sort:": "Trier :", "Popular first": "Populaires d'abord", "Copy link to saved list": "Copier le lien de la liste", "Clear saved list": "Vider la liste", "Editor's pick": "Choix de la rédaction", "See where to buy": "Où acheter", "Show another pick": "Un autre choix", "Show results": "Afficher les résultats", "Close filters": "Fermer les filtres", "Filters": "Filtres"}, es: {"Price tier and data check":"Gama de precio y verificación de datos","Independent gaming gear catalog": "Catálogo independiente de equipo gaming", "Gear worth": "Equipo que", "buying.": "vale la pena.", "Specs, a plain verdict and where to buy, for": "Especificaciones, un veredicto claro y dónde comprar, para", "products. We sell nothing and quote no prices: every store link opens that retailer's own search.": "productos. No vendemos nada ni mostramos precios: cada enlace abre la búsqueda de la tienda.", "Products": "Productos", "Categories": "Categorías", "Shared list": "Lista compartida", "Save all to my list": "Guardar todo en mi lista", "Browse all gear": "Ver todo el equipo", "Type": "Tipo", "Brand": "Marca", "Connection": "Conexión", "Wireless": "Inalámbrico", "Wired": "Con cable", "Price tier": "Gama de precio", "All": "Todo", "Sort:": "Ordenar:", "Popular first": "Populares primero", "Copy link to saved list": "Copiar enlace de la lista", "Clear saved list": "Vaciar la lista", "Editor's pick": "Selección del editor", "See where to buy": "Dónde comprar", "Show another pick": "Otra selección", "Show results": "Ver resultados", "Close filters": "Cerrar filtros", "Filters": "Filtros"}, ar: {"Price tier and data check":"فئة السعر والتحقق من البيانات","Independent gaming gear catalog": "دليل مستقل لمعدات الألعاب", "Gear worth": "معدات تستحق", "buying.": "الشراء.", "Specs, a plain verdict and where to buy, for": "المواصفات وحكم واضح وأين تشتري، لـ", "products. We sell nothing and quote no prices: every store link opens that retailer's own search.": "منتج. لا نبيع شيئاً ولا نعرض أسعاراً: كل رابط يفتح بحث المتجر نفسه.", "Products": "المنتجات", "Categories": "الفئات", "Shared list": "قائمة مشتركة", "Save all to my list": "حفظ الكل في قائمتي", "Browse all gear": "تصفح كل المعدات", "Type": "النوع", "Brand": "العلامة", "Connection": "الاتصال", "Wireless": "لاسلكي", "Wired": "سلكي", "Price tier": "فئة السعر", "All": "الكل", "Sort:": "ترتيب:", "Popular first": "الأكثر شعبية أولاً", "Copy link to saved list": "نسخ رابط القائمة", "Clear saved list": "مسح القائمة", "Editor's pick": "اختيار المحرر", "See where to buy": "أين تشتري", "Show another pick": "اختيار آخر", "Show results": "عرض النتائج", "Close filters": "إغلاق التصفية", "Filters": "التصفية"} };
+  for (const code of Object.keys(v2)) translations[code] = Object.assign({}, translations[code], v2[code]);
+  const countPatterns = {
+    fr: [[/^(\d+) products?$/, "$1 produits"], [/^Show (\d+) products?$/, "Afficher $1 produits"], [/^Show all (\d+) brands$/, "Voir les $1 marques"]],
+    es: [[/^(\d+) products?$/, "$1 productos"], [/^Show (\d+) products?$/, "Ver $1 productos"], [/^Show all (\d+) brands$/, "Ver las $1 marcas"]],
+    ar: [[/^(\d+) products?$/, "$1 منتج"], [/^Show (\d+) products?$/, "عرض $1 منتج"], [/^Show all (\d+) brands$/, "عرض كل $1 علامة"]]
+  };
+  function localize(lang, phrase) {
+    const direct = translations[lang] && translations[lang][phrase];
+    if (direct) return direct;
+    for (const [re, out] of countPatterns[lang] || []) if (re.test(phrase)) return phrase.replace(re, out);
+    return null;
+  }
+
   const selector = document.querySelector("#language-select");
   if (!selector) return;
   const textSource = new WeakMap();
@@ -165,7 +180,7 @@
     const leading = source.match(/^\s*/)[0];
     const trailing = source.match(/\s*$/)[0];
     const phrase = source.trim();
-    const output = (translations[language] && translations[language][phrase]) || phrase;
+    const output = localize(language, phrase) || phrase;
     textSource.set(node, { source, output: `${leading}${output}${trailing}` });
     if (node.nodeValue !== `${leading}${output}${trailing}`) node.nodeValue = `${leading}${output}${trailing}`;
   }
@@ -176,7 +191,7 @@
     const prior = attributeSource.get(element) || {};
     const source = prior[attribute] && prior[attribute].output === current ? prior[attribute].source : current;
     if (!source) return;
-    const output = (translations[language] && translations[language][source]) || source;
+    const output = localize(language, source) || source;
     prior[attribute] = { source, output };
     attributeSource.set(element, prior);
     if (current !== output) element.setAttribute(attribute, output);

@@ -151,6 +151,7 @@ const products = rawProducts.map(p => {
 
 /* ---------- output collection ---------- */
 const outputs = new Map();
+const upperFirst = text => String(text).charAt(0).toUpperCase() + String(text).slice(1);
 const put = (rel, content) => outputs.set(rel, content);
 
 /* regional store lists for the app: { UK: { label, short, stores: {name: {url,param,hint}}, byCategory: {category: [names]} } } */
@@ -181,9 +182,9 @@ const assetHash = {
   'site.css': sha(readText('site.css')),
   'app.js': sha(readText('app.js')),
   'products.js': sha(productsJs),
-  'language.js': sha(readText('language.js')),
   'theme-init.js': sha(readText('theme-init.js')),
-  'mail.js': sha(readText('mail.js'))
+  'mail.js': sha(readText('mail.js')),
+  'language.js': sha(readText('language.js'))
 };
 const asset = name => `/${name}?v=${assetHash[name]}`;
 
@@ -254,6 +255,8 @@ const indexable = p => Boolean(p.specs);
 /* search results cut titles near 60 characters and descriptions near 155 */
 const fitText = (text, max) => (text.length <= max ? text : text.slice(0, max - 1).replace(/[\s,;:.-]+\S*$/, '') + '…');
 const fitTitle = (candidates, max = 60) => candidates.find(t => t.length <= max) || fitText(candidates[candidates.length - 1], max);
+const TYPE_NOUN = { Mice: 'mouse', Keyboards: 'keyboard', Headsets: 'headset', Controllers: 'controller', 'Consoles & handhelds': 'console or handheld', 'PC hardware': 'PC hardware', 'Streaming & audio': 'streaming and audio gear' };
+const typeLine = p => { const noun = TYPE_NOUN[p.category] || p.category.toLowerCase(); const wireless = /wireless|lightspeed|hyperspeed|bluetooth|2\.4\s?ghz/i.test(`${p.name} ${p.specs || ''}`); return wireless && !/hardware|gear|console/.test(noun) ? `Wireless ${noun}` : noun.charAt(0).toUpperCase() + noun.slice(1); };
 const lower1 = text => text.charAt(0).toLowerCase() + text.slice(1);
 const TIER_ORDER = ['Budget', 'Mid-range', 'Premium'];
 const checkedLine = p => (p.checked
@@ -270,7 +273,8 @@ function head({ title, description, path: pagePath, robots, extraLd = [] }) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(url)}">
-${robots ? `<meta name="robots" content="${robots}">\n` : ''}<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+${robots ? `<meta name="robots" content="${robots}">\n` : ''}<meta name="theme-color" content="#efedf0" id="theme-color">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 ${verifyTags}<meta property="og:type" content="website">
@@ -296,8 +300,10 @@ ${extraLd.map(ld => `<script type="application/ld+json">${jsonLd(ld)}</script>`)
 <header class="tm-header">
   <div class="tm-header-inner">
     <a class="brand" href="/" aria-label="Tech It More home"><span class="brand-mark" aria-hidden="true">t</span><span>tech<span class="brand-it">it</span><span class="brand-light">more</span></span></a>
-    <nav class="tm-topnav" aria-label="Main"><a href="/">Search all gear</a>${categories.map(c => `<a href="${categoryUrl(c)}">${esc(c.label)}</a>`).join('')}</nav>
-    <label class="tm-language"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option><option value="es">Español</option></select></label>
+    <form class="tm-search" action="/" method="get" role="search">
+      <div class="tm-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><input name="q" type="search" placeholder="Search mice, keyboards, headsets" autocomplete="off" enterkeyhint="search" aria-label="Search gaming gear"></div>
+    </form>
+    <div class="tm-actions"><nav class="tm-nav" aria-label="Main"><a href="/">Browse</a><a href="/how-we-choose/">Guides</a><a href="/#how-it-works">About</a></nav><label class="tm-language"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option><option value="es">Español</option></select></label><a class="tm-icon-btn" id="watchlist-filter" href="/#saved" aria-label="Show saved products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="label">Saved</span><span class="count" id="watchlist-count" data-zero>0</span></a><a class="tm-compare-pill" id="compare-open" href="/#compare" aria-label="Compare products">Compare <span class="compare-badge" id="compare-badge" data-zero>0</span></a><button class="tm-icon-btn tm-theme" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Dark mode</span></button></div>
   </div>
 </header>
 <main class="tm-main tm-page" id="main">
@@ -306,7 +312,7 @@ ${extraLd.map(ld => `<script type="application/ld+json">${jsonLd(ld)}</script>`)
 const social = (href, label, path, ext, cls = '') => `<a class="social-button${cls ? ' ' + cls : ''}" href="${href}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''} aria-label="${label}" title="${label}"><svg viewBox="0 0 24 24" aria-hidden="true">${path}</svg></a>`;
 /* One simple email button on every page. `ctx` adds the page to the subject and body so a message arrives with context. */
 const mailHref = (subject, body = '') => `mailto:${MAIL}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ''}`;
-const emailButton = ctx => `<div class="tm-mail"><a class="tm-email-btn" href="${esc(mailHref(ctx.subject, ctx.body))}" aria-label="Email Tech It More"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.8 7.8 12 13.6l8.2-5.8"/></svg><span>Email us</span></a></div>`;
+const emailButton = ctx => `<div class="tm-mail"><a class="tm-email-btn" href="${esc(mailHref(ctx.subject, ctx.body))}" aria-label="Email Tech It More"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.8 7.8 12 13.6l8.2-5.8"/></svg><span>Email us</span></a><span class="tm-mail-addr">${esc(MAIL)}</span></div>`;
 const footerHtml = (app, ctx = { subject: 'Tech It More' }) => `<footer class="tm-footer">
   <div class="tm-footer-inner">
     <div class="tm-footer-grid">
@@ -335,14 +341,15 @@ ${app ? '        <button type="button" id="export-button">Export my data</button
   </div>
 </footer>
 `;
-const navIcon = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
-/* Phone bottom bar for the static pages. */
-const bottomNav = here => `<nav class="tm-bottomnav" aria-label="Main">`
-  + `<a href="/"${here === 'browse' ? ' class="is-here" aria-current="page"' : ''}>${navIcon('<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>')}<span>Browse</span></a>`
-  + `<a href="/#search">${navIcon('<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/>')}<span>Search</span></a>`
-  + `<a href="/how-we-choose/"${here === 'guides' ? ' class="is-here" aria-current="page"' : ''}>${navIcon('<path d="M5 4h10a3 3 0 013 3v13H8a3 3 0 01-3-3V4z"/>')}<span>Guides</span></a>`
-  + `<a href="/#how-it-works">${navIcon('<circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8h.01"/>')}<span>About</span></a></nav>\n`;
-const foot = ctx => `</main>\n${footerHtml(false, ctx)}${bottomNav(ctx.here)}</body>\n</html>\n`;
+const tabIcon = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+/* Phone tab bar for the static pages (same look as the home page). */
+const tabBar = here => `<nav class="tm-tabbar tm-tabbar-static" aria-label="Primary">`
+  + `<a class="tm-tab" href="/"${here === 'browse' ? ' aria-current="page"' : ''}>${tabIcon('<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>')}<span>Browse</span></a>`
+  + `<a class="tm-tab" href="/#search">${tabIcon('<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/>')}<span>Search</span></a>`
+  + `<a class="tm-tab" href="/#saved">${tabIcon('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>')}<span>Saved</span><span class="count" id="tab-saved-count" data-zero>0</span></a>`
+  + `<a class="tm-tab" href="/#compare">${tabIcon('<path d="M7 4v14M3.5 14.5 7 18l3.5-3.5M17 20V6M13.5 9.5 17 6l3.5 3.5"/>')}<span>Compare</span><span class="count" id="tab-compare-count" data-zero>0</span></a>`
+  + `<a class="tm-tab" href="/how-we-choose/"${here === 'guides' ? ' aria-current="page"' : ''}>${tabIcon('<path d="M6 3.5h9l3 3V20.5H6z"/><path d="M14.5 3.5v4h3.5"/>')}<span>Guides</span></a></nav>\n`;
+const foot = ctx => `</main>\n${footerHtml(false, ctx)}${tabBar(ctx.here)}</body>\n</html>\n`;
 
 const breadcrumbLd = items => ({
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
@@ -370,7 +377,6 @@ function productPage(p) {
   const name = fullName(p);
   const query = fullName(p);
   const noun = SINGULAR[p.category];
-  const lede = `Best for: ${p.verdict.bestFor.charAt(0).toLowerCase() + p.verdict.bestFor.slice(1)}.`;
   const desc = `${name} is a ${noun} from ${brandLabel(p.brand)}.` + (p.specs ? ` Key details: ${p.specs}.` : '') + ` Find it at US retailers.`;
   const metaDesc = fitText(`${name}: ${p.summary}. Specs, the catch, and where to find it at US stores.`, 155);
   const byId = new Map(products.map(o => [o.id, o]));
@@ -394,22 +400,26 @@ function productPage(p) {
     title: fitTitle([`${name}: buying notes | ${SITE_NAME}`, `${name} | ${SITE_NAME}`, name]), description: metaDesc, path: productUrl(p),
     robots: indexable(p) ? '' : 'noindex,follow',
     extraLd: [ld, breadcrumbLd([['Home', '/'], [cat.label, categoryUrl(cat)], [name, productUrl(p)]])]
-  }) + `<nav class="tm-crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">›</span><a href="${categoryUrl(cat)}">${esc(cat.label)}</a><span aria-hidden="true">›</span><span aria-current="page">${esc(p.name)}</span></nav>
+  }) + `<nav class="tm-crumbs" aria-label="Breadcrumb"><a href="/">Browse</a><span aria-hidden="true">/</span><a href="${categoryUrl(cat)}">${esc(cat.label)}</a><span aria-hidden="true">/</span><span aria-current="page">${esc(brandLabel(p.brand))}</span></nav>
 <article class="tm-product-page">
   <div class="tm-product-media">${media}${credit}</div>
   <div class="tm-product-info">
-    <p class="tm-eyebrow">${esc(brandLabel(p.brand))} · ${esc(p.category)}</p>
-    <h1>${esc(p.name)}</h1>
-    <p class="tm-lead-text">${esc(lede)}</p>
-    <dl class="tm-verdict"><dt>The catch</dt><dd>${esc(p.verdict.downside)}.</dd><dt>Skip it if</dt><dd>${esc(p.verdict.skipIf)}.</dd><dt>Typical price tier</dt><dd>${esc(p.verdict.tier)} for ${esc(p.category.toLowerCase())}. A rough guide, not a quote; the store shows the real price.</dd></dl>
+    <h1>${esc(name)}</h1>
+    <p class="tm-tagline">${esc(p.summary.replace(/\.$/, ''))}.</p>
+    <dl class="tm-facts-rows"><div><dt>Type</dt><dd>${esc(typeLine(p))}</dd></div><div><dt>Brand</dt><dd>${esc(brandLabel(p.brand))}</dd></div><div><dt>Best for</dt><dd>${esc(p.verdict.bestFor)}</dd></div><div><dt>Price tier</dt><dd>${esc(p.verdict.tier)}</dd></div></dl>
+    <div class="tm-callouts">
+      <div class="tm-callout tm-callout-catch"><strong>The catch</strong><p>${esc(p.verdict.downside)}.</p></div>
+      <div class="tm-callout"><strong>Skip it if</strong><p>${esc(upperFirst(p.verdict.skipIf))}.</p></div>
+    </div>
+    <details class="tm-before"><summary>Price tier and data check</summary><dl class="tm-verdict"><dt>Typical price tier</dt><dd>${esc(p.verdict.tier)} for ${esc(p.category.toLowerCase())}. A rough guide, not a quote; the store shows the real price.</dd></dl>
+    ${checkedLine(p)}</details>
+    <div class="tm-cta-row"><a class="tm-primary" href="#stores">See where to buy</a><button class="tm-btn dx-act" type="button" data-dx-save="${esc(p.id)}" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Save</span></button><button class="tm-btn dx-act" type="button" data-dx-compare="${esc(p.id)}" aria-pressed="false"><span>Add to compare</span></button><a class="tm-btn" href="/#product=${encodeURIComponent(p.id)}">Open in the catalog</a></div>
     ${specList}
-    ${checkedLine(p)}
-    <h2>Find it at US retailers</h2>
+    <h2 id="stores">Find it at US retailers</h2>
     <ul class="tm-store-list">${p.stores.map(s => `<li><a href="${esc(storeUrl(s, query))}" target="_blank" rel="noopener noreferrer nofollow"><span>${esc(s)}</span><span aria-hidden="true">Search ↗</span></a></li>`).join('')}</ul>
     ${regionDetails(p, query)}
     <p class="tm-note">Each link opens the store's own search results for this product, so you can pick the exact model and seller yourself. Tech It More does not quote prices or confirm stock; the store does.</p>
     <p class="tm-review-row"><a class="tm-review" href="https://www.youtube.com/results?search_query=${encodeURIComponent(query + ' review')}" target="_blank" rel="noopener noreferrer nofollow"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="m10 9 5 3-5 3z" fill="#fff"/></svg><span>Watch reviews on YouTube</span><span aria-hidden="true">↗</span></a><small>Opens a YouTube search. Reviews are made by other people.</small></p>
-    <p><a class="tm-primary tm-inline-primary" href="/#product=${encodeURIComponent(p.id)}">Open in the catalog</a></p>
   </div>
 </article>
 ${alts.length ? `<section class="tm-section">
@@ -504,9 +514,6 @@ function howPage() {
 </section>
 ` + foot({ here: 'guides', subject: 'Tech It More: How we choose', body: `About this page: ${SITE}/how-we-choose/\n\n` });
 }
-put('how-we-choose/index.html', howPage());
-for (const p of products) put(`p/${p.id}/index.html`, productPage(p));
-for (const c of categories) put(`c/${c.slug}/index.html`, categoryPage(c));
 put('offline.html', `<!doctype html>
 <html lang="en">
 <head>
@@ -529,6 +536,9 @@ put('offline.html', `<!doctype html>
 </body>
 </html>
 `);
+put('how-we-choose/index.html', howPage());
+for (const p of products) put(`p/${p.id}/index.html`, productPage(p));
+for (const c of categories) put(`c/${c.slug}/index.html`, categoryPage(c));
 
 /* sitemap: home, category guides, and product pages that have real details */
 const urls = ['/', '/how-we-choose/', ...categories.map(categoryUrl), ...products.filter(indexable).map(productUrl)];
@@ -574,7 +584,7 @@ put('index.html', indexHtml);
    Directory links get an explicit index.html; Cloudflare Pages redirects that back to the clean URL. */
 function relativize(html, depth) {
   const up = '../'.repeat(depth);
-  return html.replace(/\b(href|src|data-fallback)="(\/[^"\/][^"]*|\/)"/g, (m, attr, value) => {
+  return html.replace(/\b(href|src|data-fallback|action)="(\/[^"\/][^"]*|\/)"/g, (m, attr, value) => {
     const cut = value.search(/[?#]/);
     const pathPart = cut === -1 ? value : value.slice(0, cut);
     const suffix = cut === -1 ? '' : value.slice(cut);

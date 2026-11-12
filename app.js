@@ -5,13 +5,14 @@ const categoryOrder = TIM.categories.map(category => category.label);
 const categories = ["All products", ...[...new Set(products.map(product => product.category))].sort((a, b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b))];
 const grid = document.querySelector("#product-grid");
 const searchInput = document.querySelector("#search-input");
-const categoryList = document.querySelector("#category-list");
+const filterTypeEl = document.querySelector("#filter-type");
+const filterBrandEl = document.querySelector("#filter-brand");
+const filterConnEl = document.querySelector("#filter-connection");
+const filterTierEl = document.querySelector("#filter-tier");
 const categoryRail = document.querySelector("#category-rail");
 const filtersBadge = document.querySelector("#filters-badge");
 const resultsCount = document.querySelector("#results-count");
 const emptyState = document.querySelector("#empty-state");
-const brandSelect = document.querySelector("#brand-select");
-const quickFilters = document.querySelector("#quick-filters");
 const activeFiltersEl = document.querySelector("#active-filters");
 const recentRow = document.querySelector("#recent-row");
 const suggestionsBox = document.querySelector("#search-suggestions");
@@ -23,7 +24,10 @@ let clearSavedTimer;
 const catalogTitle = document.querySelector("#catalog-title");
 const sharedBanner = document.querySelector("#shared-banner");
 const backToTop = document.querySelector("#back-to-top");
-let activeBrand = "All brands";
+/* Filters: each group can hold several values (Type, Brand, Price tier); Connection has two switches. */
+const selCats = new Set();
+const selBrands = new Set();
+const selTiers = new Set();
 let wirelessOnly = false;
 let wiredOnly = false;
 let region = "US";
@@ -40,7 +44,6 @@ const photoLightboxImage = document.querySelector("#photo-lightbox-image");
 const photoLightboxCaption = document.querySelector("#photo-lightbox-caption");
 const photoLightboxScroll = document.querySelector("#photo-lightbox-scroll");
 const toast = document.querySelector("#toast");
-let activeCategory = "All products";
 const themeToggle = document.querySelector("#theme-toggle");
 let toastTimer;
 let previouslyFocusedElement;
@@ -56,7 +59,7 @@ let gallerySlideshowPlaying = false;
 let gallerySlideInterval = 4500;
 let handlingProductHistory = false;
 let productDialogRequest = 0;
-const catalogPageSize = window.matchMedia("(max-width: 759px)").matches ? 16 : 36; /* phones start with fewer rows; "Show more" adds the rest */
+const catalogPageSize = 36;
 const COMPARE_MAX = 3;
 const compareIds = [];
 
@@ -87,7 +90,17 @@ function saveSetting(key, value) {
   return Promise.resolve();
 }
 
-function paintSaved(productId) {
+async function toggleWatchlist(productId) {
+  const next = new Set(watchlist);
+  if (next.has(productId)) next.delete(productId);
+  else next.add(productId);
+  await saveSetting("watchlist", [...next]);
+  watchlist = next;
+  renderWatchlistPanel();
+  if (savedOnly()) {
+    renderCatalog();
+    return;
+  }
   const saved = watchlist.has(productId);
   grid.querySelectorAll("[data-watch-id]").forEach(button => {
     if (button.dataset.watchId !== productId) return;
@@ -96,30 +109,6 @@ function paintSaved(productId) {
     button.setAttribute("aria-pressed", String(saved));
     button.setAttribute("aria-label", `${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list`);
   });
-}
-
-/* Optimistic: the heart and the count change at once; saving happens behind it and rolls back if it fails. */
-async function toggleWatchlist(productId) {
-  const previous = watchlist;
-  const next = new Set(watchlist);
-  const removing = next.has(productId);
-  if (removing) next.delete(productId);
-  else next.add(productId);
-  watchlist = next;
-  renderWatchlistPanel();
-  if (savedOnly()) renderCatalog();
-  else paintSaved(productId);
-  try {
-    await saveSetting("watchlist", [...next]);
-  } catch (error) {
-    watchlist = previous;
-    renderWatchlistPanel();
-    if (savedOnly()) renderCatalog();
-    else paintSaved(productId);
-    showToast("Could not save that. Your list is unchanged.");
-    return;
-  }
-  if (removing) showUndoToast("Removed from your saved list.", () => toggleWatchlist(productId));
 }
 
 async function exportLocalData() {
@@ -149,7 +138,7 @@ function applyTheme(theme) {
   themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} mode`);
   themeToggle.querySelector(".theme-icon").innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${isDark ? '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>' : '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'}</svg>`;
   themeToggle.querySelector(".theme-label").textContent = isDark ? "Light mode" : "Dark mode";
-  document.querySelector("#theme-color").content = isDark ? "#0e1117" : "#f3f2fa";
+  document.querySelector("#theme-color").content = isDark ? "#1a191d" : "#efedf0";
 }
 
 function reviewSearchUrl(product) {
@@ -279,7 +268,7 @@ function scrollToCatalog(instant = false) {
   const compact = window.matchMedia("(max-width: 899px)").matches;
   // Desktop: the category tiles. Phones and tablets: the results heading, so the count and chips stay in view
   // (the category list lives in the closed filter sheet there, which used to send the page to the wrong place).
-  const target = compact ? document.querySelector(".tm-toolbar") : (document.querySelector("#category-list") || document.querySelector("#catalog"));
+  const target = document.querySelector(".tm-toolbar") || document.querySelector("#catalog");
   if (!target) return;
   const top = target.getBoundingClientRect().top + window.scrollY - (headerPinnedHeight() + 12);
   // The offset above assumes the brand row has slid away, so make that true before we land.
@@ -296,7 +285,8 @@ function setConnection(mode) {
   wiredOnly = mode === "wired";
 }
 function setWireless(value) {
-  setConnection(value ? "wireless" : "any");
+  wirelessOnly = Boolean(value);
+  if (!value) wiredOnly = false;
 }
 function updateSearchState() {
   searchWrap.classList.toggle("has-text", searchInput.value.length > 0);
@@ -307,16 +297,15 @@ function featuredScore(product) {
   return (product.imageUrl ? 2 : 0) + (specText(product) ? 1 : 0);
 }
 
-function searchableProducts(allProducts, { ignoreTier = false, ignoreWireless = false } = {}) {
+function searchableProducts(allProducts, skip = {}) {
   const terms = searchInput.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   const onlySaved = savedOnly();
   const visible = allProducts.filter(product => {
     if (sharedIds && !sharedIds.includes(product.id)) return false;
-    if (activeCategory !== "All products" && product.category !== activeCategory) return false;
-    if (activeBrand !== "All brands" && brandLabel(product.brand) !== activeBrand) return false;
-    if (wirelessOnly && !ignoreWireless && !isWireless(product)) return false;
-    if (wiredOnly && !ignoreWireless && !isWired(product)) return false;
-    if (!ignoreTier && activeTier !== "All tiers" && tierOf(product) !== activeTier) return false;
+    if (!skip.ignoreCat && selCats.size && !selCats.has(product.category)) return false;
+    if (!skip.ignoreBrand && selBrands.size && !selBrands.has(brandLabel(product.brand))) return false;
+    if (!skip.ignoreConn && (wirelessOnly || wiredOnly) && !((wirelessOnly && isWireless(product)) || (wiredOnly && isWired(product)))) return false;
+    if (!skip.ignoreTier && selTiers.size && !selTiers.has(tierOf(product))) return false;
     if (onlySaved && !watchlist.has(product.id)) return false;
     return !terms.length || matchesTerms(product, terms);
   });
@@ -328,6 +317,15 @@ function searchableProducts(allProducts, { ignoreTier = false, ignoreWireless = 
 }
 
 const tierOf = product => (product.verdict && product.verdict.tier) || "";
+const filtersActive = () => selCats.size > 0 || selBrands.size > 0 || selTiers.size > 0 || wirelessOnly || wiredOnly;
+function resetFilters() { selCats.clear(); selBrands.clear(); selTiers.clear(); wirelessOnly = false; wiredOnly = false; }
+function setOnlyCategory(category) { selCats.clear(); if (category && category !== "All products") selCats.add(category); }
+function updateSavedCount() {
+  watchlistCount.textContent = String(watchlist.size);
+  if (watchlist.size) watchlistCount.removeAttribute("data-zero"); else watchlistCount.setAttribute("data-zero", "");
+  const tabSavedCount = document.querySelector("#tab-saved-count");
+  if (tabSavedCount) { tabSavedCount.textContent = String(watchlist.size); tabSavedCount.toggleAttribute("data-zero", !watchlist.size); }
+}
 function checkedDate(value) {
   const date = new Date(`${value}T00:00:00Z`);
   return Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
@@ -355,16 +353,18 @@ const YT_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" w
 function reviewMarkup(product) {
   return `<p class="tm-review-row"><a class="tm-review" href="${escapeHtml(reviewSearchUrl(product))}" target="_blank" rel="noopener noreferrer nofollow">${YT_ICON}<span>Watch reviews on YouTube</span><span aria-hidden="true">↗</span></a><small>Opens a YouTube search. Reviews are made by other people.</small></p>`;
 }
+let pickOffset = 0;
 function renderSpotlight() {
   const box = document.querySelector("#spotlight");
-  const pool = products.filter(p => p.verdict && p.verdict.downside);
+  const pool = products.filter(p => p.verdict && p.verdict.bestFor && p.imageUrl);
   if (!box || !pool.length) return;
-  const pick = pool[Math.floor(Math.random() * pool.length)];
-  const name = escapeHtml(fullProductName(pick));
-  const best = pick.verdict.bestFor ? `<p class="tm-spot-best">Best for: ${escapeHtml(pick.verdict.bestFor.charAt(0).toLowerCase() + pick.verdict.bestFor.slice(1))}.</p>` : "";
-  box.innerHTML = `<p class="tm-spot-label">Before you buy <span class="tm-spot-random">· a random pick each visit</span> <button type="button" class="tm-spot-again" data-spot-again>Another</button></p><p class="tm-spot-name">${name}</p><p class="tm-spot-catch"><span class="tm-spot-tag">The catch:</span> ${escapeHtml(pick.verdict.downside)}.</p>${best}<a class="tm-spot-link" href="p/${escapeHtml(pick.id)}/index.html">Read the full verdict<span class="sr-only"> for ${name}</span></a>`;
+  /* One pick per day, so it feels chosen; "Show another pick" walks through the rest. */
+  const pick = pool[(Math.floor(Date.now() / 86400000) + pickOffset) % pool.length];
+  const id = escapeHtml(pick.id);
+  const tag = String(pick.summary || pick.verdict.bestFor).replace(/\.$/, "");
+  box.innerHTML = `<div><p class="tm-pick-label">Editor’s pick</p><h2 class="tm-pick-name"><a href="p/${id}/index.html" data-open-pick="${id}">${escapeHtml(fullProductName(pick))}</a></h2><p class="tm-pick-tag">${escapeHtml(tag)}.</p><p class="tm-pick-more"><button type="button" class="tm-link" data-open-pick="${id}">See where to buy</button><button type="button" class="tm-pick-again" data-spot-again>Show another pick</button></p></div><div class="tm-pick-art" aria-hidden="true"><img src="${escapeHtml(pick.imageUrl)}" alt="" decoding="async"><span class="tm-icon" hidden>${categoryIcon(pick.category)}</span></div>`;
 }
-let activeTier = "All tiers";
+const TIER_NAMES = ["Budget", "Mid-range", "Premium"];
 
 /* Standout specs for the card: the few numbers a buyer compares first, pulled from the spec line. */
 const HL = {
@@ -409,30 +409,33 @@ function factsMarkup(product) {
   return list.length ? `<span class="tm-facts">${list.map(item => `<span>${escapeHtml(item)}</span>`).join("")}</span>` : "";
 }
 
+const SINGULAR_TYPE = { Mice: "mouse", Keyboards: "keyboard", Headsets: "headset", Controllers: "controller", "Consoles & handhelds": "console or handheld", "PC hardware": "PC hardware", "Streaming & audio": "streaming and audio gear" };
+function typeLine(product) {
+  const noun = SINGULAR_TYPE[product.category] || String(product.category).toLowerCase();
+  const plain = noun.charAt(0).toUpperCase() + noun.slice(1);
+  return isWireless(product) && !/hardware|gear|console/.test(noun) ? `Wireless ${noun}` : plain;
+}
 function cardMarkup(product) {
   const name = escapeHtml(product.name);
   const brand = escapeHtml(brandLabel(product.brand));
+  const full = escapeHtml(fullProductName(product));
   const kind = escapeHtml(product.category);
   const productId = escapeHtml(product.id);
   const saved = watchlist.has(product.id);
   const compared = compareIds.includes(product.id);
   const icon = categoryIcon(product.category);
-  const v = product.verdict || {};
+  const tier = product.verdict && product.verdict.tier ? escapeHtml(product.verdict.tier) : "";
   const media = product.imageUrl
-    ? `<img class="tm-photo" src="${escapeHtml(product.imageUrl)}" alt="${brand} ${name}" loading="lazy" decoding="async"><span class="tm-icon" aria-hidden="true" hidden>${icon}</span>`
+    ? `<img class="tm-photo" src="${escapeHtml(product.imageUrl)}" alt="${full}" loading="lazy" decoding="async"><span class="tm-icon" aria-hidden="true" hidden>${icon}</span>`
     : `<span class="tm-icon" aria-hidden="true">${icon}</span>`;
-  const note = v.downside
-    ? `<span class="tm-note"><span class="tm-note-label">The catch</span><span class="tm-note-text">${escapeHtml(v.downside)}.</span></span>`
-    : "";
   return `<article class="tm-item" data-kind="${kind}">
-    <button class="tm-open" type="button" data-product-id="${productId}" aria-label="${brand} ${name}: see where to buy">
-      <span class="tm-tile${product.imageUrl ? " tm-loading" : ""}"${product.blurhash ? ` data-blurhash="${escapeHtml(product.blurhash)}"` : ""}>${media}</span>
-      <span class="tm-body"><span class="tm-brand">${brand} · ${kind}</span><span class="tm-name">${name}</span>${product.summary ? `<span class="tm-summary">${escapeHtml(product.summary)}</span>` : ""}${factsMarkup(product)}<span class="tm-meta">${v.tier ? `<span class="tm-tier">${escapeHtml(v.tier)}</span>` : ""}${isWireless(product) ? '<span class="tm-pill">Wireless</span>' : ""}</span></span>
-      ${note}
+    <button class="tm-open" type="button" data-product-id="${productId}" aria-label="${full}: see where to buy">
+      <span class="tm-tile">${tier ? `<span class="tm-tier" data-tier="${tier}">${tier}</span>` : ""}${media}</span>
+      <span class="tm-body"><span class="tm-brand">${brand}</span><span class="tm-name">${name}</span>${product.summary ? `<span class="tm-summary">${escapeHtml(product.summary)}</span>` : ""}${factsMarkup(product)}</span>
     </button>
     <div class="tm-item-tools">
       <button class="tm-heart${saved ? " saved" : ""}" type="button" data-watch-id="${productId}" aria-pressed="${saved}" aria-label="${saved ? "Remove" : "Save"} ${name} ${saved ? "from" : "to"} your saved list">${HEART_ICON}</button>
-      <label class="tm-compare-check"><input type="checkbox" data-compare-id="${productId}"${compared ? " checked" : ""}><span>Compare</span><span class="sr-only"> ${brand} ${name}</span></label>
+      <label class="tm-compare-check"><input type="checkbox" data-compare-id="${productId}"${compared ? " checked" : ""}><span class="cmp-box" aria-hidden="true"></span><span>Compare<span class="sr-only"> ${brand} ${name}</span></span></label>
     </div>
   </article>`;
 }
@@ -445,7 +448,7 @@ function getAdditionalProductPhotos(product) {
     if (/corsair/i.test(product.brand) && product.imageUrl) {
       const corsairImage = product.imageUrl.match(/^(.*_)(\d{2})(\.[a-z0-9]+)(\?.*)?$/i);
       if (corsairImage) {
-        const candidates = Array.from({ length: 4 }, (_, index) => {
+        const candidates = Array.from({ length: 9 }, (_, index) => {
           const number = String(index + 2).padStart(2, "0");
           return {
             title: `${product.name} photo ${number}`,
@@ -480,7 +483,9 @@ function getAdditionalProductPhotos(product) {
     }).toString();
     let commonsPhotos = [];
     try {
-      const payload = await swrJson(url, "Wikimedia Commons");
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Wikimedia Commons returned HTTP ${response.status}.`);
+      const payload = await response.json();
       const pages = payload && typeof payload === "object" && payload.query && payload.query.pages
         ? Object.values(payload.query.pages)
         : [];
@@ -721,7 +726,7 @@ function stopGallerySlideshow() {
 }
 
 function renderWatchlistPanel() {
-  watchlistCount.textContent = String(watchlist.size); document.querySelectorAll("[data-saved-badge]").forEach(b => { b.textContent = String(watchlist.size); b.hidden = watchlist.size === 0; });
+  updateSavedCount();
   updateShareButton();
 }
 
@@ -744,45 +749,43 @@ function updateSharedUi() {
   if (sharedIds) document.querySelector("#shared-text").textContent = `Shared list: ${sharedIds.length} ${sharedIds.length === 1 ? "product" : "products"}`;
 }
 
-function renderBrandSelect() {
-  const counts = new Map();
-  catalogProducts
-    .filter(product => (!sharedIds || sharedIds.includes(product.id)) && (activeCategory === "All products" || product.category === activeCategory))
-    .forEach(product => counts.set(brandLabel(product.brand), (counts.get(brandLabel(product.brand)) || 0) + 1));
-  if (activeBrand !== "All brands" && !counts.has(activeBrand)) activeBrand = "All brands";
-  const names = [...counts.keys()].sort((a, b) => a.localeCompare(b));
-  brandSelect.innerHTML = [`<option value="All brands">All brands</option>`, ...names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)} (${counts.get(name)})</option>`)].join("");
-  brandSelect.value = activeBrand;
+let brandsExpanded = false;
+function checkMarkup(group, value, label, count, on) {
+  return `<label class="tm-check"><input type="checkbox" data-filter="${group}" value="${escapeHtml(value)}"${on ? " checked" : ""}${count === 0 && !on ? " disabled" : ""}><span>${escapeHtml(label)}</span><span class="n">${count}</span></label>`;
+}
+function renderFilterPanel() {
+  const typeCounts = new Map();
+  searchableProducts(catalogProducts, { ignoreCat: true }).forEach(product => typeCounts.set(product.category, (typeCounts.get(product.category) || 0) + 1));
+  filterTypeEl.innerHTML = categories.filter(category => category !== "All products").map(category => checkMarkup("cat", category, category, typeCounts.get(category) || 0, selCats.has(category))).join("");
+  const brandCounts = new Map();
+  searchableProducts(catalogProducts, { ignoreBrand: true }).forEach(product => { const name = brandLabel(product.brand); brandCounts.set(name, (brandCounts.get(name) || 0) + 1); });
+  selBrands.forEach(name => { if (!brandCounts.has(name)) brandCounts.set(name, 0); });
+  const brandNames = [...brandCounts.keys()].sort((a, b) => a.localeCompare(b));
+  const top = new Set([...brandNames].sort((a, b) => brandCounts.get(b) - brandCounts.get(a) || a.localeCompare(b)).slice(0, 6));
+  const shown = brandsExpanded ? brandNames : brandNames.filter(name => top.has(name) || selBrands.has(name));
+  filterBrandEl.innerHTML = shown.map(name => checkMarkup("brand", name, name, brandCounts.get(name), selBrands.has(name))).join("")
+    + (brandNames.length > shown.length || brandsExpanded ? `<button type="button" class="tm-brand-more" data-brand-more aria-expanded="${brandsExpanded}">${brandsExpanded ? "Show fewer brands" : `Show all ${brandNames.length} brands`}</button>` : "");
+  const connBase = searchableProducts(catalogProducts, { ignoreConn: true });
+  filterConnEl.innerHTML = checkMarkup("conn", "wireless", "Wireless", connBase.filter(isWireless).length, wirelessOnly) + checkMarkup("conn", "wired", "Wired", connBase.filter(isWired).length, wiredOnly);
+  const tierBase = searchableProducts(catalogProducts, { ignoreTier: true });
+  filterTierEl.innerHTML = TIER_NAMES.map(name => checkMarkup("tier", name, name, tierBase.filter(product => tierOf(product) === name).length, selTiers.has(name))).join("");
 }
 
 function renderActiveFilters() {
   const chips = [];
   const query = searchInput.value.trim();
-  if (query) chips.push(["query", `Search: “${query}”`]);
-  if (activeCategory !== "All products") chips.push(["category", activeCategory]);
-  if (activeBrand !== "All brands") chips.push(["brand", activeBrand]);
-  if (wirelessOnly) chips.push(["wireless", "Wireless only"]);
-  if (wiredOnly) chips.push(["wireless", "Wired only"]);
-  if (activeTier !== "All tiers") chips.push(["tier", `Tier: ${activeTier}`]);
-  if (savedOnly()) chips.push(["saved", "Saved only"]);
-  const html = chips.map(([kind, label]) => `<button type="button" class="tm-chip" data-clear="${kind}" aria-label="Remove filter: ${escapeHtml(label)}">${escapeHtml(label)} <span aria-hidden="true">×</span></button>`);
+  if (query) chips.push(["query", "", `Search: “${query}”`]);
+  selBrands.forEach(name => chips.push(["brand", name, name]));
+  if (wirelessOnly) chips.push(["conn", "wireless", "Wireless"]);
+  if (wiredOnly) chips.push(["conn", "wired", "Wired"]);
+  selTiers.forEach(name => chips.push(["tier", name, name]));
+  if (selCats.size > 1) selCats.forEach(name => chips.push(["cat", name, name]));
+  if (savedOnly()) chips.push(["saved", "", "Saved only"]);
+  const html = chips.map(([kind, value, label]) => `<button type="button" class="tm-chip" data-clear="${kind}" data-value="${escapeHtml(value)}" aria-label="Remove filter: ${escapeHtml(label)}">${escapeHtml(label)} <span aria-hidden="true">×</span></button>`);
   if (chips.length > 1) html.push(`<button type="button" class="tm-link" data-clear="all">Clear all</button>`);
   activeFiltersEl.innerHTML = html.join("");
 }
 
-function renderQuickFilters() {
-  const tierBase = searchableProducts(catalogProducts, { ignoreTier: true });
-  const tierCounts = { Budget: 0, "Mid-range": 0, Premium: 0 };
-  tierBase.forEach(product => { if (tierCounts[tierOf(product)] !== undefined) tierCounts[tierOf(product)]++; });
-  const connBase = searchableProducts(catalogProducts, { ignoreWireless: true });
-  const connCounts = { wireless: connBase.filter(isWireless).length, wired: connBase.filter(isWired).length };
-  const connNow = wirelessOnly ? "wireless" : wiredOnly ? "wired" : "any";
-  const btn = (attr, value, label, count, on) =>
-    `<button type="button" class="tm-qf" ${attr}="${value}" aria-pressed="${on}"${count === 0 && !on ? " disabled" : ""}>${label}<span class="tm-qf-n">${count}</span></button>`;
-  quickFilters.innerHTML =
-    `<div class="tm-qf-group" role="group" aria-label="Price tier"><span class="tm-qf-label">Price</span>${Object.keys(tierCounts).map(t => btn("data-qf-tier", t, t, tierCounts[t], activeTier === t)).join("")}</div>` +
-    `<div class="tm-qf-group" role="group" aria-label="Connection"><span class="tm-qf-label">Connection</span>${btn("data-qf-conn", "wireless", "Wireless", connCounts.wireless, connNow === "wireless")}${btn("data-qf-conn", "wired", "Wired", connCounts.wired, connNow === "wired")}</div>`;
-}
 
 const CATEGORY_HINTS = [
   [/mouse|mice/i, "Mice"], [/keyboard|keypad/i, "Keyboards"], [/headset|headphone|earbud/i, "Headsets"],
@@ -799,7 +802,7 @@ function renderEmptyState(visibleCount) {
   emptyState.hidden = visibleCount !== 0;
   if (visibleCount !== 0) { emptyState.innerHTML = ""; return; }
   const query = searchInput.value.trim();
-  const otherFilters = activeCategory !== "All products" || activeBrand !== "All brands" || wirelessOnly || wiredOnly || activeTier !== "All tiers" || savedOnly();
+  const otherFilters = filtersActive() || savedOnly();
   const button = (action, label, primary) => `<button type="button" class="${primary ? "tm-primary" : "tm-btn"} tm-empty-btn" data-empty-action="${escapeHtml(action)}">${escapeHtml(label)}</button>`;
   if (savedOnly() && !watchlist.size) {
     emptyState.innerHTML = `<p class="tm-empty-title">Nothing saved yet.</p><p>Tap the heart on any product to save it here.</p><div class="tm-empty-actions">${button("clear-saved-filter", "Browse all gear", true)}</div>`;
@@ -834,13 +837,14 @@ function renderEmptyState(visibleCount) {
     const suggest = mailtoLink("Tech It More: please add a product", `I searched for "${query}" and didn't find it. Please consider adding it.`);
     if (suggest) actions.push(`<a class="tm-btn tm-empty-btn" href="${escapeHtml(suggest)}">Suggest “${escapeHtml(query.slice(0, 40))}”</a>`);
     if (otherFilters) actions.push(button("clear-filters", "Clear filters, keep search"));
-  } else if (activeTier !== "All tiers" && searchableProducts(catalogProducts, { ignoreTier: true }).length) {
+  } else if (selTiers.size && searchableProducts(catalogProducts, { ignoreTier: true }).length) {
+    const tierLabel = [...selTiers].join(" or ").toLowerCase();
     const others = searchableProducts(catalogProducts, { ignoreTier: true }).length;
-    const what = activeCategory === "All products" ? "products" : activeCategory.toLowerCase();
-    title = `No ${activeTier.toLowerCase()} ${escapeHtml(what)} yet.`;
+    const what = selCats.size === 1 ? [...selCats][0].toLowerCase() : "products";
+    title = `No ${tierLabel} ${escapeHtml(what)} yet.`;
     body = `<p>${others} matching ${others === 1 ? "product sits" : "products sit"} in other tiers.</p>`;
     actions.push(button("clear-tier", "Show all tiers", true));
-    const suggest = mailtoLink(`Tech It More: ${activeTier.toLowerCase()} pick suggestion`, `I'd like to see a ${activeTier.toLowerCase()} ${what} pick. My suggestion: `);
+    const suggest = mailtoLink(`Tech It More: ${tierLabel} pick suggestion`, `I'd like to see a ${tierLabel} ${what} pick. My suggestion: `);
     if (suggest) actions.push(`<a class="tm-btn tm-empty-btn" href="${escapeHtml(suggest)}">Suggest one</a>`);
   } else {
     title = otherFilters ? "No products match these filters." : "No products to show.";
@@ -851,23 +855,29 @@ function renderEmptyState(visibleCount) {
 }
 
 function setTier(value) {
-  activeTier = value;
+  selTiers.clear();
+  if (TIER_NAMES.includes(value)) selTiers.add(value);
 }
 
-function clearFilter(kind) {
-  if (kind === "query" || kind === "all") searchInput.value = "";
-  if (kind === "category" || kind === "all") activeCategory = "All products";
-  if (kind === "brand" || kind === "all") activeBrand = "All brands";
-  if (kind === "wireless" || kind === "all") setWireless(false);
-  if (kind === "tier" || kind === "all") setTier("All tiers");
-  if (kind === "saved" || kind === "all") setWatchlistFilter(false);
+function clearFilter(kind, value = "") {
+  const all = kind === "all";
+  if (kind === "query" || all) searchInput.value = "";
+  if (kind === "cat" || all) { if (value && !all) selCats.delete(value); else selCats.clear(); }
+  if (kind === "brand" || all) { if (value && !all) selBrands.delete(value); else selBrands.clear(); }
+  if (kind === "conn" || all) {
+    if (all || !value) { wirelessOnly = false; wiredOnly = false; }
+    else if (value === "wireless") wirelessOnly = false;
+    else wiredOnly = false;
+  }
+  if (kind === "tier" || all) { if (value && !all) selTiers.delete(value); else selTiers.clear(); }
+  if (kind === "saved" || all) setWatchlistFilter(false);
   updateSearchState();
   renderCategories();
   renderCatalog();
 }
 
 function renderRecent() {
-  const home = !searchInput.value.trim() && activeCategory === "All products" && activeBrand === "All brands" && activeTier === "All tiers" && !wirelessOnly && !wiredOnly && !savedOnly() && !sharedIds;
+  const home = !searchInput.value.trim() && !filtersActive() && !savedOnly() && !sharedIds;
   const items = recentIds.map(id => catalogProducts.find(product => product.id === id)).filter(Boolean);
   recentRow.hidden = !(home && items.length);
   if (recentRow.hidden) return;
@@ -885,11 +895,11 @@ function syncUrl() {
   const params = new URLSearchParams();
   const query = searchInput.value.trim();
   if (query) params.set("q", query);
-  if (activeCategory !== "All products") params.set("cat", activeCategory);
-  if (activeBrand !== "All brands") params.set("brand", activeBrand);
+  selCats.forEach(name => params.append("cat", name));
+  selBrands.forEach(name => params.append("brand", name));
   if (wirelessOnly) params.set("wireless", "1");
   if (wiredOnly) params.set("wired", "1");
-  if (activeTier !== "All tiers") params.set("tier", activeTier);
+  selTiers.forEach(name => params.append("tier", name));
   if (sortSelect.value !== "popular") params.set("sort", sortSelect.value);
   if (sharedIds) params.set("list", sharedIds.join(","));
   const search = params.toString();
@@ -899,11 +909,11 @@ function syncUrl() {
 function readUrlState() {
   const params = new URLSearchParams(window.location.search);
   if (params.get("q")) searchInput.value = params.get("q");
-  if (categories.includes(params.get("cat"))) activeCategory = params.get("cat");
-  if (params.get("brand")) activeBrand = params.get("brand");
-  if (params.get("wireless") === "1") setWireless(true);
-  else if (params.get("wired") === "1") setConnection("wired");
-  if (["Budget", "Mid-range", "Premium"].includes(params.get("tier"))) setTier(params.get("tier"));
+  params.getAll("cat").forEach(name => { if (name !== "All products" && categories.includes(name)) selCats.add(name); });
+  params.getAll("brand").forEach(name => { if (name) selBrands.add(name); });
+  if (params.get("wireless") === "1") wirelessOnly = true;
+  if (params.get("wired") === "1") wiredOnly = true;
+  params.getAll("tier").forEach(name => { if (TIER_NAMES.includes(name)) selTiers.add(name); });
   if ([...sortSelect.options].some(option => option.value === params.get("sort"))) sortSelect.value = params.get("sort");
   if (params.get("list")) {
     const ids = params.get("list").split(",").filter(id => catalogProducts.some(product => product.id === id));
@@ -945,7 +955,7 @@ function renderSuggestions() {
   if (text.length === 0 && document.activeElement === searchInput) return renderQuickStart();
   if (text.length < 2) return closeSuggestions();
   suggestionsBox.setAttribute("role", "listbox");
-  const matches = catalogProducts.filter(product => (activeCategory === "All products" || product.category === activeCategory) && (activeBrand === "All brands" || brandLabel(product.brand) === activeBrand) && matchesTerms(product, text.toLocaleLowerCase().split(/\s+/)));
+  const matches = catalogProducts.filter(product => (!selCats.size || selCats.has(product.category)) && (!selBrands.size || selBrands.has(brandLabel(product.brand))) && matchesTerms(product, text.toLocaleLowerCase().split(/\s+/)));
   suggestionItems = matches.slice(0, 6);
   suggestionIndex = -1;
   if (!suggestionItems.length) return closeSuggestions();
@@ -966,8 +976,7 @@ function moveSuggestion(delta) {
 }
 
 function renderCatalog(append = false) {
-  if (!append) renderBrandSelect();
-  if (!append) renderQuickFilters();
+  if (!append) renderFilterPanel();
   const visible = searchableProducts(catalogProducts);
   const alreadyRendered = append ? grid.children.length : 0;
   if (!append) grid.innerHTML = "";
@@ -982,7 +991,7 @@ function renderCatalog(append = false) {
   resultsCount.textContent = `${visible.length} ${visible.length === 1 ? "product" : "products"}`;
   const applyButton = document.querySelector("#filters-apply");
   if (applyButton) applyButton.textContent = `Show ${visible.length} ${visible.length === 1 ? "product" : "products"}`;
-  catalogTitle.textContent = sharedIds ? "Shared list" : activeCategory === "All products" ? "All gear" : activeCategory;
+  catalogTitle.textContent = sharedIds ? "Shared list" : selCats.size === 1 ? [...selCats][0] : "All gear";
   renderEmptyState(visible.length);
   loadMoreButton.hidden = rendered >= visible.length;
   if (!loadMoreButton.hidden) {
@@ -1000,11 +1009,11 @@ function renderCatalog(append = false) {
 
 /* Filters button shows how many filters are on; on phones the hero steps aside once you start searching. */
 function activeFilterCount() {
-  return (activeCategory !== "All products" ? 1 : 0) + (activeBrand !== "All brands" ? 1 : 0) + (wirelessOnly || wiredOnly ? 1 : 0) + (activeTier !== "All tiers" ? 1 : 0) + (savedOnly() ? 1 : 0);
+  return selCats.size + selBrands.size + (wirelessOnly ? 1 : 0) + (wiredOnly ? 1 : 0) + selTiers.size + (savedOnly() ? 1 : 0);
 }
 function updateSearchingState() {
   if (filtersBadge) {
-    const count = (activeBrand !== "All brands" ? 1 : 0) + (sortSelect.value && sortSelect.value !== "popular" ? 1 : 0);
+    const count = selBrands.size + selTiers.size + (wirelessOnly ? 1 : 0) + (wiredOnly ? 1 : 0);
     filtersBadge.hidden = count === 0;
     filtersBadge.textContent = String(count);
   }
@@ -1017,31 +1026,21 @@ function updateSearchingState() {
 }
 
 function renderCategories() {
-  const categoryCounts = new Map();
-  catalogProducts.forEach(product => categoryCounts.set(product.category, (categoryCounts.get(product.category) || 0) + 1));
-  categoryList.innerHTML = categories.map(category => {
-    const count = category === "All products" ? catalogProducts.length : (categoryCounts.get(category) || 0);
-    const selected = category === activeCategory;
+  if (!categoryRail) return;
+  const keep = categoryRail.scrollLeft;
+  const only = selCats.size === 1 ? [...selCats][0] : null;
+  categoryRail.innerHTML = categories.map(category => {
+    const selected = category === "All products" ? selCats.size === 0 : category === only;
     const label = escapeHtml(category);
-    const shown = category === "Consoles & handhelds" ? "Consoles" : label;
-    return `<button type="button" class="tm-cat${selected ? " selected" : ""}" data-kind="${label}" aria-pressed="${selected}" data-category="${label}"><span class="tm-cat-icon">${categoryIcon(category)}</span><span class="tm-cat-name">${shown}</span><span class="tm-cat-count">${count}</span></button>`;
+    const shown = category === "All products" ? "All" : category === "Consoles & handhelds" ? "Consoles" : category === "Streaming & audio" ? "Streaming" : category === "PC hardware" ? "PC" : label;
+    return `<button type="button" class="tm-rc${selected ? " selected" : ""}" aria-pressed="${selected}" data-category="${label}">${shown}</button>`;
   }).join("");
-  if (categoryRail) {
-    const keep = categoryRail.scrollLeft;
-    categoryRail.innerHTML = categories.map(category => {
-      const count = category === "All products" ? catalogProducts.length : (categoryCounts.get(category) || 0);
-      const selected = category === activeCategory;
-      const label = escapeHtml(category);
-      const shown = category === "All products" ? "All" : category === "Consoles & handhelds" ? "Consoles" : label;
-      return `<button type="button" class="tm-rc${selected ? " selected" : ""}" aria-pressed="${selected}" data-category="${label}">${shown}<span class="tm-rc-n">${count}</span></button>`;
-    }).join("");
-    categoryRail.scrollLeft = keep;
-    const selectedChip = categoryRail.querySelector(".selected");
-    if (selectedChip) {
-      const left = selectedChip.offsetLeft, right = left + selectedChip.offsetWidth;
-      if (left < categoryRail.scrollLeft + 12) categoryRail.scrollLeft = Math.max(0, left - 12);
-      else if (right > categoryRail.scrollLeft + categoryRail.clientWidth - 12) categoryRail.scrollLeft = right - categoryRail.clientWidth + 12;
-    }
+  categoryRail.scrollLeft = keep;
+  const selectedChip = categoryRail.querySelector(".selected");
+  if (selectedChip && categoryRail.scrollWidth > categoryRail.clientWidth) {
+    const left = selectedChip.offsetLeft, right = left + selectedChip.offsetWidth;
+    if (left < categoryRail.scrollLeft + 12) categoryRail.scrollLeft = Math.max(0, left - 12);
+    else if (right > categoryRail.scrollLeft + categoryRail.clientWidth - 12) categoryRail.scrollLeft = right - categoryRail.clientWidth + 12;
   }
 }
 
@@ -1127,24 +1126,24 @@ async function openProduct(productId, { fromHistory = false } = {}) {
     const v = product.verdict || {};
     const checked = product.checked && checkedDate(product.checked);
     const brandName = escapeHtml(brandLabel(product.brand));
-    const specChips = String(product.specs || "").split(/\s*·\s*/).filter(item => item && !/not listed|check the/i.test(item)).slice(0, 4).map(item => `<li>${escapeHtml(item)}</li>`).join("");
-    const headChips = `${v.tier ? `<li class="dx-tier">${escapeHtml(v.tier)}</li>` : ""}${isWireless(product) ? "<li>Wireless</li>" : ""}${specChips}`;
+    const specChips = String(product.specs || "").split(/\s*·\s*/).filter(item => item && !/not listed|check the/i.test(item)).slice(0, 5).map(item => `<li>${escapeHtml(item)}</li>`).join("");
     const savedNow = watchlist.has(product.id);
     const comparedNow = compareIds.includes(product.id);
-    const COMPARE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4v16M12 9v11M18 13v7"/></svg>';
-    const verdictCard = (v.bestFor || v.downside || v.skipIf)
-      ? `<section class="dx-verdict" aria-label="Our verdict">
-          ${v.bestFor ? `<div class="dx-block"><h3>Best for</h3><p>${escapeHtml(v.bestFor)}.</p></div>` : ""}
-          ${v.downside ? `<div class="tm-note dx-note"><span class="tm-note-label">The catch</span><span class="tm-note-text dx-note-text">${escapeHtml(v.downside)}.</span></div>` : ""}
-          ${v.skipIf ? `<div class="dx-block"><h3>Skip it if</h3><p>${escapeHtml(v.skipIf)}.</p></div>` : ""}
-          <p class="dx-fine">${v.tier ? `Typical price tier: ${escapeHtml(v.tier)}, a rough guide and not a quote. ` : ""}${checked ? `Checked ${escapeHtml(checked)} against the manufacturer's page.` : "Not yet re-checked against the manufacturer's page."}</p>
-        </section>`
+    const COMPARE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+    const fullName = escapeHtml(fullProductName(product));
+    const typeText = escapeHtml(typeLine(product));
+    const tagline = product.summary ? String(product.summary).replace(/\.$/, "") + "." : "";
+    const rowsHtml = `<div><dt>Type</dt><dd>${typeText}</dd></div><div><dt>Brand</dt><dd>${brandName}</dd></div>${v.bestFor ? `<div><dt>Best for</dt><dd>${escapeHtml(v.bestFor)}</dd></div>` : ""}${v.tier ? `<div><dt>Price tier</dt><dd>${escapeHtml(v.tier)}</dd></div>` : ""}`;
+    const cap = text => String(text).charAt(0).toUpperCase() + String(text).slice(1);
+    const verdictCard = (v.downside || v.skipIf)
+      ? `<div class="tm-callouts">${v.downside ? `<div class="tm-callout tm-callout-catch"><strong>The catch</strong><p>${escapeHtml(v.downside)}.</p></div>` : ""}${v.skipIf ? `<div class="tm-callout"><strong>Skip it if</strong><p>${escapeHtml(cap(v.skipIf))}.</p></div>` : ""}</div>
+        <details class="dx-before"><summary>Price tier and data check</summary><p class="dx-fine">${v.tier ? `${escapeHtml(v.tier)} is a rough price guide, not a quote. ` : ""}${checked ? `Checked ${escapeHtml(checked)} against the manufacturer's page.` : "Not yet re-checked against the manufacturer's page."}</p></details>`
       : "";
     dialogContent.innerHTML = `<div class="detail-content dx" data-product-id="${productIdAttribute}" data-kind="${category}">
       <div class="product-photo-gallery" id="product-photo-gallery" data-selected-index="0">
         <div class="detail-photo-wrap">
           <button class="photo-gallery-arrow previous" type="button" data-photo-step="-1" aria-label="Show previous product photo" disabled hidden>‹</button>
-        <img class="detail-photo" id="gallery-main-photo" src="${escapeHtml(product.imageUrl || "")}" alt="${brand} ${productName} ${/\.svg(\?|$)/.test(product.imageUrl) ? "illustration" : "product photo"}" role="button" tabindex="0" aria-label="Open ${productName} photo full screen" decoding="async" ${product.imageUrl ? "" : "hidden"}>
+        <img class="detail-photo" id="gallery-main-photo" src="${escapeHtml(product.imageUrl || "")}" alt="${fullName} ${/\.svg(\?|$)/.test(product.imageUrl) ? "illustration" : "product photo"}" role="button" tabindex="0" aria-label="Open ${productName} photo full screen" decoding="async" ${product.imageUrl ? "" : "hidden"}>
         <div class="photo-unavailable detail-photo-unavailable"${product.imageUrl ? " hidden" : ""}><span class="product-art detail-art${artClass}" aria-hidden="true">${categoryIcon(product.category)}</span><span>Official product photo unavailable</span></div>
           <span class="photo-gallery-counter" id="photo-gallery-counter" aria-live="polite" hidden>1 / 1</span>
           <button class="photo-gallery-arrow next" type="button" data-photo-step="1" aria-label="Show next product photo" disabled hidden>›</button>
@@ -1154,18 +1153,18 @@ async function openProduct(productId, { fromHistory = false } = {}) {
         <p class="photo-gallery-status" id="photo-gallery-status" role="status"></p>
       </div>
       <div class="detail-info-column dx-info">
-        <header class="dx-head">
-          <p class="dx-eyebrow">${brandName} · ${category}</p>
-          <h2 id="detail-name" class="dx-title">${productName}</h2>
-          ${product.summary ? `<p class="dx-sub">${escapeHtml(product.summary)}</p>` : ""}
-          ${headChips ? `<ul class="dx-chips">${headChips}</ul>` : ""}
-        </header>
-        <div class="dx-actions">
-          <button class="tm-primary dx-cta" type="button" data-scroll-offers>Where to buy <span aria-hidden="true">↓</span></button>
-          <button class="dx-act" type="button" data-dx-save="${productIdAttribute}" aria-pressed="${savedNow}" aria-label="Save ${productName} to your list">${HEART_ICON}<span class="label">${savedNow ? "Saved" : "Save"}</span></button>
-          <button class="dx-act" type="button" data-dx-compare="${productIdAttribute}" aria-pressed="${comparedNow}" aria-label="Add ${productName} to compare">${COMPARE_ICON}<span class="label">${comparedNow ? "Added" : "Compare"}</span></button>
-        </div>
+        <nav class="dx-crumbs" aria-label="Breadcrumb"><button type="button" data-close-dialog>Browse</button><span aria-hidden="true">/</span><span>${category}</span><span aria-hidden="true">/</span><span>${brandName}</span></nav>
+        <p class="dx-eyebrow">${typeText} · ${brandName}</p>
+        <h2 id="detail-name" class="dx-title">${fullName}</h2>
+        ${tagline ? `<p class="dx-sub">${escapeHtml(tagline)}</p>` : ""}
+        <dl class="dx-rows">${rowsHtml}</dl>
         ${verdictCard}
+        <div class="dx-actions">
+          <button class="tm-primary dx-cta" type="button" data-scroll-offers>See where to buy</button>
+          <button class="dx-act" type="button" data-dx-compare="${productIdAttribute}" aria-pressed="${comparedNow}" aria-label="Add ${productName} to compare">${COMPARE_ICON}<span class="label">${comparedNow ? "Added to compare" : "Add to compare"}</span></button>
+          <button class="dx-act" type="button" data-dx-save="${productIdAttribute}" aria-pressed="${savedNow}" aria-label="Save ${productName} to your list">${HEART_ICON}<span class="label">${savedNow ? "Saved" : "Save"}</span></button>
+        </div>
+        ${specChips ? `<ul class="dx-chips" aria-label="Key specs">${specChips}</ul>` : ""}
         <section class="dx-offers" aria-labelledby="offers-heading">
           <h3 class="offers-heading" id="offers-heading">Where to buy <span class="offers-notice">Opens each store's own search</span></h3>
           ${regionSwitchMarkup()}
@@ -1220,7 +1219,6 @@ function showError(message, error) {
 }
 
 function showToast(message) {
-  toast.classList.remove("has-action");
   toast.textContent = message;
   toast.classList.add("visible");
   window.clearTimeout(toastTimer);
@@ -1230,6 +1228,7 @@ function showToast(message) {
 function setWatchlistFilter(selected) {
   watchlistFilter.setAttribute("aria-pressed", String(selected));
   watchlistFilter.classList.toggle("selected", selected);
+  document.querySelector("#tab-saved")?.setAttribute("aria-pressed", String(selected));
 }
 
 document.addEventListener("error", event => {
@@ -1237,26 +1236,18 @@ document.addEventListener("error", event => {
   if (!(image instanceof HTMLImageElement)) return;
   if (image.matches(".photo-thumb img")) {
     image.closest(".photo-thumb-item").hidden = true;
-  } else if (image.matches(".product-photo, .tm-photo, #gallery-main-photo, .tm-cmp-photo img")) {
+  } else if (image.matches(".product-photo, .tm-photo, #gallery-main-photo, .tm-cmp-photo img, .tm-pick-art img")) {
     image.hidden = true;
     if (image.nextElementSibling instanceof HTMLElement) image.nextElementSibling.hidden = false;
   }
 }, true);
 
-categoryList.addEventListener("click", event => {
-  const button = event.target.closest("[data-category]");
-  if (!button) return;
-  activeCategory = button.dataset.category;
-  renderCategories();
-  renderCatalog();
-  if (!window.matchMedia("(max-width: 899px)").matches) scrollToCatalog();
-});
-
 if (categoryRail) categoryRail.addEventListener("click", event => {
   const button = event.target.closest("[data-category]");
   if (!button) return;
   const chosen = button.dataset.category;
-  activeCategory = chosen === activeCategory ? "All products" : chosen;
+  if (chosen === "All products" || (selCats.size === 1 && selCats.has(chosen))) selCats.clear();
+  else setOnlyCategory(chosen);
   renderCategories();
   renderCatalog();
 });
@@ -1290,26 +1281,55 @@ filtersBackdrop.addEventListener("click", () => setFiltersOpen(false));
 document.querySelector("#filters-close").addEventListener("click", () => setFiltersOpen(false));
 document.querySelector("#filters-apply").addEventListener("click", () => { setFiltersOpen(false); scrollToCatalog(); });
 window.matchMedia("(min-width: 900px)").addEventListener("change", event => { if (event.matches) setFiltersOpen(false); });
+filterSidebar.addEventListener("click", event => {
+  if (!event.target.closest("[data-brand-more]")) return;
+  brandsExpanded = !brandsExpanded;
+  renderFilterPanel();
+});
+filterSidebar.addEventListener("change", event => {
+  const input = event.target.closest("[data-filter]");
+  if (!input) return;
+  const group = input.dataset.filter, value = input.value, on = input.checked;
+  const flip = set => { if (on) set.add(value); else set.delete(value); };
+  if (group === "cat") flip(selCats);
+  else if (group === "brand") flip(selBrands);
+  else if (group === "tier") flip(selTiers);
+  else if (group === "conn") { if (value === "wireless") wirelessOnly = on; else wiredOnly = on; }
+  renderCategories();
+  renderCatalog();
+  const again = filterSidebar.querySelector(`[data-filter="${group}"][value="${CSS.escape(value)}"]`);
+  if (again) again.focus({ preventScroll: true });
+});
 
 /* ---------- Compare tray and side-by-side view ---------- */
-const compareTray = document.querySelector("#compare-tray");
-const compareTrayList = document.querySelector("#compare-tray-list");
-const compareGo = document.querySelector("#compare-go");
+const compareOpenButton = document.querySelector("#compare-open");
+const tabCompareButton = document.querySelector("#tab-compare");
 const compareModal = document.querySelector("#compare-modal");
 const compareContent = document.querySelector("#compare-content");
 function productById(id) { return products.find(item => item.id === id); }
 function syncCompareChecks() {
   grid.querySelectorAll("[data-compare-id]").forEach(input => { input.checked = compareIds.includes(input.dataset.compareId); });
 }
+let compareRestored = false;
+function persistCompare() {
+  if (!compareRestored) return;
+  try { window.sessionStorage.setItem(STORAGE_PREFIX + "compare", JSON.stringify(compareIds)); } catch (error) { /* session storage unavailable */ }
+}
 function renderCompareTray() {
-  const items = compareIds.map(productById).filter(Boolean);
-  compareTray.hidden = items.length === 0;
-  document.body.classList.toggle("has-tray", items.length > 0);
-  document.querySelector("#compare-count").textContent = String(items.length);
-  compareTrayList.innerHTML = items.map(item => `<li class="tm-tray-chip"><span>${escapeHtml(fullProductName(item))}</span><button type="button" data-compare-remove="${escapeHtml(item.id)}" aria-label="Remove ${escapeHtml(item.name)} from compare">×</button></li>`).join("");
-  document.querySelectorAll("[data-compare-badge]").forEach(b => { b.textContent = String(items.length); b.hidden = items.length === 0; });
-  compareGo.disabled = items.length < 2;
-  compareGo.textContent = items.length < 2 ? "Pick two to compare" : `Compare ${items.length}`;
+  persistCompare();
+  const count = compareIds.length;
+  for (const badge of [document.querySelector("#compare-badge"), document.querySelector("#tab-compare-count")]) {
+    if (!badge) continue;
+    badge.textContent = String(count);
+    if (count) badge.removeAttribute("data-zero"); else badge.setAttribute("data-zero", "");
+  }
+  compareOpenButton.setAttribute("aria-label", count ? `Compare ${count} selected ${count === 1 ? "product" : "products"}` : "Compare products");
+  dialogContent.querySelectorAll("[data-dx-compare]").forEach(button => {
+    const on = compareIds.includes(button.dataset.dxCompare);
+    button.setAttribute("aria-pressed", String(on));
+    const label = button.querySelector(".label");
+    if (label) label.textContent = on ? "Added to compare" : "Add to compare";
+  });
 }
 function setCompared(id, on) {
   const at = compareIds.indexOf(id);
@@ -1341,7 +1361,7 @@ function renderCompare() {
   }).join("");
   const body = compareRows().map(([label, get, cls]) => `<tr><th scope="row">${label}</th>${items.map(item => `<td${cls ? ` class="${cls}"` : ""}>${escapeHtml(get(item))}</td>`).join("")}</tr>`).join("");
   const foot = items.map(item => `<td><button type="button" class="tm-btn" data-compare-open="${escapeHtml(item.id)}">Where to buy</button></td>`).join("");
-  compareContent.innerHTML = `<table class="tm-cmp-table"><caption class="sr-only">Comparison of ${items.length} products</caption><thead><tr><td></td>${head}</tr></thead><tbody>${body}<tr><th scope="row"><span class="sr-only">Actions</span></th>${foot}</tr></tbody></table>`;
+  compareContent.innerHTML = `<table class="tm-cmp-table"><caption class="sr-only">Comparison of ${items.length} products</caption><thead><tr><td></td>${head}</tr></thead><tbody>${body}<tr><th scope="row"><span class="sr-only">Actions</span></th>${foot}</tr></tbody></table><p class="tm-cmp-actions"><button type="button" class="tm-link" data-compare-clear>Clear comparison</button></p>`;
 }
 function openCompare() {
   if (compareIds.length < 2) return;
@@ -1356,21 +1376,50 @@ function closeCompare() {
   compareModal.hidden = true;
   compareModal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("tm-lock");
-  compareGo.focus();
+  compareOpenButton.focus();
 }
 grid.addEventListener("change", event => {
   const input = event.target.closest("[data-compare-id]");
   if (input) setCompared(input.dataset.compareId, input.checked);
 });
-compareTrayList.addEventListener("click", event => {
-  const remove = event.target.closest("[data-compare-remove]");
-  if (remove) setCompared(remove.dataset.compareRemove, false);
+function currentProductId() {
+  return dialog.hidden ? "" : (dialogContent.querySelector(".detail-content")?.dataset.productId || "");
+}
+function askCompare() {
+  if (compareIds.length >= 2) { openCompare(); return; }
+  const viewing = currentProductId();
+  if (viewing) {
+    /* Compare was pressed while reading a product: put this product in the list, go back to browsing, and ask for the second one. */
+    if (!compareIds.includes(viewing)) setCompared(viewing, true);
+    closeDialog();
+    showToast(compareIds.length >= 2 ? "Ready. Press Compare to see them side by side." : "Added to compare. Tick Compare on one more product.");
+    return;
+  }
+  showToast(compareIds.length ? "Tick Compare on one more product." : "Tick Compare on two products to compare them.");
+}
+compareOpenButton.addEventListener("click", askCompare);
+tabCompareButton.addEventListener("click", askCompare);
+document.querySelector(".brand")?.addEventListener("click", event => {
+  if (dialog.hidden) return;
+  event.preventDefault();
+  closeDialog();
+  window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
 });
-document.querySelector("#compare-clear").addEventListener("click", () => { compareIds.length = 0; syncCompareChecks(); renderCompareTray(); closeCompare(); });
-compareGo.addEventListener("click", openCompare);
+document.querySelector("#tab-search")?.addEventListener("click", () => {
+  if (!dialog.hidden) closeDialog();
+  document.querySelector(".tm-header")?.classList.remove("tm-header-hidden");
+  window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
+  searchInput.focus();
+});
+document.querySelector("#tab-saved")?.addEventListener("click", () => watchlistFilter.click());
+document.querySelector("#tab-browse").addEventListener("click", () => {
+  if (!dialog.hidden) closeDialog();
+  window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
+});
 document.querySelector("#compare-close").addEventListener("click", closeCompare);
 compareModal.addEventListener("click", event => {
   if (event.target === compareModal) { closeCompare(); return; }
+  if (event.target.closest("[data-compare-clear]")) { compareIds.length = 0; syncCompareChecks(); renderCompareTray(); closeCompare(); return; }
   const open = event.target.closest("[data-compare-open]");
   if (open) { const id = open.dataset.compareOpen; closeCompare(); openProduct(id); }
 });
@@ -1396,6 +1445,7 @@ searchInput.addEventListener("input", () => {
 loadMoreButton.addEventListener("click", () => renderCatalog(true));
 sortSelect.addEventListener("change", () => renderCatalog());
 watchlistFilter.addEventListener("click", () => {
+  if (!dialog.hidden) closeDialog();
   const selected = watchlistFilter.getAttribute("aria-pressed") === "true";
   setWatchlistFilter(!selected);
   renderCatalog();
@@ -1418,6 +1468,7 @@ dialogContent.addEventListener("click", event => {
     });
     return;
   }
+  if (event.target.closest("[data-close-dialog]")) { closeDialog(); return; }
   if (event.target.closest("[data-scroll-offers]")) {
     const heading = dialogContent.querySelector("#offers-heading");
     if (heading) heading.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
@@ -1446,7 +1497,7 @@ dialogContent.addEventListener("click", event => {
     toggleWatchlist(id).then(() => {
       const on = watchlist.has(id);
       dxSave.setAttribute("aria-pressed", String(on));
-      dxSave.querySelector(".label").textContent = on ? "Saved" : "Save";
+      const label = dxSave.querySelector(".label"); if (label) label.textContent = on ? "Saved" : "Save";
     }).catch(error => showError("Could not update your saved list.", error));
     return;
   }
@@ -1454,9 +1505,6 @@ dialogContent.addEventListener("click", event => {
   if (dxCompare) {
     const id = dxCompare.dataset.dxCompare;
     setCompared(id, !compareIds.includes(id));
-    const on = compareIds.includes(id);
-    dxCompare.setAttribute("aria-pressed", String(on));
-    dxCompare.querySelector(".label").textContent = on ? "Added" : "Compare";
     return;
   }
   const shareButton = event.target.closest("[data-share-product]");
@@ -1597,19 +1645,40 @@ async function start() {
   catalogProducts = products.map(product => ({ ...product, retailerSearchStores: product.stores || [] }));
   const knownIds = new Set(catalogProducts.map(product => product.id));
   watchlist = new Set((await readSetting("watchlist") || []).filter(id => knownIds.has(id)));
-  watchlistCount.textContent = String(watchlist.size); document.querySelectorAll("[data-saved-badge]").forEach(b => { b.textContent = String(watchlist.size); b.hidden = watchlist.size === 0; });
+  updateSavedCount();
   applyTheme(await readSetting("theme") || (window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
   recentIds = (await readSetting("recent") || []).filter(id => knownIds.has(id));
   const savedRegion = await readSetting("region");
   if (typeof savedRegion === "string" && REGIONS[savedRegion]) region = savedRegion;
+  try {
+    const keptCompare = JSON.parse(window.sessionStorage.getItem(STORAGE_PREFIX + "compare") || "[]");
+    for (const id of Array.isArray(keptCompare) ? keptCompare : []) if (knownIds.has(id) && compareIds.length < COMPARE_MAX && !compareIds.includes(id)) compareIds.push(id);
+  } catch (error) { /* ignore a damaged session value */ }
+  compareRestored = true;
   readUrlState();
   renderCategories();
   renderWatchlistPanel();
   renderCatalog();
-  document.querySelector("#hero-count").textContent = String(catalogProducts.length);
+  const heroCount = document.querySelector("#hero-count"); if (heroCount) heroCount.textContent = String(catalogProducts.length);
+  const statP = document.querySelector("#hero-count-stat"), statC = document.querySelector("#hero-cat-stat");
+  if (statP) statP.textContent = String(catalogProducts.length);
+  if (statC) statC.textContent = String(categories.length - 1);
   const productId = new URLSearchParams(window.location.hash.slice(1)).get("product");
   if (productId) await openProduct(productId, { fromHistory: true });
+  syncCompareChecks();
+  renderCompareTray();
+  followRoute();
 }
+/* /#saved and /#compare: links from the other pages (and from this one) */
+function followRoute() {
+  const route = window.location.hash;
+  if (route !== "#saved" && route !== "#compare") return;
+  history.replaceState(history.state, "", `${window.location.pathname}${window.location.search}`);
+  if (!dialog.hidden) closeDialog();
+  if (route === "#saved") { setWatchlistFilter(true); renderCatalog(); window.scrollTo({ top: 0 }); }
+  else askCompare();
+}
+window.addEventListener("hashchange", followRoute);
 
 themeToggle.addEventListener("click", async () => {
   const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
@@ -1680,7 +1749,7 @@ suggestionsBox.addEventListener("click", event => {
     return;
   }
   if (categoryChip) {
-    activeCategory = categoryChip.dataset.suggestCategory;
+    setOnlyCategory(categoryChip.dataset.suggestCategory);
     closeSuggestions(); searchInput.blur(); renderCategories(); renderCatalog();
     window.setTimeout(scrollToCatalog, 80);
     return;
@@ -1698,23 +1767,6 @@ searchClear.addEventListener("click", () => {
   searchInput.focus();
 });
 
-brandSelect.addEventListener("change", () => {
-  activeBrand = brandSelect.value;
-  renderCatalog();
-});
-quickFilters.addEventListener("click", event => {
-  const tier = event.target.closest("[data-qf-tier]");
-  const conn = event.target.closest("[data-qf-conn]");
-  if (tier) {
-    const value = tier.dataset.qfTier;
-    setTier(activeTier === value ? "All tiers" : value);
-  } else if (conn) {
-    const value = conn.dataset.qfConn;
-    const current = wirelessOnly ? "wireless" : wiredOnly ? "wired" : "any";
-    setConnection(current === value ? "any" : value);
-  } else return;
-  renderCatalog();
-});
 emptyState.addEventListener("click", event => {
   const button = event.target.closest("[data-empty-action]");
   if (!button) return;
@@ -1724,20 +1776,20 @@ emptyState.addEventListener("click", event => {
   else if (action === "clear-all") clearFilter("all");
   else if (action === "clear-saved-filter") clearFilter("saved");
   else if (action === "clear-filters") {
-    activeCategory = "All products"; activeBrand = "All brands"; setWireless(false); setTier("All tiers"); setWatchlistFilter(false);
+    resetFilters(); setWatchlistFilter(false);
     renderCategories(); renderCatalog();
   } else if (action.startsWith("query:")) {
     searchInput.value = action.slice("query:".length);
     updateSearchState(); renderCatalog(); searchInput.focus();
   } else if (action.startsWith("category:")) {
-    searchInput.value = ""; activeBrand = "All brands"; setWireless(false); setTier("All tiers"); setWatchlistFilter(false);
-    activeCategory = action.slice("category:".length);
+    searchInput.value = ""; resetFilters(); setWatchlistFilter(false);
+    setOnlyCategory(action.slice("category:".length));
     updateSearchState(); renderCategories(); renderCatalog(); scrollToCatalog();
   }
 });
 activeFiltersEl.addEventListener("click", event => {
   const button = event.target.closest("[data-clear]");
-  if (button) clearFilter(button.dataset.clear);
+  if (button) clearFilter(button.dataset.clear, button.dataset.value || "");
 });
 recentRow.addEventListener("click", event => {
   if (event.target.closest("[data-clear-recent]")) {
@@ -1799,10 +1851,8 @@ backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: re
 document.querySelectorAll("[data-query]").forEach(button => {
   button.addEventListener("click", () => {
     searchInput.value = button.dataset.query;
-    activeCategory = "All products";
-    activeBrand = "All brands";
+    resetFilters();
     sharedIds = null;
-    setWireless(false);
     setWatchlistFilter(false);
     updateSearchState();
     renderCategories();
@@ -1843,24 +1893,10 @@ clearSavedButton.addEventListener("click", async () => {
 });
 renderSpotlight();
 document.addEventListener("click", event => {
-  if (event.target.closest("[data-spot-again]")) renderSpotlight();
+  if (event.target.closest("[data-spot-again]")) { pickOffset += 1; renderSpotlight(); return; }
+  const open = event.target.closest("[data-open-pick]");
+  if (open && !(event.metaKey || event.ctrlKey || event.shiftKey || event.button)) { event.preventDefault(); openProduct(open.dataset.openPick); }
 });
-
-// On phones the "Before you buy" box moves below the product list so the first screen shows products.
-(function placeSpotlight() {
-  const box = document.querySelector("#spotlight");
-  const how = document.querySelector("#how-it-works");
-  if (!box || !how || !window.matchMedia) return;
-  const home = box.parentNode;
-  const homeNext = box.nextSibling;
-  const query = window.matchMedia("(max-width: 760px)");
-  const place = () => {
-    if (query.matches) { how.parentNode.insertBefore(box, how); box.classList.add("tm-spot-moved"); }
-    else { home.insertBefore(box, homeNext && homeNext.parentNode === home ? homeNext : null); box.classList.remove("tm-spot-moved"); }
-  };
-  place();
-  if (query.addEventListener) query.addEventListener("change", place);
-})();
 
 // Mobile: the brand row slides away while scrolling down and returns on scroll up; the search row stays pinned.
 (() => {
@@ -1905,305 +1941,16 @@ document.addEventListener("click", event => {
   observer.observe(loadMoreButton);
 })();
 
-
-/* Phone bottom bar: Browse, Search, Saved, Compare, Guides. */
-/* Search stays visible in the header; the bottom-bar action scrolls to it and focuses it. */
-function focusSearch() {
-  document.body.classList.add("tm-search-open");
-  window.scrollTo(0, 0);
-  searchInput.focus({ preventScroll: true });
+/* Open straight into search when a page links to /#search (static pages' Search tab). */
+function focusSearchFromHash() {
+  if (window.location.hash !== "#search") return;
+  searchInput.focus({ preventScroll: false });
+  searchInput.scrollIntoView({ block: "center" });
 }
-searchInput.addEventListener("blur", () => window.setTimeout(() => {
-  if (!searchInput.value.trim()) document.body.classList.remove("tm-search-open");
-}, 250));
-document.querySelectorAll("[data-nav-search]").forEach(button => button.addEventListener("click", focusSearch));
-document.querySelectorAll("[data-nav-saved]").forEach(button => button.addEventListener("click", () => document.querySelector("#watchlist-filter").click()));
-document.querySelectorAll("[data-nav-compare]").forEach(button => {
-  button.addEventListener("click", () => {
-    if (compareIds.length >= 2) openCompare();
-    else showToast("Tick Compare on two products first.");
-  });
-});
-document.querySelectorAll("[data-nav-browse]").forEach(link => {
-  link.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" }));
-});
-if (window.location.hash === "#search") { history.replaceState(null, "", window.location.pathname + window.location.search); focusSearch(); }
-renderCompareTray();
+window.addEventListener("hashchange", focusSearchFromHash);
+window.addEventListener("load", focusSearchFromHash);
 
-renderWatchlistPanel();
-
-/* ======================================================================
-   v12 interaction polish. Each block stands alone; delete one to remove that behavior.
-   ====================================================================== */
-function reducedMotionNow() { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
-
-/* Undo toast: the action stays on screen long enough to use. */
-function showUndoToast(message, undo) {
-  toast.replaceChildren();
-  const text = document.createElement("span");
-  text.textContent = message;
-  const button = document.createElement("button");
-  button.type = "button";
-  button.className = "toast-undo";
-  button.textContent = "Undo";
-  button.addEventListener("click", () => { toast.classList.remove("visible", "has-action"); undo(); });
-  toast.append(text, button);
-  toast.classList.add("visible", "has-action");
-  window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => toast.classList.remove("visible", "has-action"), 7000);
-}
-compareClearHook();
-function compareClearHook() {
-  document.querySelector("#compare-clear").addEventListener("click", () => {
-    const before = [...compareIds];
-    if (before.length) window.setTimeout(() => showUndoToast("Comparison cleared.", () => before.forEach(id => setCompared(id, true))), 0);
-  }, true);
-  clearSavedButton.addEventListener("click", () => {
-    if (!clearSavedButton.classList.contains("confirming")) return;
-    const before = [...watchlist];
-    window.setTimeout(() => showUndoToast("Saved list cleared.", async () => {
-      watchlist = new Set(before);
-      await saveSetting("watchlist", before);
-      renderWatchlistPanel();
-      renderCatalog();
-    }), 0);
-  }, true);
-}
-
-/* Stale-while-revalidate: show the last answer at once, refresh it quietly when it is old. */
-async function swrJson(url, label) {
-  const key = `swr:${url}`;
-  const cached = storageGet(key);
-  const refresh = async () => {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`${label} returned HTTP ${response.status}.`);
-    const data = await response.json();
-    storageSet(key, { t: Date.now(), data });
-    return data;
-  };
-  if (cached && cached.data) {
-    if (Date.now() - cached.t > 60 * 60 * 1000) refresh().catch(() => {});
-    return cached.data;
-  }
-  return refresh();
-}
-
-/* Photos fade in when ready; an optional BlurHash (product.blurhash) shows behind them meanwhile. */
-const BLUR83 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%*+,-.:;=?@[]^_{|}~";
-function blurDecode(hash, w, h) {
-  const n83 = (from, to) => { let v = 0; for (let i = from; i < to; i++) v = v * 83 + BLUR83.indexOf(hash[i]); return v; };
-  const toLin = v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
-  const toSrgb = v => { v = Math.max(0, Math.min(1, v)); return v <= 0.0031308 ? Math.round(v * 12.92 * 255 + 0.5) : Math.round((1.055 * v ** (1 / 2.4) - 0.055) * 255 + 0.5); };
-  const sq = v => Math.sign(v) * v * v;
-  const flag = n83(0, 1), ny = Math.floor(flag / 9) + 1, nx = (flag % 9) + 1;
-  const maxAC = (n83(1, 2) + 1) / 166;
-  const colors = [];
-  for (let i = 0; i < nx * ny; i++) {
-    if (i === 0) { const v = n83(2, 6); colors.push([toLin(v >> 16), toLin((v >> 8) & 255), toLin(v & 255)]); }
-    else { const v = n83(4 + i * 2, 6 + i * 2); colors.push([sq((Math.floor(v / 361) - 9) / 9) * maxAC, sq((Math.floor(v / 19) % 19 - 9) / 9) * maxAC, sq((v % 19 - 9) / 9) * maxAC]); }
-  }
-  const px = new Uint8ClampedArray(w * h * 4);
-  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-    let r = 0, g = 0, b = 0;
-    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
-      const basis = Math.cos(Math.PI * x * i / w) * Math.cos(Math.PI * y * j / h), c = colors[i + j * nx];
-      r += c[0] * basis; g += c[1] * basis; b += c[2] * basis;
-    }
-    const o = 4 * (x + y * w);
-    px[o] = toSrgb(r); px[o + 1] = toSrgb(g); px[o + 2] = toSrgb(b); px[o + 3] = 255;
-  }
-  return px;
-}
-function paintBlurs(root) {
-  root.querySelectorAll(".tm-tile[data-blurhash]:not([data-blur-done])").forEach(tile => {
-    tile.dataset.blurDone = "1";
-    try {
-      const canvas = document.createElement("canvas");
-      canvas.width = 32; canvas.height = 32; canvas.className = "tm-blur"; canvas.setAttribute("aria-hidden", "true");
-      canvas.getContext("2d").putImageData(new ImageData(blurDecode(tile.dataset.blurhash, 32, 32), 32, 32), 0, 0);
-      tile.prepend(canvas);
-    } catch (error) { /* a bad hash just means no placeholder */ }
-  });
-}
-(function photosFadeIn() {
-  const mark = img => { img.classList.add("is-loaded"); img.closest(".tm-tile")?.classList.remove("tm-loading"); };
-  document.addEventListener("error", event => { if (event.target instanceof HTMLImageElement) event.target.closest(".tm-tile")?.classList.remove("tm-loading"); }, true);
-  const sweep = () => { grid.querySelectorAll("img.tm-photo:not(.is-loaded)").forEach(img => { if (img.complete && img.naturalWidth) mark(img); }); paintBlurs(grid); };
-  document.addEventListener("load", event => { if (event.target instanceof HTMLImageElement && event.target.classList.contains("tm-photo")) mark(event.target); }, true);
-  new MutationObserver(sweep).observe(grid, { childList: true, subtree: true });
-  window.setTimeout(() => grid.querySelectorAll("img.tm-photo").forEach(mark), 8000);
-  sweep();
-})();
-
-/* Command menu: Ctrl or Cmd + K. Products, categories and actions in one box. */
-const cmdk = (function () {
-  const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
-  const keyLabel = isMac ? "⌘K" : "Ctrl K";
-  searchInput.closest(".tm-search")?.querySelectorAll("kbd").forEach(k => { k.textContent = keyLabel; });
-  const root = document.createElement("div");
-  root.className = "tm-cmdk"; root.id = "cmdk"; root.hidden = true;
-  root.setAttribute("role", "dialog"); root.setAttribute("aria-modal", "true"); root.setAttribute("aria-label", "Command menu");
-  root.innerHTML = '<div class="tm-cmdk-backdrop" data-cmdk-close></div><div class="tm-cmdk-panel"><div class="tm-grab" data-sheet-handle></div>'
-    + '<input class="tm-cmdk-input" id="cmdk-input" type="search" role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list" placeholder="Search products, jump to a category, run a command" autocomplete="off" spellcheck="false" enterkeyhint="go">'
-    + '<ul class="tm-cmdk-list" id="cmdk-list" role="listbox"></ul>'
-    + '<div class="tm-cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div></div>';
-  document.body.append(root);
-  const input = root.querySelector("#cmdk-input"), list = root.querySelector("#cmdk-list");
-  let rows = [], index = 0, lastFocus = null;
-  const isDark = () => document.documentElement.dataset.theme === "dark";
-  function build(query) {
-    const q = query.trim().toLowerCase();
-    const has = text => !q || text.toLowerCase().includes(q);
-    const actions = [
-      { label: "Surprise me", run: () => document.querySelector("#surprise-button").click() },
-      { label: "Show saved products", run: () => document.querySelector("#watchlist-filter").click() },
-      { label: compareIds.length >= 2 ? `Compare ${compareIds.length} selected products` : "Compare products", hint: "C", run: () => (compareIds.length >= 2 ? openCompare() : showToast("Tick Compare on two products first.")) },
-      { label: isDark() ? "Switch to light mode" : "Switch to dark mode", hint: "T", run: () => themeToggle.click() },
-      { label: "Open filters", run: () => filtersOpen.click() },
-      { label: "How we choose", run: () => { window.location.href = "how-we-choose/index.html"; } }
-    ].filter(item => has(item.label)).map(item => ({ ...item, group: "Actions" }));
-    const cats = categories.filter(name => name !== "All products" && has(`browse ${name}`)).map(name => ({
-      group: "Browse", label: `Browse ${name}`,
-      run: () => { document.querySelector(`.tm-rc[data-category="${CSS.escape(name)}"], [data-category="${CSS.escape(name)}"]`)?.click(); scrollToCatalog(); }
-    }));
-    const filterRow = q ? [{ group: "Search", label: `Filter the list for \u201c${query.trim()}\u201d`, run: () => { searchInput.value = query.trim(); searchInput.dispatchEvent(new Event("input", { bubbles: true })); scrollToCatalog(); } }] : [];
-    const terms = q.split(/\s+/).filter(Boolean);
-    const found = q ? products.filter(p => terms.every(t => `${p.brand} ${p.name} ${p.category}`.toLowerCase().includes(t))).slice(0, 8).map(p => ({
-      group: "Products", label: p.name, sub: `${p.brand} · ${p.category}`, run: () => openProduct(p.id)
-    })) : [];
-    return [...found, ...filterRow, ...cats.slice(0, q ? 4 : 8), ...actions];
-  }
-  function render() {
-    rows = build(input.value); index = Math.min(index, Math.max(0, rows.length - 1));
-    let group = ""; let html = "";
-    rows.forEach((row, i) => {
-      if (row.group !== group) { group = row.group; html += `<li role="presentation" class="tm-cmdk-group">${group}</li>`; }
-      html += `<li role="option" id="cmdk-opt-${i}" data-i="${i}" aria-selected="${i === index}"><span class="tm-cmdk-main"><span>${escapeHtml(row.label)}</span>${row.sub ? `<small>${escapeHtml(row.sub)}</small>` : ""}</span>${row.hint ? `<kbd>${row.hint}</kbd>` : ""}</li>`;
-    });
-    list.innerHTML = html || '<li role="presentation" class="tm-cmdk-empty">Nothing matches that.</li>';
-    input.setAttribute("aria-activedescendant", rows.length ? `cmdk-opt-${index}` : "");
-  }
-  function select(i) {
-    index = (i + rows.length) % Math.max(1, rows.length);
-    list.querySelectorAll("[role=option]").forEach(li => li.setAttribute("aria-selected", String(+li.dataset.i === index)));
-    input.setAttribute("aria-activedescendant", `cmdk-opt-${index}`);
-    list.querySelector(`#cmdk-opt-${index}`)?.scrollIntoView({ block: "nearest" });
-  }
-  function open() {
-    if (!root.hidden) return;
-    lastFocus = document.activeElement; input.value = ""; index = 0; render();
-    root.hidden = false; document.body.classList.add("tm-lock"); input.focus();
-  }
-  function close(restore = true) {
-    if (root.hidden) return;
-    root.hidden = true;
-    if (filterSidebar.classList.contains("open") === false && compareModal.hidden && dialog.hidden) document.body.classList.remove("tm-lock");
-    if (restore && lastFocus instanceof HTMLElement && lastFocus.isConnected) lastFocus.focus();
-  }
-  function run(i) { const row = rows[i]; if (!row) return; close(false); window.setTimeout(row.run, 0); }
-  input.addEventListener("input", () => { index = 0; render(); });
-  input.addEventListener("keydown", event => {
-    if (event.key === "ArrowDown") { event.preventDefault(); select(index + 1); }
-    else if (event.key === "ArrowUp") { event.preventDefault(); select(index - 1); }
-    else if (event.key === "Enter") { event.preventDefault(); run(index); }
-    else if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); close(); }
-    else if (event.key === "Tab") event.preventDefault();
-  });
-  list.addEventListener("click", event => { const li = event.target.closest("[role=option]"); if (li) run(+li.dataset.i); });
-  list.addEventListener("pointermove", event => { const li = event.target.closest("[role=option]"); if (li && +li.dataset.i !== index) select(+li.dataset.i); });
-  root.addEventListener("click", event => { if (event.target.closest("[data-cmdk-close]")) close(); });
-  document.addEventListener("keydown", event => {
-    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "") || document.activeElement?.isContentEditable;
-    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-      event.preventDefault(); event.stopImmediatePropagation(); if (root.hidden) open(); else close(); return;
-    }
-    if (typing || event.metaKey || event.ctrlKey || event.altKey || !root.hidden || !dialog.hidden || !compareModal.hidden) return;
-    if (event.key === "t") { event.preventDefault(); themeToggle.click(); }
-    else if (event.key === "c") { event.preventDefault(); if (compareIds.length >= 2) openCompare(); else showToast("Tick Compare on two products first."); }
-  }, true);
-  themeToggle.title = "Switch theme (T)";
-  compareGo.title = "Compare (C)";
-  return { open, close, isOpen: () => !root.hidden, panel: root.querySelector(".tm-cmdk-panel"), backdrop: root.querySelector(".tm-cmdk-backdrop"), handle: root.querySelector(".tm-grab") };
-})();
-
-/* Swipe to dismiss: drag a sheet by its handle. It follows the finger, can be caught mid-flight, and springs back if let go early. */
-(function swipeSheets() {
-  const phone = window.matchMedia("(max-width: 759px)");
-  const currentY = el => { const m = getComputedStyle(el).transform; return m && m !== "none" ? new DOMMatrix(m).m42 : 0; };
-  function enable(panel, handle, backdrop, close) {
-    let anim = null, startY = 0, base = 0, lastY = 0, lastT = 0, velocity = 0, dragging = false, cleanup = 0;
-    const ms = n => (reducedMotionNow() ? 0 : n);
-    const reset = () => { panel.style.transform = ""; if (backdrop) backdrop.style.opacity = ""; };
-    function catchAnim() {
-      window.clearTimeout(cleanup);
-      if (!anim) return;
-      try { anim.commitStyles(); } catch (error) { /* older browsers: the drag simply restarts from where it ended */ }
-      anim.cancel(); anim = null;
-    }
-    handle.addEventListener("pointerdown", event => {
-      if (!phone.matches || (event.pointerType === "mouse" && event.button !== 0)) return;
-      catchAnim();
-      base = currentY(panel); startY = lastY = event.clientY; lastT = event.timeStamp; velocity = 0; dragging = true;
-      handle.setPointerCapture(event.pointerId);
-    });
-    handle.addEventListener("pointermove", event => {
-      if (!dragging) return;
-      const dy = Math.max(0, base + event.clientY - startY);
-      panel.style.transform = `translateY(${dy}px)`;
-      if (backdrop) backdrop.style.opacity = String(Math.max(.25, 1 - dy / Math.max(1, panel.offsetHeight)));
-      const dt = event.timeStamp - lastT;
-      if (dt > 0) velocity = (event.clientY - lastY) / dt;
-      lastY = event.clientY; lastT = event.timeStamp;
-    });
-    const release = () => {
-      if (!dragging) return;
-      dragging = false;
-      const dy = currentY(panel);
-      if (dy > 110 || velocity > .6) {
-        anim = panel.animate([{ transform: `translateY(${dy}px)` }, { transform: `translateY(${panel.offsetHeight + 40}px)` }], { duration: ms(180), easing: "ease-in", fill: "forwards" });
-        anim.onfinish = () => { close(); cleanup = window.setTimeout(() => { if (anim) anim.cancel(); anim = null; reset(); }, 400); };
-      } else {
-        anim = panel.animate([{ transform: `translateY(${dy}px)` }, { transform: "translateY(0)" }], { duration: ms(240), easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" });
-        anim.onfinish = () => { if (anim) anim.cancel(); anim = null; reset(); };
-      }
-    };
-    handle.addEventListener("pointerup", release);
-    handle.addEventListener("pointercancel", release);
-  }
-  const grab = () => { const el = document.createElement("div"); el.className = "tm-grab"; el.setAttribute("data-sheet-handle", ""); return el; };
-  const dialogPanel = dialog.querySelector(".dialog-panel"); const dialogGrab = grab(); dialogPanel.prepend(dialogGrab);
-  const comparePanel = compareModal.querySelector(".tm-cmp-panel"); const compareGrab = grab(); comparePanel.prepend(compareGrab);
-  const filtersGrab = grab(); filterSidebar.prepend(filtersGrab);
-  enable(dialogPanel, dialogGrab, dialogBackdrop, closeDialog);
-  enable(comparePanel, compareGrab, null, closeCompare);
-  enable(filterSidebar, filtersGrab, filtersBackdrop, () => setFiltersOpen(false));
-  enable(cmdk.panel, cmdk.handle, cmdk.backdrop, () => cmdk.close());
-})();
-
-/* Back button closes the open sheet instead of leaving the page (Android back gesture included). */
-(function sheetHistory() {
-  const sheets = {
-    filters: { node: filterSidebar, attr: "class", isOpen: () => filterSidebar.classList.contains("open"), close: () => setFiltersOpen(false) },
-    compare: { node: compareModal, attr: "hidden", isOpen: () => !compareModal.hidden, close: () => closeCompare() },
-    palette: { node: document.querySelector("#cmdk"), attr: "hidden", isOpen: () => cmdk.isOpen(), close: () => cmdk.close(false) }
-  };
-  let popping = false;
-  const inHistory = name => !!(history.state && history.state.sheet === name);
-  function sync(name) {
-    const sheet = sheets[name], open = sheet.isOpen();
-    if (popping) return;
-    if (open && !inHistory(name)) history.pushState({ ...(history.state || {}), sheet: name }, "");
-    else if (!open && inHistory(name)) history.back();
-  }
-  Object.keys(sheets).forEach(name => new MutationObserver(() => sync(name)).observe(sheets[name].node, { attributes: true, attributeFilter: [sheets[name].attr] }));
-  window.addEventListener("popstate", () => {
-    popping = true;
-    Object.keys(sheets).forEach(name => { if (sheets[name].isOpen() && !inHistory(name)) sheets[name].close(); });
-    popping = false;
-  });
-})();
-
-/* Offline and repeat visits: the service worker is generated by scripts/build.mjs. */
+/* Offline support: register the service worker on HTTPS (and localhost). */
 if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {
   window.addEventListener("load", () => { navigator.serviceWorker.register("/sw.js").catch(() => {}); });
 }

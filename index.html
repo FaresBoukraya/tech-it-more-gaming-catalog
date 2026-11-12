@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#fafaf7" id="theme-color">
-    <meta name="description" content="Browse gaming keyboards, mice, headsets and controllers, then compare them at Amazon, Best Buy, Newegg and more. Independent, no accounts.">
+    <meta name="theme-color" content="#efedf0" id="theme-color">
+    <meta name="description" content="Browse keyboards, mice, headsets, controllers, monitors and more, then open Amazon, Best Buy, Newegg and other stores in the US, UK, Canada and Europe to compare. Independent, no accounts.">
     <link rel="canonical" href="https://tech-it-more-gaming-catalog.pages.dev/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48">
@@ -24,16 +24,17 @@
     <meta name="twitter:card" content="summary_large_image">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Tech It More","url":"https://tech-it-more-gaming-catalog.pages.dev/","description":"Independent catalog of gaming gear with links to US retailers.","potentialAction":{"@type":"SearchAction","target":"https://tech-it-more-gaming-catalog.pages.dev/?q={search_term_string}","query-input":"required name=search_term_string"}}</script>
     <title>Tech It More: gaming gear catalog and where to buy it (US)</title>
-    <script src="theme-init.js?v=b41f54c4"></script>
+    <script src="theme-init.js?v=4fa18534"></script>
     <link rel="preconnect" href="https://assets2.razerzone.com">
     <link rel="preconnect" href="https://images.ctfassets.net">
     <link rel="preconnect" href="https://gmedia.playstation.com">
     <link rel="preload" href="fonts/lora-latin.woff" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="fonts/carlito-regular.woff" as="font" type="font/woff" crossorigin>
-    <link rel="stylesheet" href="site.css?v=b4c7f898">
+    <link rel="preload" href="fonts/lora-italic-latin.woff" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="site.css?v=1deda21a">
     <script src="products.js?v=cb66205d" defer></script>
-    <script src="language.js?v=5c4eae83" defer></script>
-    <script src="app.js?v=0006b541" defer></script>
+    <script src="language.js?v=530b85bc" defer></script>
+    <script src="app.js?v=4e29afac" defer></script>
     <script src="mail.js?v=047f1937" defer></script>
   </head>
   <body>
@@ -47,31 +48,34 @@
         <div class="tm-search" id="search-wrap" role="search">
           <div class="tm-search-field">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg>
-            <input id="search-input" type="search" placeholder="Search gear, brands or models" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="search" inputmode="search" spellcheck="false" aria-label="Search gaming gear" role="combobox" aria-expanded="false" aria-controls="search-suggestions" aria-autocomplete="list">
+            <input id="search-input" type="search" placeholder="Search mice, keyboards, headsets" autocomplete="off" autocapitalize="off" autocorrect="off" enterkeyhint="search" inputmode="search" spellcheck="false" aria-label="Search gaming gear" role="combobox" aria-expanded="false" aria-controls="search-suggestions" aria-autocomplete="list">
             <button class="tm-search-clear" id="search-clear" type="button" aria-label="Clear search">×</button>
             <kbd>Ctrl K</kbd>
           </div>
           <div class="tm-suggestions" id="search-suggestions" role="listbox" aria-label="Search suggestions" hidden></div>
         </div>
         <div class="tm-actions">
+          <nav class="tm-nav" aria-label="Main"><a href="#catalog" aria-current="page">Browse</a><a href="how-we-choose/index.html">Guides</a><a href="#how-it-works">About</a></nav>
           <label class="tm-language"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option><option value="es">Español</option></select></label>
-          <button class="tm-btn" id="watchlist-filter" type="button" aria-pressed="false" aria-label="Show saved products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="label">Saved</span><span class="count" id="watchlist-count">0</span></button>
-          <button class="tm-btn tm-theme" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Dark mode</span></button>
+          <button class="tm-icon-btn" id="watchlist-filter" type="button" aria-pressed="false" aria-label="Show saved products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="label">Saved</span><span class="count" id="watchlist-count" data-zero>0</span></button>
+          <button class="tm-icon-btn tm-theme" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Dark mode</span></button>
+          <button class="tm-compare-pill" id="compare-open" type="button" aria-label="Compare products">Compare <span class="compare-badge" id="compare-badge" data-zero>0</span></button>
         </div>
       </div>
     </header>
     <main class="tm-main" id="main">
       <section class="tm-hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">Find gaming gear worth buying.</h1>
-        <p class="tm-lead">Browse <span id="hero-count">52</span> gaming products, then open any one to find it at Amazon, Best Buy, Newegg and other retailers in the US, UK, Canada and Europe.</p>
-        <p class="tm-trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3z"/><path d="m9 12 2 2 4-4"/></svg><span>We're independent and sell nothing. Store links open each retailer's own search, where you see its current price and stock.</span></p>
-        <div class="tm-hero-actions">
-          <button class="tm-primary" id="surprise-button" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3.5"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/></svg>Surprise me</button>
-          <span class="tm-hint">Press <kbd>/</kbd> to search from anywhere</span>
+        <div class="tm-hero-inner">
+          <div>
+            <p class="tm-kicker">Independent gaming gear catalog</p>
+            <h1 id="hero-title">Gear worth <em>buying.</em></h1>
+          </div>
+          <div>
+            <p class="tm-hero-lead">Specs, a plain verdict and where to buy, for <span id="hero-count">52</span> products. We sell nothing and quote no prices: every store link opens that retailer's own search.</p>
+            <div class="tm-hero-stats"><div class="tm-stat"><strong id="hero-count-stat">52</strong><span>Products</span></div><div class="tm-stat"><strong id="hero-cat-stat">7</strong><span>Categories</span></div></div>
+          </div>
         </div>
-        <aside class="tm-spotlight" id="spotlight" aria-label="Before you buy"></aside>
       </section>
-
       <section class="tm-catalog" id="catalog" aria-labelledby="catalog-title">
         <div class="tm-banner" id="shared-banner" hidden>
           <p id="shared-text">Shared list</p>
@@ -83,47 +87,41 @@
               <h2 class="tm-side-title">Filters</h2>
               <button class="tm-side-close" id="filters-close" type="button" aria-label="Close filters">×</button>
             </div>
-            <div class="tm-side-group tm-side-cats">
-              <h3>Category</h3>
-              <div class="tm-cats" id="category-list" role="group" aria-label="Browse by category"></div>
-            </div>
-            <div class="tm-side-group">
-              <h3>Refine</h3>
-              <label class="tm-side-field"><span>Brand</span><select id="brand-select" aria-label="Filter by brand"><option>All brands</option></select></label>
-            </div>
-            <div class="tm-side-group">
-              <h3>Order</h3>
-              <label class="tm-side-field"><span>Sort</span><select id="sort-select" aria-label="Sort products">
-                <option value="popular">Featured</option>
-                <option value="name">Name A–Z</option>
-                <option value="brand">Brand A–Z</option>
-                <option value="tier">Price tier: low to high</option>
-              </select></label>
-            </div>
+            <div class="tm-side-group tm-side-cats"><h3>Type</h3><div class="tm-checks" id="filter-type" role="group" aria-label="Type"></div></div>
+            <div class="tm-side-group"><h3>Brand</h3><div class="tm-checks" id="filter-brand" role="group" aria-label="Brand"></div></div>
+            <div class="tm-side-group"><h3>Connection</h3><div class="tm-checks" id="filter-connection" role="group" aria-label="Connection"></div></div>
+            <div class="tm-side-group"><h3>Price tier</h3><div class="tm-checks" id="filter-tier" role="group" aria-label="Price tier"></div></div>
             <button class="tm-primary tm-side-apply" id="filters-apply" type="button">Show results</button>
           </aside>
           <div class="tm-results-col">
             <div class="tm-toolbar">
-              <div>
-                <h2 id="catalog-title" tabindex="-1">All gear</h2>
-                <p class="tm-results" id="results-count" aria-live="polite">52 products</p>
-              </div>
+              <div class="tm-catrail" id="category-rail" role="group" aria-label="Browse by category"></div>
               <div class="tm-toolbar-actions">
                 <button class="tm-btn tm-filters-open" id="filters-open" type="button" aria-controls="filter-sidebar" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span class="label">Filters</span><span class="tm-filter-badge" id="filters-badge" hidden></span></button>
+                <p class="tm-results" id="results-count" aria-live="polite">52 products</p>
+                <label class="tm-sort"><span>Sort:</span><select id="sort-select" aria-label="Sort products">
+                  <option value="popular">Popular first</option>
+                  <option value="name">Name A–Z</option>
+                  <option value="brand">Brand A–Z</option>
+                  <option value="tier">Price tier: low to high</option>
+                </select></label>
+                <button class="tm-link" id="surprise-button" type="button">Surprise me</button>
                 <button class="tm-link" id="share-list" type="button" hidden>Copy link to saved list</button>
                 <button class="tm-link tm-danger" id="clear-saved" type="button" hidden>Clear saved list</button>
               </div>
             </div>
-            <div class="tm-catrail" id="category-rail" role="group" aria-label="Browse by category"></div>
-            <div class="tm-quick" id="quick-filters" role="group" aria-label="Quick filters"></div>
+            <h2 id="catalog-title" tabindex="-1">All gear</h2>
             <div class="tm-chips" id="active-filters" aria-label="Active filters"></div>
+            <aside class="tm-pick" id="spotlight" aria-label="Editor's pick"></aside>
             <section class="tm-recent" id="recent-row" aria-label="Recently viewed" hidden></section>
-            <div class="tm-list" id="product-grid"><div class="tm-skel" aria-hidden="true"><span class="tm-skel-tile"></span><span class="tm-skel-body"><span class="tm-skel-line"></span><span class="tm-skel-line w80"></span><span class="tm-skel-line w50"></span></span></div><div class="tm-skel" aria-hidden="true"><span class="tm-skel-tile"></span><span class="tm-skel-body"><span class="tm-skel-line"></span><span class="tm-skel-line w80"></span><span class="tm-skel-line w50"></span></span></div><div class="tm-skel" aria-hidden="true"><span class="tm-skel-tile"></span><span class="tm-skel-body"><span class="tm-skel-line"></span><span class="tm-skel-line w80"></span><span class="tm-skel-line w50"></span></span></div><div class="tm-skel" aria-hidden="true"><span class="tm-skel-tile"></span><span class="tm-skel-body"><span class="tm-skel-line"></span><span class="tm-skel-line w80"></span><span class="tm-skel-line w50"></span></span></div><div class="tm-skel" aria-hidden="true"><span class="tm-skel-tile"></span><span class="tm-skel-body"><span class="tm-skel-line"></span><span class="tm-skel-line w80"></span><span class="tm-skel-line w50"></span></span></div><div class="tm-skel" aria-hidden="true"><span class="tm-skel-tile"></span><span class="tm-skel-body"><span class="tm-skel-line"></span><span class="tm-skel-line w80"></span><span class="tm-skel-line w50"></span></span></div></div>
+            <div class="tm-list" id="product-grid"></div>
             <div class="tm-empty" id="empty-state" hidden></div>
             <button class="tm-more" id="load-more" type="button" hidden>Show more products</button>
           </div>
         </div>
       </section>
+
+      <p class="tm-trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3z"/><path d="m9 12 2 2 4-4"/></svg><span>We're independent and sell nothing. Store links open each retailer's own search, where you see its current price and stock.</span></p>
 
       <section class="tm-how" id="how-it-works" aria-labelledby="how-title">
         <h2 id="how-title">How it works</h2>
@@ -171,7 +169,7 @@
       </nav>
     </div>
     <div class="footer-contact" aria-label="Contact and code">
-      <div class="tm-mail"><a class="tm-email-btn" href="mailto:techitmore.contact@gmail.com?subject=Tech%20It%20More" aria-label="Email Tech It More"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.8 7.8 12 13.6l8.2-5.8"/></svg><span>Email us</span></a></div>
+      <div class="tm-mail"><a class="tm-email-btn" href="mailto:techitmore.contact@gmail.com?subject=Tech%20It%20More" aria-label="Email Tech It More"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.8 7.8 12 13.6l8.2-5.8"/></svg><span>Email us</span></a><span class="tm-mail-addr">techitmore.contact@gmail.com</span></div>
       <div class="footer-socials">
         <a class="social-button social-discord" href="https://discord.com/users/743614856128888862" target="_blank" rel="noopener noreferrer" aria-label="Message me on Discord" title="Message me on Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a>
         <a class="social-button social-github" href="https://github.com/FaresBoukraya/tech-it-more-gaming-catalog" target="_blank" rel="noopener noreferrer" aria-label="Source code on GitHub" title="Source code on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.7-2.3 4.5-4.5 4.8.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A9.5 9.5 0 0 0 12 2.5Z"/></svg></a>
@@ -183,11 +181,18 @@
 
 <!--/build:footer-->
 
-    <button class="tm-top" id="back-to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V6M6 11l6-6 6 6"/></svg></button>
+        <nav class="tm-tabbar" aria-label="Primary">
+        <button class="tm-tab" id="tab-browse" type="button" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg><span>Browse</span></button>
+        <button class="tm-tab" id="tab-search" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><span>Search</span></button>
+        <button class="tm-tab" id="tab-saved" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Saved</span><span class="count" id="tab-saved-count" data-zero>0</span></button>
+        <button class="tm-tab" id="tab-compare" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v14M3.5 14.5 7 18l3.5-3.5M17 20V6M13.5 9.5 17 6l3.5 3.5"/></svg><span>Compare</span><span class="count" id="tab-compare-count" data-zero>0</span></button>
+        <a class="tm-tab" href="how-we-choose/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h9l3 3V20.5H6z"/><path d="M14.5 3.5v4h3.5"/></svg><span>Guides</span></a>
+      </nav>
+<button class="tm-top" id="back-to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V6M6 11l6-6 6 6"/></svg></button>
 
     <div class="product-dialog" id="product-dialog" role="dialog" aria-modal="true" aria-label="Product details" aria-hidden="true" hidden>
       <div class="dialog-panel">
-        <button class="dialog-close" id="dialog-close" type="button" aria-label="Close product details">×</button>
+        <button class="dialog-close" id="dialog-close" type="button" aria-label="Back to browse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg><span>Back to browse</span></button>
         <div id="dialog-content"></div>
       </div>
     </div>
@@ -203,14 +208,6 @@
       <button class="photo-lightbox-scroll" id="photo-lightbox-scroll" type="button" aria-label="Scroll down to see the full photo">↓ Scroll to see full photo</button>
     </div>
     <div class="tm-filters-backdrop" id="filters-backdrop" hidden></div>
-    <div class="tm-tray" id="compare-tray" role="region" aria-label="Compare tray" hidden>
-      <div class="tm-tray-inner">
-        <p class="tm-tray-label">Compare <span id="compare-count">0</span>/3</p>
-        <ul class="tm-tray-list" id="compare-tray-list"></ul>
-        <button class="tm-link" id="compare-clear" type="button">Clear</button>
-        <button class="tm-primary tm-tray-go" id="compare-go" type="button" disabled>Pick two to compare</button>
-      </div>
-    </div>
     <div class="tm-cmp" id="compare-modal" role="dialog" aria-modal="true" aria-label="Compare products" aria-hidden="true" hidden>
       <div class="tm-cmp-panel">
         <button class="tm-cmp-close" id="compare-close" type="button" aria-label="Close comparison">×</button>
@@ -218,7 +215,6 @@
         <div class="tm-cmp-scroll" id="compare-content"></div>
       </div>
     </div>
-    <nav class="tm-bottomnav" aria-label="Main"><a href="#catalog" class="is-here" data-nav-browse><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span>Browse</span></a><button type="button" data-nav-search><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><span>Search</span></button><button type="button" data-nav-saved><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Saved</span><span class="tm-badge" data-saved-badge hidden>0</span></button><button type="button" data-nav-compare><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M16 5v14M5 8l3-3 3 3M13 16l3 3 3-3"/></svg><span>Compare</span><span class="tm-badge" data-compare-badge hidden>0</span></button><a href="how-we-choose/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h10a3 3 0 013 3v13H8a3 3 0 01-3-3V4z"/></svg><span>Guides</span></a></nav>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
 </html>

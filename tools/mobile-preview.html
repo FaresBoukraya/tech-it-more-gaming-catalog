@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Tech It More: phone preview</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; gap: 18px; padding: 24px 16px; background: #d9d6de; font: 15px/1.4 system-ui, sans-serif; color: #272a41; }
+  @media (prefers-color-scheme: dark) { body { background: #121115; color: #d9d7de; } }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  button { padding: 9px 14px; border: 1px solid currentColor; border-radius: 10px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+  button[aria-pressed="true"] { background: #6b62b0; border-color: #6b62b0; color: #fff; }
+  .phone { width: 390px; height: 800px; max-height: calc(100vh - 140px); border: 12px solid #17161a; border-radius: 44px; overflow: hidden; background: #fff; box-shadow: 0 30px 60px rgba(0,0,0,.35); }
+  iframe { display: block; width: 100%; height: 100%; border: 0; }
+  p { margin: 0; opacity: .75; text-align: center; max-width: 420px; }
+</style>
+</head>
+<body>
+  <div class="bar" role="group" aria-label="Page">
+    <button type="button" data-src="../index.html" aria-pressed="true">Home</button>
+    <button type="button" data-src="../index.html#product=razer-huntsman-v3-pro" aria-pressed="false">Product view</button>
+    <button type="button" data-src="../p/razer-deathadder-v3/index.html" aria-pressed="false">Product page</button>
+    <button type="button" data-src="../c/keyboards/index.html" aria-pressed="false">Category</button>
+    <button type="button" data-src="../how-we-choose/index.html" aria-pressed="false">Guide</button>
+  </div>
+  <div class="phone"><iframe id="frame" src="../index.html" title="Tech It More on a 390px phone"></iframe></div>
+  <p>A 390 px wide phone. Everything inside is the live site, so tap, scroll, save and compare as usual. Use the theme button inside the page to switch light and dark.</p>
+  <script>
+    var frame = document.getElementById('frame');
+    document.querySelectorAll('button[data-src]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('button[data-src]').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+        frame.src = b.dataset.src; frame.contentWindow && frame.contentWindow.location.reload();
+      });
+    });
+  </script>
+</body>
+</html>
