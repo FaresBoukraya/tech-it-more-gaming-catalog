@@ -1,0 +1,29 @@
+PASS desk grid renders 36
+PASS desk search filters 23 products
+PASS desk suggestions show 
+PASS desk clear restores 52 products
+PASS desk category rail filters 11 products
+PASS desk save increments 1
+PASS desk compare badge 2
+PASS desk theme toggles light->dark
+PASS desk FR hero translated Du matériel qui vaut le coup.
+PASS desk AR sets rtl 
+PASS desk AR no hscroll 
+PASS desk product opens 1/index.html#product=razer-deathadder-v3
+PASS desk back closes it 
+PASS desk no js errors []
+PASS mob grid renders 36
+PASS mob search filters 23 products
+PASS mob suggestions show 
+PASS mob clear restores 52 products
+PASS mob category rail filters 11 products
+PASS mob save increments 1
+PASS mob compare badge 2
+PASS mob theme toggles light->dark
+PASS mob FR hero translated Du matériel qui vaut le coup.
+PASS mob AR sets rtl 
+PASS mob AR no hscroll 
+PASS mob product opens 1/index.html#product=razer-deathadder-v3
+PASS mob back closes it 
+PASS mob no js errors []
+0 failures

@@ -58,9 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
   function badge(el, n) { if (!el) return; el.textContent = String(n); if (n) el.removeAttribute('data-zero'); else el.setAttribute('data-zero', ''); }
   function paint() {
     badge(document.getElementById('watchlist-count'), saved.length);
-    badge(document.getElementById('tab-saved-count'), saved.length);
+    badge(document.getElementById('menu-saved-count'), saved.length);
     badge(document.getElementById('compare-badge'), compare.length);
-    badge(document.getElementById('tab-compare-count'), compare.length);
+    badge(document.getElementById('menu-compare-count'), compare.length);
     document.querySelectorAll('[data-dx-save]').forEach(function (b) {
       var on = saved.indexOf(b.dataset.dxSave) !== -1;
       b.setAttribute('aria-pressed', String(on)); b.querySelector('span').textContent = on ? 'Saved' : 'Save';

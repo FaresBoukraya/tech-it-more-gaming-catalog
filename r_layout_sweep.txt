@@ -1,0 +1,11 @@
+320 home {'clipped': ['H2']} []
+320 product {'small': ['A 82x33']} []
+360 home {'clipped': ['H2']} []
+360 product {'small': ['A 82x33']} []
+390 home {'clipped': ['H2']} []
+390 product {'small': ['A 82x33']} []
+430 home {'clipped': ['H2']} []
+430 product {'small': ['A 82x33']} []
+768 home {'clipped': ['H2']} []
+768 product {'small': ['A 82x33']} []
+sweep done

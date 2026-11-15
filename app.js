@@ -5,6 +5,11 @@ const categoryOrder = TIM.categories.map(category => category.label);
 const categories = ["All products", ...[...new Set(products.map(product => product.category))].sort((a, b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b))];
 const grid = document.querySelector("#product-grid");
 const searchInput = document.querySelector("#search-input");
+/* On phones the search field is tucked behind the search icon: open it first so focusing really works. */
+function focusSearch(options) {
+  window.dispatchEvent(new CustomEvent("tm:search-open"));
+  searchInput.focus(options);
+}
 const filterTypeEl = document.querySelector("#filter-type");
 const filterBrandEl = document.querySelector("#filter-brand");
 const filterConnEl = document.querySelector("#filter-connection");
@@ -254,11 +259,9 @@ function savedOnly() {
 function reducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
-/* Phones: the brand row of the header slides away on scroll, the search row stays pinned. */
+/* Phones: the top bar stays pinned, so nothing slides away. (Kept as a function because the scroll offsets below use it.) */
 function headerShift() {
-  const header = document.querySelector(".tm-header");
-  if (!header || !window.matchMedia("(max-width: 760px)").matches) return 0;
-  return Math.max(0, Math.round(searchWrap.getBoundingClientRect().top - header.getBoundingClientRect().top - 6));
+  return 0;
 }
 function headerPinnedHeight() {
   const header = document.querySelector(".tm-header");
@@ -271,12 +274,6 @@ function scrollToCatalog(instant = false) {
   const target = document.querySelector(".tm-toolbar") || document.querySelector("#catalog");
   if (!target) return;
   const top = target.getBoundingClientRect().top + window.scrollY - (headerPinnedHeight() + 12);
-  // The offset above assumes the brand row has slid away, so make that true before we land.
-  const header = document.querySelector(".tm-header");
-  if (header && window.matchMedia("(max-width: 760px)").matches && top > 24) {
-    header.style.setProperty("--tm-hdr-shift", headerShift() + "px");
-    header.classList.add("tm-header-hidden");
-  }
   window.scrollTo({ top: Math.max(0, top), behavior: instant || reducedMotion() ? "auto" : "smooth" });
 }
 /* Connection filter: "any", "wireless" or "wired" (only one at a time). */
@@ -323,7 +320,7 @@ function setOnlyCategory(category) { selCats.clear(); if (category && category !
 function updateSavedCount() {
   watchlistCount.textContent = String(watchlist.size);
   if (watchlist.size) watchlistCount.removeAttribute("data-zero"); else watchlistCount.setAttribute("data-zero", "");
-  const tabSavedCount = document.querySelector("#tab-saved-count");
+  const tabSavedCount = document.querySelector("#menu-saved-count");
   if (tabSavedCount) { tabSavedCount.textContent = String(watchlist.size); tabSavedCount.toggleAttribute("data-zero", !watchlist.size); }
 }
 function checkedDate(value) {
@@ -1228,7 +1225,6 @@ function showToast(message) {
 function setWatchlistFilter(selected) {
   watchlistFilter.setAttribute("aria-pressed", String(selected));
   watchlistFilter.classList.toggle("selected", selected);
-  document.querySelector("#tab-saved")?.setAttribute("aria-pressed", String(selected));
 }
 
 document.addEventListener("error", event => {
@@ -1303,7 +1299,6 @@ filterSidebar.addEventListener("change", event => {
 
 /* ---------- Compare tray and side-by-side view ---------- */
 const compareOpenButton = document.querySelector("#compare-open");
-const tabCompareButton = document.querySelector("#tab-compare");
 const compareModal = document.querySelector("#compare-modal");
 const compareContent = document.querySelector("#compare-content");
 function productById(id) { return products.find(item => item.id === id); }
@@ -1318,7 +1313,7 @@ function persistCompare() {
 function renderCompareTray() {
   persistCompare();
   const count = compareIds.length;
-  for (const badge of [document.querySelector("#compare-badge"), document.querySelector("#tab-compare-count")]) {
+  for (const badge of [document.querySelector("#compare-badge"), document.querySelector("#menu-compare-count")]) {
     if (!badge) continue;
     badge.textContent = String(count);
     if (count) badge.removeAttribute("data-zero"); else badge.setAttribute("data-zero", "");
@@ -1398,21 +1393,14 @@ function askCompare() {
   showToast(compareIds.length ? "Tick Compare on one more product." : "Tick Compare on two products to compare them.");
 }
 compareOpenButton.addEventListener("click", askCompare);
-tabCompareButton.addEventListener("click", askCompare);
 document.querySelector(".brand")?.addEventListener("click", event => {
   if (dialog.hidden) return;
   event.preventDefault();
   closeDialog();
   window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
 });
-document.querySelector("#tab-search")?.addEventListener("click", () => {
-  if (!dialog.hidden) closeDialog();
-  document.querySelector(".tm-header")?.classList.remove("tm-header-hidden");
-  window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
-  searchInput.focus();
-});
-document.querySelector("#tab-saved")?.addEventListener("click", () => watchlistFilter.click());
-document.querySelector("#tab-browse").addEventListener("click", () => {
+/* "Browse" in the phone menu: leave any open product and go back to the top of the list. */
+window.addEventListener("tm:browse", () => {
   if (!dialog.hidden) closeDialog();
   window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" });
 });
@@ -1616,12 +1604,12 @@ document.addEventListener("keydown", event => {
   }
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
     event.preventDefault();
-    searchInput.focus();
+    focusSearch();
     searchInput.select();
   } else if (event.key === "/" && !event.metaKey && !event.ctrlKey && !event.altKey && dialog.hidden
     && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "")) {
     event.preventDefault();
-    searchInput.focus();
+    focusSearch();
   }
 });
 window.addEventListener("popstate", () => {
@@ -1764,7 +1752,7 @@ searchClear.addEventListener("click", () => {
   updateSearchState();
   closeSuggestions();
   renderCatalog();
-  searchInput.focus();
+  focusSearch();
 });
 
 emptyState.addEventListener("click", event => {
@@ -1780,7 +1768,7 @@ emptyState.addEventListener("click", event => {
     renderCategories(); renderCatalog();
   } else if (action.startsWith("query:")) {
     searchInput.value = action.slice("query:".length);
-    updateSearchState(); renderCatalog(); searchInput.focus();
+    updateSearchState(); renderCatalog(); focusSearch();
   } else if (action.startsWith("category:")) {
     searchInput.value = ""; resetFilters(); setWatchlistFilter(false);
     setOnlyCategory(action.slice("category:".length));
@@ -1898,28 +1886,11 @@ document.addEventListener("click", event => {
   if (open && !(event.metaKey || event.ctrlKey || event.shiftKey || event.button)) { event.preventDefault(); openProduct(open.dataset.openPick); }
 });
 
-// Mobile: the brand row slides away while scrolling down and returns on scroll up; the search row stays pinned.
+// Mobile: the product view sits just under the top bar, so keep that height available to CSS.
 (() => {
   const header = document.querySelector(".tm-header");
-  if (!header) return;
-  const phone = window.matchMedia("(max-width: 760px)");
-  let lastY = window.scrollY;
-  let ticking = false;
-  const measure = () => header.style.setProperty("--tm-hdr-shift", headerShift() + "px");
-  const update = () => {
-    ticking = false;
-    const y = Math.max(0, window.scrollY);
-    const dy = y - lastY;
-    const typing = header.contains(document.activeElement) && document.activeElement.tagName === "INPUT";
-    if (!phone.matches || y < 24 || typing || dy < -6) header.classList.remove("tm-header-hidden");
-    else if (dy > 8) { measure(); header.classList.add("tm-header-hidden"); }
-    if (Math.abs(dy) > 6) lastY = y;
-  };
-  window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  window.addEventListener("resize", measure);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-  measure();
-  header.addEventListener("focusin", () => header.classList.remove("tm-header-hidden"));
+  if (!header || !("ResizeObserver" in window)) return;
+  new ResizeObserver(() => document.documentElement.style.setProperty("--hdr-live", header.offsetHeight + "px")).observe(header);
 })();
 
 // Mobile: keep the suggestion list inside the part of the screen the keyboard leaves free.
@@ -1944,7 +1915,7 @@ document.addEventListener("click", event => {
 /* Open straight into search when a page links to /#search (static pages' Search tab). */
 function focusSearchFromHash() {
   if (window.location.hash !== "#search") return;
-  searchInput.focus({ preventScroll: false });
+  focusSearch({ preventScroll: false });
   searchInput.scrollIntoView({ block: "center" });
 }
 window.addEventListener("hashchange", focusSearchFromHash);

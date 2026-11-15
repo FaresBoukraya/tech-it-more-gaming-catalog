@@ -6,7 +6,10 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "check": "node scripts/build.mjs --check",
-    "images": "node scripts/fetch-images.mjs"
+    "images": "node scripts/fetch-images.mjs",
+    "test": "python3 tests/run.py"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }

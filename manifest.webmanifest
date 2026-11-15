@@ -1,0 +1,36 @@
+{
+  "name": "Tech It More",
+  "short_name": "Tech It More",
+  "description": "An independent catalog of gaming gear with plain verdicts and where to buy.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#efedf0",
+  "theme_color": "#efedf0",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Saved",
+      "short_name": "Saved",
+      "url": "/#saved"
+    },
+    {
+      "name": "Compare",
+      "short_name": "Compare",
+      "url": "/#compare"
+    }
+  ]
+}

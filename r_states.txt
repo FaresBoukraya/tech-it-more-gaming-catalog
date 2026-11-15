@@ -1,0 +1,33 @@
+PASS desk product opens from card 
+PASS desk body scroll locked while open 
+PASS desk Escape closes product 
+PASS desk scroll lock released 
+PASS desk URL hash cleared after close tp://127.0.0.1:8882/index.html
+PASS desk compare opens with 2 
+PASS desk Escape closes compare 
+PASS desk scroll unlocked after compare 
+PASS desk compare capped at 3 
+PASS desk empty saved list explains itself Nothing saved yet.  Tap the heart on any product to save it 
+PASS desk no-results state shows 
+PASS desk load more adds products 
+PASS desk FAQ opens 
+PASS desk arabic: no horizontal scroll 
+PASS desk '/' focuses search 
+PASS desk no js errors []
+PASS mob product opens from card 
+PASS mob body scroll locked while open 
+PASS mob Escape closes product 
+PASS mob scroll lock released 
+PASS mob URL hash cleared after close tp://127.0.0.1:8882/index.html
+PASS mob compare opens with 2 
+PASS mob Escape closes compare 
+PASS mob scroll unlocked after compare 
+PASS mob compare capped at 3 
+PASS mob empty saved list explains itself Nothing saved yet.  Tap the heart on any product to save it 
+PASS mob no-results state shows 
+PASS mob load more adds products 
+PASS mob FAQ opens 
+PASS mob arabic: no horizontal scroll 
+FAIL mob '/' focuses search 
+PASS mob no js errors []
+1 failures of 32

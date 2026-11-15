@@ -184,7 +184,8 @@ const assetHash = {
   'products.js': sha(productsJs),
   'theme-init.js': sha(readText('theme-init.js')),
   'mail.js': sha(readText('mail.js')),
-  'language.js': sha(readText('language.js'))
+  'language.js': sha(readText('language.js')),
+  'menu.js': sha(readText('menu.js'))
 };
 const asset = name => `/${name}?v=${assetHash[name]}`;
 
@@ -192,8 +193,8 @@ const asset = name => `/${name}?v=${assetHash[name]}`;
    Navigations use stale-while-revalidate (show the saved page now, refresh it quietly);
    fonts, tiles and versioned files are cache-first. The cache name changes whenever any
    shipped file changes, so a new deploy replaces the old cache. */
-const swShell = ['/', '/offline.html', asset('site.css'), asset('app.js'), asset('products.js'), asset('language.js'), asset('theme-init.js'), asset('mail.js'),
-  '/fonts/lora-latin.woff', '/fonts/carlito-regular.woff', '/fonts/carlito-bold.woff', '/favicon.svg'];
+const swShell = ['/', '/offline.html', asset('site.css'), asset('app.js'), asset('products.js'), asset('language.js'), asset('menu.js'), asset('theme-init.js'), asset('mail.js'),
+  '/fonts/carlito-regular.woff', '/fonts/carlito-bold.woff', '/favicon.svg', '/manifest.webmanifest', '/icon-192.png'];
 const swBody = [
   'var SHELL = ' + JSON.stringify(swShell) + ';',
   'var CACHE = "tim-" + VERSION;',
@@ -277,6 +278,7 @@ ${robots ? `<meta name="robots" content="${robots}">\n` : ''}<meta name="theme-c
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
 ${verifyTags}<meta property="og:type" content="website">
 <meta property="og:site_name" content="${SITE_NAME}">
 <meta property="og:title" content="${esc(title)}">
@@ -287,11 +289,11 @@ ${verifyTags}<meta property="og:type" content="website">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Tech It More: find gaming gear and where to buy it in the US">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="/fonts/lora-latin.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/fonts/carlito-regular.woff" as="font" type="font/woff" crossorigin>
 <script src="${asset('theme-init.js')}"></script>
 <link rel="stylesheet" href="${asset('site.css')}">
 <script src="${asset('language.js')}" defer></script>
+<script src="${asset('menu.js')}" defer></script>
 <script src="${asset('mail.js')}" defer></script>
 ${extraLd.map(ld => `<script type="application/ld+json">${jsonLd(ld)}</script>`).join('\n')}
 </head>
@@ -303,9 +305,11 @@ ${extraLd.map(ld => `<script type="application/ld+json">${jsonLd(ld)}</script>`)
     <form class="tm-search" action="/" method="get" role="search">
       <div class="tm-search-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><input name="q" type="search" placeholder="Search mice, keyboards, headsets" autocomplete="off" enterkeyhint="search" aria-label="Search gaming gear"></div>
     </form>
-    <div class="tm-actions"><nav class="tm-nav" aria-label="Main"><a href="/">Browse</a><a href="/how-we-choose/">Guides</a><a href="/#how-it-works">About</a></nav><label class="tm-language"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option><option value="es">Español</option></select></label><a class="tm-icon-btn" id="watchlist-filter" href="/#saved" aria-label="Show saved products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="label">Saved</span><span class="count" id="watchlist-count" data-zero>0</span></a><a class="tm-compare-pill" id="compare-open" href="/#compare" aria-label="Compare products">Compare <span class="compare-badge" id="compare-badge" data-zero>0</span></a><button class="tm-icon-btn tm-theme" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Dark mode</span></button></div>
+    <div class="tm-actions"><nav class="tm-nav" aria-label="Main"><a href="/">Browse</a><a href="/how-we-choose/">Guides</a><a href="/#how-it-works">About</a></nav><label class="tm-language"><span class="sr-only">Language</span><select id="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option><option value="es">Español</option></select></label><button class="tm-icon-btn tm-search-toggle" id="search-toggle" type="button" aria-expanded="false" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg></button><a class="tm-icon-btn" id="watchlist-filter" href="/#saved" aria-label="Show saved products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="label">Saved</span><span class="count" id="watchlist-count" data-zero>0</span></a><a class="tm-compare-pill" id="compare-open" href="/#compare" aria-label="Compare products">Compare <span class="compare-badge" id="compare-badge" data-zero>0</span></a><button class="tm-icon-btn tm-menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu"><span class="menu-open"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span class="menu-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></span></button><button class="tm-icon-btn tm-theme" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Dark mode</span></button></div>
   </div>
+  <div class="tm-menu" id="site-menu" hidden><nav class="tm-menu-nav" aria-label="Menu"><a href="/" data-tone="browse" data-menu="browse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg><span>Browse</span></a><a href="/#saved" data-tone="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Saved</span><span class="count" id="menu-saved-count" data-zero>0</span></a><a href="/#compare" data-tone="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v14M3.5 14.5 7 18l3.5-3.5M17 20V6M13.5 9.5 17 6l3.5 3.5"/></svg><span>Compare</span><span class="count" id="menu-compare-count" data-zero>0</span></a><a href="/how-we-choose/" data-tone="guides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h9l3 3V20.5H6z"/><path d="M14.5 3.5v4h3.5"/></svg><span>Guides</span></a><a href="/#how-it-works" data-tone="how"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.2"/></svg><span>How it works</span></a><a href="/#faq" data-tone="faq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.5a2.5 2.5 0 1 1 3.4 2.3c-.7.3-1 .8-1 1.5M12 16.6v.1"/></svg><span>Questions</span></a></nav><div class="tm-menu-controls" id="menu-controls"></div></div>
 </header>
+<div class="tm-menu-backdrop" hidden></div>
 <main class="tm-main tm-page" id="main">
 `;
 }
@@ -341,15 +345,7 @@ ${app ? '        <button type="button" id="export-button">Export my data</button
   </div>
 </footer>
 `;
-const tabIcon = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
-/* Phone tab bar for the static pages (same look as the home page). */
-const tabBar = here => `<nav class="tm-tabbar tm-tabbar-static" aria-label="Primary">`
-  + `<a class="tm-tab" href="/"${here === 'browse' ? ' aria-current="page"' : ''}>${tabIcon('<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>')}<span>Browse</span></a>`
-  + `<a class="tm-tab" href="/#search">${tabIcon('<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/>')}<span>Search</span></a>`
-  + `<a class="tm-tab" href="/#saved">${tabIcon('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>')}<span>Saved</span><span class="count" id="tab-saved-count" data-zero>0</span></a>`
-  + `<a class="tm-tab" href="/#compare">${tabIcon('<path d="M7 4v14M3.5 14.5 7 18l3.5-3.5M17 20V6M13.5 9.5 17 6l3.5 3.5"/>')}<span>Compare</span><span class="count" id="tab-compare-count" data-zero>0</span></a>`
-  + `<a class="tm-tab" href="/how-we-choose/"${here === 'guides' ? ' aria-current="page"' : ''}>${tabIcon('<path d="M6 3.5h9l3 3V20.5H6z"/><path d="M14.5 3.5v4h3.5"/>')}<span>Guides</span></a></nav>\n`;
-const foot = ctx => `</main>\n${footerHtml(false, ctx)}${tabBar(ctx.here)}</body>\n</html>\n`;
+const foot = ctx => `</main>\n${footerHtml(false, ctx)}</body>\n</html>\n`;
 
 const breadcrumbLd = items => ({
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',

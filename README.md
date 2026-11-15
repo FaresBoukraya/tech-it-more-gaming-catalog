@@ -195,7 +195,7 @@ If you move to your own domain, change `SITE` at the top of `scripts/build.mjs` 
 ## Under the hood
 
 - Plain HTML, CSS and JavaScript. No framework, no bundler, no dependencies.
-- Self-hosted fonts (Carlito and Lora), so no third-party font requests. See [fonts/FONTS.md](fonts/FONTS.md).
+- Self-hosted font (Carlito), so no third-party font requests. See [fonts/FONTS.md](fonts/FONTS.md).
 - Product pages and category pages are pre-built, so they work without JavaScript.
 - Product sheets open full screen. Browser Back closes them and Forward reopens them.
 
@@ -212,3 +212,15 @@ Bug reports, product suggestions, accessibility and speed fixes are welcome. Rea
 ## License
 
 [MIT](LICENSE) © 2026 Fares. Tech It More is not affiliated with the brands or stores shown. Names and photos belong to their owners.
+
+## Tests
+
+`npm test` runs the browser tests and audits in `tests/` (layout, saved list, compare, navigation, contrast, links). Build first with `npm run build`. See [tests/README.md](tests/README.md) for setup and what each file covers.
+
+## Install as an app
+
+`manifest.webmanifest` lets people add the site to their phone's home screen. It has a Saved and a Compare shortcut. The icons are `icon-192.png` and `icon-512.png`.
+
+## Phone navigation
+
+On phones the header is a slim top bar: logo, then search, saved, compare and a menu button. The menu holds the pages, the language picker and the dark-mode switch. `menu.js` runs on every page; on larger screens it puts the language picker and the theme button back in the header. The same markup is in `index.html` and in the page template in `scripts/build.mjs`, so change both.
